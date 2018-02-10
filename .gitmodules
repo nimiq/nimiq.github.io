@@ -58,3 +58,11 @@
 	path = apps/nimiq-activation
 	url = ../nimiq-activation.git
 	branch = master
+[submodule "meta/doc-theme"]
+	path = meta/doc-theme
+	url = ../doc-theme.git
+	branch = master
+[submodule "meta/email-template"]
+	path = meta/email-template
+	url = ../email-template.git
+	branch = master
