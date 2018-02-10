@@ -5,7 +5,7 @@ Root repository for all projects regarding the Nimiq UX.
 - [Libraries](/libraries) contains low-level javascript modules.
 - [Elements](/elements) contains high-level UI components.
 - [Apps](/apps) contains the Nimiq enduser applications.
-
+- [Meta](/meta) contains all other projects such as doc or email templates.
 
 
 ## Getting Started
