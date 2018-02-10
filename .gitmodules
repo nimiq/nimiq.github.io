@@ -1,0 +1,60 @@
+[submodule "elements"]
+	path = elements
+	url = ../elements.git
+	branch = master
+[submodule "apps/wallet"]
+	path = apps/wallet
+	url = ../wallet.git
+	branch = master
+[submodule "libraries/nano-api"]
+	path = libraries/nano-api
+	url = ../nano-api.git
+	branch = master
+[submodule "libraries/qr-encoder"]
+	path = libraries/qr-encoder
+	url = ../qr-encoder.git
+	branch = master
+[submodule "libraries/qr-scanner"]
+	path = libraries/qr-scanner
+	url = ../qr-scanner.git
+	branch = master
+[submodule "libraries/identicon"]
+	path = libraries/identicon
+	url = ../identicon.git
+	branch = master
+[submodule "libraries/robohash"]
+	path = libraries/robohash
+	url = ../robohash.git
+	branch = master
+[submodule "libraries/iqons"]
+	path = libraries/iqons
+	url = ../iqons.git
+	branch = master
+[submodule "libraries/mnemonic-phrase"]
+	path = libraries/mnemonic-phrase
+	url = ../mnemonic-phrase.git
+	branch = master
+[submodule "libraries/wallet-backup"]
+	path = libraries/wallet-backup
+	url = ../wallet-backup.git
+	branch = master
+[submodule "libraries/web-share-shim"]
+	path = libraries/web-share-shim
+	url = ../web-share-shim.git
+	branch = master
+[submodule "libraries/x-element"]
+	path = libraries/x-element
+	url = ../x-element.git
+	branch = master
+[submodule "libraries/nimiq-style"]
+	path = libraries/nimiq-style
+	url = ../nimiq-style.git
+	branch = master
+[submodule "libraries/nimiq-utils"]
+	path = libraries/nimiq-utils
+	url = ../nimiq-utils.git
+	branch = master
+[submodule "apps/nimiq-activation"]
+	path = apps/nimiq-activation
+	url = ../nimiq-activation.git
+	branch = master
