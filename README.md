@@ -43,9 +43,3 @@ cd nimiq
 git submodule deinit <submodule-path>    
 rm -rf .git/module/<submodule-path>
 ``` 
-
-
-### Build 
-```
-rollup -c rollup-config.js
-```
