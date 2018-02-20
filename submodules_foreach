@@ -1,0 +1,159 @@
+#!/usr/bin/node
+
+var fs    = require('fs');
+var spawn = require('child_process').spawn;
+
+function parseSubmodules(data) {
+
+	var lines = data.split(/\n+/);
+	var modules = {};
+	var currentPath;
+
+	for (var l = 0, length = lines.length; l < length; l++) {
+
+		var line = lines[l].trim();
+
+		if (!line) {
+			continue;
+		}
+
+		var match;
+
+		if ((match = line.match(/\[submodule\s+"(.*?)"\]/))) {
+			currentPath = match[1];
+			modules[currentPath] = {};
+		} else {
+			var kv = line.split(/\s*=\s*/);
+			modules[currentPath][kv[0]] = kv[1];
+		}
+	}
+
+	return modules;
+}
+
+if (!fs.existsSync('.gitmodules'))
+{
+	console.log('No submodules found, aborting.');
+	process.exit();
+}
+
+var modules = parseSubmodules(fs.readFileSync('.gitmodules', 'UTF-8'));
+
+var args = process.argv.slice(2);
+
+if (args.length === 0)
+{
+	console.log('No command specified, aborting.');
+	process.exit();
+}
+
+var command        = args[0];
+
+var errors = [];
+
+if (command === '--init') {
+	var initModule = function (module, next) {
+		var cloneArgs = ['clone', module.data.url];
+		if (module.data.branch) {
+			cloneArgs.push('-b', module.data.branch);
+		}
+		cloneArgs.push('--recursive', module.path);
+
+		var error = '';
+
+		spawn('git', cloneArgs).on('close', function (code) {
+			if (code === 0) {
+				console.log('Successfully initialized submodule in `' + module.path + '`');
+			} else {
+				errors.push('Could not initialize submodule in `' + module.path + '`, failed with code ' + code + ' (' + error + ').');
+			}
+
+			if (next) {
+				next();
+			}
+		}).stderr.on('data', function (chunk) {
+			chunk = chunk.toString();
+			if (chunk) {
+				error += chunk;
+			}
+		});
+	};
+
+	var processBatch = function (modules) {
+
+		if (modules.length > 0) {
+			initModule(modules.shift(), function () {
+				processBatch(modules);
+			});
+		}
+	};
+
+	var modulesList = [];
+
+	var path;
+	
+	for (path in modules) {
+		if (Object.prototype.hasOwnProperty.call(modules, path)) {
+			var data = modules[path];
+			modulesList.push({
+				path: path,
+				data: data
+			});
+		}
+	}
+
+	modulesList.sort(function (a, b) {
+		return a.path < b.path ? -1 : 1;
+	});
+
+
+	var moduleBatches = [];
+	var currentBatch = [];
+	var currentTopLevel;
+
+	for (var i = 0, len = modulesList.length; i < len; ++i) {
+		var submodule = modulesList[i];
+		var topLevel = submodule.path.split('/')[0];
+		if (topLevel !== currentTopLevel && currentBatch.length > 0) {
+			moduleBatches.push(currentBatch);
+			currentBatch = [];
+		}
+		currentTopLevel = topLevel;
+		currentBatch.push(submodule);
+	}
+	if (currentBatch.length > 0) {
+		moduleBatches.push(currentBatch);
+	}
+
+	for (var m = 0, mlen = moduleBatches.length; m < mlen; ++m) {
+		processBatch(moduleBatches[m]);
+	}
+} else {
+	var spawnArguments = args.slice(1);
+	console.log('Will run: ', command + ' ' + spawnArguments.join(' '));
+	for (path in modules) {
+		if (modules.hasOwnProperty(path)) {
+			(function(path){
+				spawn(command, spawnArguments, {cwd: path}).on('close', function (code) {
+					if (code === 0) {
+						console.log('Successfully ran command in submodule `' + path + '`.');
+					} else {
+						errors.push('Command failed with code ' + code + ' in submodule `' + path + '`.');
+					}
+				});
+			})(path);
+		}
+	}
+}
+
+process.on('exit', function () {
+	if (errors.length === 0)
+	{
+		console.log("\nDone!");
+	}
+	else
+	{
+		console.log("\nDone, but there are errors:");
+		console.log(errors.join("\n"));
+	}
+});
