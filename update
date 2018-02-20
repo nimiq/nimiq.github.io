@@ -1,0 +1,4 @@
+#!/bin/bash
+git pull
+node ./submodules_foreach git checkout master
+node ./submodules_foreach git pull
