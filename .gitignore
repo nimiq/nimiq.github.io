@@ -3,3 +3,6 @@
 _todos
 research
 node_modules
+Gemfile*
+_site
+package*.json
