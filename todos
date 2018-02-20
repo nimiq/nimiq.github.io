@@ -1,6 +1,6 @@
 rm -rf _todos
 mkdir _todos
-grep -nr --include "*.js" "// Todo:" . | sed "s/\/\/ Todo://g" | sed "s|.*/||g" > _todos/todos.txt
+grep -nr --include "*.js" "// Todo:" . | sed "s/\/\/ Todo://gi" | sed "s|.*/||g" > _todos/todos.txt
 grep "\[Daniel\]" _todos/todos.txt > _todos/daniel.txt
 grep "\[Soeren\]" _todos/todos.txt > _todos/soeren.txt
 grep "\[Max\]" _todos/todos.txt > _todos/max.txt
