@@ -43,3 +43,5 @@ cd nimiq
 git submodule deinit <submodule-path>    
 rm -rf .git/module/<submodule-path>
 ``` 
+
+
