@@ -66,3 +66,7 @@
 	path = meta/email-template
 	url = ../email-template.git
 	branch = master
+[submodule "meta/build-process"]
+	path = meta/build-process
+	url = ../build-process.git
+	branch = master
