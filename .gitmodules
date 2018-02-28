@@ -72,5 +72,5 @@
 	branch = master
 [submodule "libraries/boruca-messaging"]
 	path = libraries/boruca-messaging
-	url = git@github.com:nimiq/boruca-messaging.git
+	url = ../boruca-messaging.git
 	branch = master
