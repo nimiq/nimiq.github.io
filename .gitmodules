@@ -70,3 +70,7 @@
 	path = meta/build-process
 	url = ../build-process.git
 	branch = master
+[submodule "libraries/boruca-messaging"]
+	path = libraries/boruca-messaging
+	url = git@github.com:nimiq/boruca-messaging.git
+	branch = master
