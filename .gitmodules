@@ -74,3 +74,9 @@
 	path = libraries/boruca-messaging
 	url = ../boruca-messaging.git
 	branch = master
+[submodule "apps/vault"]
+	path = apps/vault
+	url = git@github.com:nimiq/vault.git
+[submodule "libraries/keystore"]
+	path = libraries/keystore
+	url = git@github.com:nimiq/keystore.git
