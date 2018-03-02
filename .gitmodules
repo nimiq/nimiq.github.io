@@ -77,6 +77,12 @@
 [submodule "apps/vault"]
 	path = apps/vault
 	url = git@github.com:nimiq/vault.git
+	branch = master
 [submodule "libraries/keystore"]
 	path = libraries/keystore
 	url = git@github.com:nimiq/keystore.git
+	branch = master
+[submodule "libraries/network"]
+	path = libraries/network
+	url = https://github.com/nimiq/network.git
+	branch = master
