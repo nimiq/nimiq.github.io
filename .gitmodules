@@ -86,3 +86,6 @@
 	path = libraries/network
 	url =../network.git
 	branch = master
+[submodule "libraries/keystore-client"]
+	path = libraries/keystore-client
+	url = ../keystore-client.git
