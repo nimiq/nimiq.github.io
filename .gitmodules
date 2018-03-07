@@ -89,3 +89,6 @@
 [submodule "libraries/keystore-client"]
 	path = libraries/keystore-client
 	url = ../keystore-client.git
+[submodule "libraries/es6-router"]
+	path = libraries/es6-router
+	url = ../es6-router.git
