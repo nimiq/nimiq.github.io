@@ -27,6 +27,7 @@ git submodule foreach --recursive git pull
 ```bash
 cd nimiq
 git pull
+git submodule sync
 git submodule update --recursive --remote
 git submodule foreach --recursive git checkout master
 ```
