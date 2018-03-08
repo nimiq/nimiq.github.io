@@ -89,6 +89,8 @@
 [submodule "libraries/keyguard-client"]
 	path = libraries/keyguard-client
 	url = ../keyguard-client.git
+	branch = master
 [submodule "libraries/es6-router"]
 	path = libraries/es6-router
 	url = ../es6-router.git
+	branch = master
