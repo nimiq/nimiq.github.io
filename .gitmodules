@@ -75,11 +75,11 @@
 	url = ../boruca-messaging.git
 	branch = master
 [submodule "apps/vault"]
-	path = apps/vault
+	path = apps/safe
 	url =../vault.git
 	branch = master
 [submodule "libraries/keystore"]
-	path = libraries/keystore
+	path = libraries/keyguard
 	url =../keystore.git
 	branch = master
 [submodule "libraries/network"]
@@ -87,7 +87,7 @@
 	url =../network.git
 	branch = master
 [submodule "libraries/keystore-client"]
-	path = libraries/keystore-client
+	path = libraries/keyguard-client
 	url = ../keystore-client.git
 [submodule "libraries/es6-router"]
 	path = libraries/es6-router
