@@ -94,3 +94,9 @@
 	path = libraries/es6-router
 	url = ../es6-router.git
 	branch = master
+[submodule "libraries/redux"]
+	path = libraries/redux
+	url = ../redux.git
+[submodule "libraries/redux-logger"]
+	path = libraries/redux-logger
+	url = ../redux-logger.git
