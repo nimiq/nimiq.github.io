@@ -7,3 +7,5 @@ Gemfile*
 _site
 package*.json
 labs
+.floo
+.flooignore
