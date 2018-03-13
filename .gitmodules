@@ -100,3 +100,6 @@
 [submodule "libraries/redux-logger"]
 	path = libraries/redux-logger
 	url = ../redux-logger.git
+[submodule "libraries/redux-pack"]
+	path = libraries/redux-pack
+	url = ../redux-pack.git
