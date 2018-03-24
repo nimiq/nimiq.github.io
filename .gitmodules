@@ -86,10 +86,6 @@
 	path = libraries/network
 	url =../network.git
 	branch = master
-[submodule "libraries/keyguard-client"]
-	path = libraries/keyguard-client
-	url = ../keyguard-client.git
-	branch = master
 [submodule "libraries/es6-router"]
 	path = libraries/es6-router
 	url = ../es6-router.git
@@ -97,12 +93,20 @@
 [submodule "libraries/redux"]
 	path = libraries/redux
 	url = ../redux.git
+	branch = master
 [submodule "libraries/redux-logger"]
 	path = libraries/redux-logger
 	url = ../redux-logger.git
+	branch = master
 [submodule "libraries/redux-pack"]
 	path = libraries/redux-pack
 	url = ../redux-pack.git
+	branch = master
 [submodule "libraries/deep-object-diff"]
 	path = libraries/deep-object-diff
 	url = ../deep-object-diff.git
+	branch = master
+[submodule "libraries/account-manager"]
+	path = libraries/account-manager
+	url = ../account-manager.git
+	branch = master
