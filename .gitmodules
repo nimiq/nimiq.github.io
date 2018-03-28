@@ -98,10 +98,6 @@
 	path = libraries/redux-logger
 	url = ../redux-logger.git
 	branch = master
-[submodule "libraries/redux-pack"]
-	path = libraries/redux-pack
-	url = ../redux-pack.git
-	branch = master
 [submodule "libraries/deep-object-diff"]
 	path = libraries/deep-object-diff
 	url = ../deep-object-diff.git
