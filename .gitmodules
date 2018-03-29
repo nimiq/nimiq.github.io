@@ -108,3 +108,6 @@
 [submodule "libraries/backup-file"]
 	path = libraries/backup-file
 	url = ../backup-file.git
+[submodule "libraries/secure-utils"]
+	path = libraries/secure-utils
+	url = ../secure-utils.git
