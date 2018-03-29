@@ -34,10 +34,6 @@
 	path = libraries/mnemonic-phrase
 	url = ../mnemonic-phrase.git
 	branch = master
-[submodule "libraries/wallet-backup"]
-	path = libraries/wallet-backup
-	url = ../wallet-backup.git
-	branch = master
 [submodule "libraries/web-share-shim"]
 	path = libraries/web-share-shim
 	url = ../web-share-shim.git
@@ -106,3 +102,9 @@
 	path = libraries/account-manager
 	url = ../account-manager.git
 	branch = master
+[submodule "secure-elements"]
+	path = secure-elements
+	url = ../secure-elements.git
+[submodule "libraries/backup-file"]
+	path = libraries/backup-file
+	url = ../backup-file.git
