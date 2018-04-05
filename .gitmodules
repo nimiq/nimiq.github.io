@@ -111,3 +111,7 @@
 [submodule "libraries/secure-utils"]
 	path = libraries/secure-utils
 	url = ../secure-utils.git
+[submodule "libraries/ledger-api"]
+	path = libraries/ledger-api
+	url = ../ledger-api.git
+	branch = master

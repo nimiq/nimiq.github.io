@@ -37,6 +37,11 @@ git submodule foreach --recursive git checkout master
 cd nimiq
 git submodule add -b <branch> <repository> [<submodule-path>]
 ```
+For example:
+```bash
+git submodule add -b master ../x-element.git libraries/x-element/
+```
+
 
 ### Remove a Submodule
 ```bash
