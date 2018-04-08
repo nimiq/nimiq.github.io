@@ -105,12 +105,15 @@
 [submodule "secure-elements"]
 	path = secure-elements
 	url = ../secure-elements.git
+	branch = master
 [submodule "libraries/backup-file"]
 	path = libraries/backup-file
 	url = ../backup-file.git
+	branch = master
 [submodule "libraries/secure-utils"]
 	path = libraries/secure-utils
 	url = ../secure-utils.git
+	branch = master
 [submodule "libraries/ledger-api"]
 	path = libraries/ledger-api
 	url = ../ledger-api.git
@@ -118,3 +121,8 @@
 [submodule "libraries/reselect"]
 	path = libraries/reselect
 	url = ../reselect.git
+	branch = master
+[submodule "libraries/patternLock"]
+	path = libraries/patternLock
+	url = ../patternLock.git
+	branch = master
