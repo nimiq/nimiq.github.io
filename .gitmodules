@@ -115,3 +115,6 @@
 	path = libraries/ledger-api
 	url = ../ledger-api.git
 	branch = master
+[submodule "libraries/reselect"]
+	path = libraries/reselect
+	url = ../reselect.git
