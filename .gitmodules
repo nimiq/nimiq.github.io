@@ -126,3 +126,7 @@
 	path = libraries/patternLock
 	url = ../patternLock.git
 	branch = master
+[submodule "apps/miner"]
+	path = apps/miner
+	url = git@github.com:nimiq-network/miner.git
+	branch = daniel/main-net
