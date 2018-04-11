@@ -1,0 +1,42 @@
+#!/bin/sh
+
+cwd=$(pwd)
+
+echo "Checking out offline branches"
+
+cd libraries/keyguard 
+git checkout offline
+cd $cwd
+
+cd libraries/nimiq-utils
+git checkout offline
+cd $cwd
+
+cd libraries/secure-utils
+git checkout offline
+cd $cwd
+
+echo "Building Safe and Keyguard deployment"
+
+cd apps/safe
+gulp
+cd $cwd
+
+cd libraries/keyguard
+gulp
+cd $cwd
+
+echo "Packaging Nimiq-Safe-Offline.zip"
+
+mkdir offline
+mkdir offline/safe
+mkdir offline/keyguard
+
+cp apps/safe/deployment-safe/dist/* offline/safe/
+cp libraries/keyguard/deployment-keyguard/dist/* offline/keyguard/
+
+rm Nimiq-Safe-Offline.zip
+zip -r Nimiq-Safe-Offline.zip offline
+
+echo "Cleaning up"
+rm -r offline

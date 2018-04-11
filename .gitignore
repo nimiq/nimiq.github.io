@@ -9,3 +9,5 @@ package*.json
 labs
 .floo
 .flooignore
+
+Nimiq-Safe-Offline\.zip
