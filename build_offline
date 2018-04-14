@@ -4,11 +4,7 @@ cwd=$(pwd)
 
 echo "Checking out offline branches"
 
-cd libraries/keyguard 
-git checkout offline
-cd $cwd
-
-cd libraries/nimiq-utils
+cd libraries/keyguard
 git checkout offline
 cd $cwd
 
