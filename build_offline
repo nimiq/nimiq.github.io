@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cwd=$(pwd)
+name="Nimiq-Safe-offline"
 
 echo "Checking out offline branches"
 
@@ -22,17 +23,25 @@ cd libraries/keyguard
 gulp
 cd $cwd
 
-echo "Packaging Nimiq-Safe-Offline.zip"
+echo "Packaging $name.zip"
 
-mkdir offline
-mkdir offline/safe
-mkdir offline/keyguard
+mkdir $name
+mkdir $name/safe
+mkdir $name/keyguard
 
-cp apps/safe/deployment-safe/dist/* offline/safe/
-cp libraries/keyguard/deployment-keyguard/dist/* offline/keyguard/
+cp apps/safe/deployment-safe/dist/* $name/safe/
+cp libraries/keyguard/deployment-keyguard/dist/* $name/keyguard/
 
-rm Nimiq-Safe-Offline.zip
-zip -r Nimiq-Safe-Offline.zip offline
+rm $name.zip
+zip -r $name.zip $name
 
 echo "Cleaning up"
-rm -r offline
+rm -r $name
+
+cd libraries/keyguard
+git checkout master
+cd $cwd
+
+cd libraries/secure-utils
+git checkout master
+cd $cwd
