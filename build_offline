@@ -5,15 +5,17 @@ name="Nimiq-Safe-offline"
 
 echo "Checking out offline branches"
 
+# Use local Nimiq.js in Keyguard
 cd libraries/keyguard
 git checkout offline
 cd $cwd
 
+# Checkout offline Config
 cd libraries/secure-utils
 git checkout offline
 cd $cwd
 
-echo "Building Safe and Keyguard deployment"
+echo "Building offline Safe and Keyguard deployments"
 
 cd apps/safe
 gulp
@@ -38,6 +40,7 @@ zip -r $name.zip $name
 echo "Cleaning up"
 rm -r $name
 
+# Switch back from offline to to master branches
 cd libraries/keyguard
 git checkout master
 cd $cwd
@@ -45,3 +48,5 @@ cd $cwd
 cd libraries/secure-utils
 git checkout master
 cd $cwd
+
+echo "Done"
