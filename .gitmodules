@@ -126,3 +126,7 @@
 	path = libraries/patternLock
 	url = ../patternLock.git
 	branch = master
+[submodule "libraries/cashlink"]
+	path = libraries/cashlink
+	url = ../cashlink.git
+	branch = master
