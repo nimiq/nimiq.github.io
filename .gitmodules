@@ -132,4 +132,5 @@
 	branch = master
 [submodule "apps/keyguard-next"]
 	path = apps/keyguard-next
-	url = ./apps/keyguard-next
+	url = ../keyguard-next.git
+	branch = master
