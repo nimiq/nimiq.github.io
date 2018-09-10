@@ -1,6 +1,6 @@
 # Nimiq UX
 
-Root repository for all projects regarding the Nimiq UX. 
+Legacy Root repository for all projects regarding the Nimiq UX. 
 
 - [Libraries](/libraries) contains low-level javascript modules.
 - [Elements](/elements) contains high-level UI components.
