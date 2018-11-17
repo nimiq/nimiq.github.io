@@ -1,0 +1,12 @@
+[submodule "meta/doc-theme"]
+	path = meta/doc-theme
+	url = ../doc-theme.git
+	branch = master
+[submodule "meta/email-template"]
+	path = meta/email-template
+	url = ../email-template.git
+	branch = master
+[submodule "accounts"]
+	path = accounts
+	url = ../accounts.git
+	branch = master
