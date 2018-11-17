@@ -1,0 +1,12 @@
+#!/bin/bash
+DIR="todos"
+TEMP="$DIR/todos.txt"
+
+rm -rf $DIR
+mkdir -p $DIR
+
+grep -nri --exclude-dir "_site" --include "*.md" "\[//\]: " .. | sed "s/\.\///" | sed "s/\[\/\/\]\://" > $TEMP
+grep -i "\: daniel " $TEMP > "$DIR/daniel.txt"
+grep -i "\: soeren " $TEMP > "$DIR/soeren.txt"
+grep -i "\: max " $TEMP > "$DIR/max.txt"
+grep -i "\: sven " $TEMP > "$DIR/sven.txt"

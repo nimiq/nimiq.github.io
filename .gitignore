@@ -1,0 +1,13 @@
+.DS_Store
+.idea
+_dev/todos
+research
+node_modules
+Gemfile*
+_site
+package*.json
+labs
+.floo
+.flooignore
+
+Nimiq-Safe-offline\.zip
