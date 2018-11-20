@@ -1,7 +1,9 @@
 remote_theme: nimiq/doc-theme
 title: "Nimiq"
 description: "Ecosystem"
+
 submodule_section: "Details"
-exclude: ["node_modules/*", "./*/*/**", "meta/doc-theme/libraries/**", "meta/email-template/**"]
-submodules: "brief"
+submodules: "detailed"
+
+exclude: ["node_modules/*", "./*/*/**", "_dev/*", "meta/doc-theme/libraries/**", "meta/email-template/**"]
 
