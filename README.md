@@ -1,71 +1,94 @@
 # Nimiq Ecosystem
 
-Using Nimiq APIs and libraries can turn your projects and apps into payment systems and shops
-where users can pay comfortably with NIM directly from their browser.
+By using Nimiq APIs and libraries you can
+- extend your projects, websites, and apps with a payment system; and
+- allow customers of your online shop to pay comfortably with NIM directly from their browser; or
+- build apps and services enriching the Nimiq apps ecosystem.
 
-The goal of this documentation is to get you started integrating Nimiq in your project.
+The goal of this documentation is to get you started integrating Nimiq into your project.
 
 [//]: Sven (add checkout plugin)
 [//]: Sven (add cashlink js lib)
 [//]: Sven (secondary: add nimiq style)
 [//]: Sven (secondary: add wallet file format)
 
-- [Nimiq Accounts Manager](accounts): Enable users of your project to use their Nimiq Accounts.
+- [Nimiq Accounts Manager](accounts): Enable users of your project to use their Nimiq Accounts to pay, for transactions, and more.
 
 ## Tech
-The Nimiq front-ends are build with TypeScript ? and CSS 3 on Vue.js 2.x and delivered compiled to ES2015. The Front-ends are tested for Firefox 62+, Chrome/Chromium 69+, and Safari ?.
-We chose TypeScript as it provides a) type safety which is good for
+
+[//]: Soeren (what version of TS, CSS, Vue do we official support/require?)
+[//]: Soeren (confirm ES2015 - had a look at tsconfig, but not sure)
+[//]: Soeren (I use Chromium, somebody else? Is it offical?)
+[//]: Soeren (More browsers? Add versions?)
+
+The Nimiq front-ends are build with
+[TypeScript](https://www.typescriptlang.org/) and CSS on [Vue.js](https://vuejs.org/)
+and delivered compiled to ES2015.
+The Front-ends are tested on latest versions of Firefox, Chrome/Chromium, and Safari.
+
+[//]: Sven (Paragraph on why TypeScript)
+[//]: Sven (Paragraph on why Vue.js)
 
 ## Terminology
+
 Nimiq is aiming for mainstream adoption and thus strives to use laymen terms for all UIs.
-If you plan to build apps using Nimiq, becoming part of the Nimiq ecosystem,
-we recommend you using the same terms for optimal usability.
+Building apps using Nimiq APIs and libraries means becoming part of the Nimiq Ecosystem.
+For optimal usability and a pleasant user experience for your users,
+we highly recommend using the same terminology for all user facing parts.
 
-While using layman terms in the UI, the code uses terms that are typical for the crypto space.
+While using layman terms in the UI, within the code, typical terms of the crypto space are being used.
 The following map will give you an idea which term to use when.
-See the “Terminology” section in the [FAQs on nimiq.com](nimiq.com/#faq) for details on each term.
+See the “Terminology” section in the [FAQs on nimiq.com](nimiq.com/#faq) for more details on each term.
 
-| Layman term                                    | API term | Terms in code
+| Layman term (for UI use)                       | API term | Term in code
 |------------------------------------------------|----------|---
 | Nimiq Account Number <br> _NQXX XXXX XXXX ..._ | address  | _core code_: userFriendlyAddress <br> _front-end_: humanReadableAddress
 | Nimiq Account <br> _address + label_           | account  | account
 | Nimiq Wallet <br> _with one or more accounts_  | walletId | keyId or loginId
 | Account Recovery Words <br> _24 words_         | n/a      | mnemonicPhrase
 
-
 ## Improve This Documentation
-If you want to work on this documentation,
-start by getting the source code from Github and set up you machine to build GitHub pages.
+
+**Great idea! Welcome on board!**
+If it's rather a smaller issue your after
+&mdash;such as wording, typos, or adding a few lines&mdash;
+use the little pen icon in the lower right.
+GitHub will help you to fork the repository, do the changes,
+and finally start a pull request so that your changes can be reviewed and merged in.
+
+If you have bigger plans, a good starting point is to
+[summit an issue](https://github.com/nimiq/nimiq.github.io/issues).
+This way, the team as well as community members can contribute to the idea, collect facts, and give advice.
+Once some communication has happened and it's clear what should be done to improve the documentation,
+go ahead and get the source code from Github and set up you machine to build GitHub pages as described below
 
 ### Get Source Code
+
 ```bash
 git clone git@github.com:nimiq/nimiq.github.io.git nimiq --recursive
 ```
 
-Note: You might need to
-[add a ssh key to your github Account](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
-Even if you try to clone with https, it can happen that git will use ssh for the submodules.
+Note: If you experience issues during this step, make sure you have
+[an SSH key set up for your GitHub account](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
+Even if you clone the repository using HTTPS, submodules might require SSH.
 
 ### Build Documentation Locally
-To build jekyll sites locally on fedora:
 
-First, install all pre-requisits (will skip what is installed already):
-```bash
-sudo dnf install ruby ruby-devel make gcc redhat-rpm-config zlib-devel
-```
-
-Then, follow [this guide](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/) but skip step 3.
+Please refer to the [Doc-Theme documentation](meta/doc-theme/#installation).
 
 ### Modify Refered Repositories
+
 The documentation structure makes use of Git submodules, i.e. including source code from other repositories.
 
 #### Update Modules
+
 ```bash
 cd nimiq
 git submodule foreach --recursive git pull
 ```
 
-#### Fetch New Modules
+#### Fetch new Modules
+
 ```bash
 cd nimiq
 git pull
@@ -75,6 +98,7 @@ git submodule foreach --recursive git checkout master
 ```
 
 #### Add a Submodule
+
 ```bash
 cd nimiq
 git submodule add -b <branch> <repository> [<submodule-path>]
@@ -85,6 +109,7 @@ git submodule add -b master ../x-element.git libraries/x-element/
 ```
 
 #### Remove a Submodule
+
 ```bash
 cd nimiq
 git submodule deinit <submodule-path>
