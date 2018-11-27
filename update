@@ -1,14 +1,7 @@
 #!/bin/bash
 git pull
 
-node ./submodules_foreach 'git checkout intermediate || git checkout master'
-
-#cd apps/miner
-#git checkout daniel/main-net
-#cd ../..
-
-cd libraries/nimiq-style
-git checkout master
-cd ../..
+node ./submodules_foreach git checkout master
+node ./submodules_foreach git checkout intermediate
 
 node ./submodules_foreach git pull
