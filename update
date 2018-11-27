@@ -1,7 +1,7 @@
 #!/bin/bash
 git pull
-node ./submodules_foreach 'git checkout legacy || git checkout  master' 
-#cd apps/miner
-#git checkout daniel/main-net
-#cd ../..
+
+node ./submodules_foreach git checkout master
+node ./submodules_foreach git checkout legacy
+
 node ./submodules_foreach git pull
