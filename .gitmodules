@@ -130,7 +130,3 @@
 	path = libraries/cashlink
 	url = ../cashlink.git
 	branch = master
-[submodule "apps/keyguard-next"]
-	path = apps/keyguard-next
-	url = ../keyguard-next.git
-	branch = master
