@@ -12,7 +12,13 @@ The goal of this documentation is to get you started integrating Nimiq into your
 [//]: Sven (secondary: add nimiq style)
 [//]: Sven (secondary: add wallet file format)
 
-- [Nimiq Accounts Manager](accounts): Enable users of your project to use their Nimiq Accounts to pay, for transactions, and more.
+## Content
+- [Nimiq Accounts Manager](accounts):
+  Enable users of your project to use their Nimiq Accounts to pay, for transactions, and more.
+- [Nimiq Style](style) ([demo](style/index.html)):
+  CSS framework defining UI look and feel.
+- [Nimiq Vue.js Components](vue-components):
+  Reusable Vue.js components to build Nimiq-enabled websites and webapps.
 
 ## Tech
 
@@ -22,7 +28,7 @@ The goal of this documentation is to get you started integrating Nimiq into your
 [//]: Soeren (More browsers? Add versions?)
 
 The Nimiq front-ends are build with
-[TypeScript](https://www.typescriptlang.org/) and CSS on [Vue.js](https://vuejs.org/)
+[TypeScript](https://www.typescriptlang.org/) 2.9 and CSS on [Vue.js](https://vuejs.org/)
 and delivered compiled to ES2015.
 The Front-ends are tested on latest versions of Firefox, Chrome/Chromium, and Safari.
 
