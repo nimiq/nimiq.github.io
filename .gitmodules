@@ -10,3 +10,11 @@
 	path = accounts
 	url = ../accounts.git
 	branch = master
+[submodule "style"]
+	path = style
+	url = ../nimiq-style.git
+	branch = next
+[submodule "vue-components"]
+	path = vue-components
+	url = ../vue-components
+	branch = master
