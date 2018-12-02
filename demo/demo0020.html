@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Nimiq Demo App</title>
+    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script>
+        function init() {
+            Nimiq.init(async function() {
+                // Connect to the Nimiq Testnet - details below
+                Nimiq.GenesisConfig.test();
+
+                // Wait for consensus to be established
+                const consensus = await Nimiq.Consensus.nano();
+
+                const {blockchain, mempool, network} = consensus;
+                // const mempool = consensus.mempool;
+                // const network = consensus.network;
+
+                // Generate a temporary wallet.
+                const wallet = await Nimiq.Wallet.generate();
+
+                network.connect();
+            });
+        };
+
+        window.onload = init;
+    </script>
+</head>
+<body>
+
+</body>
+</html>
