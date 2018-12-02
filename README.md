@@ -28,7 +28,7 @@ The goal of this documentation is to get you started integrating Nimiq into your
 [//]: Soeren (More browsers? Add versions?)
 
 The Nimiq front-ends are build with
-[TypeScript](https://www.typescriptlang.org/) 2.9 and CSS on [Vue.js](https://vuejs.org/)
+[TypeScript 3](https://www.typescriptlang.org/) and CSS on [Vue.js](https://vuejs.org/)
 and delivered compiled to ES2015.
 The Front-ends are tested on latest versions of Firefox, Chrome/Chromium, and Safari.
 
