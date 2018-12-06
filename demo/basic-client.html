@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="Connect Nimiq Client - Tutorial 1 - https://nimiq.com/developers">
+    <meta charset=utf-8 />
+    <title>Nimiq Demo App</title>
+    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script>
+        function status(text) {
+            document.getElementById('message').innerText = text;
+            console.log(`Status: ${ text }`);
+        }
+
+        function start() {
+            Nimiq.init(async function() {
+                status('Nimiq loaded. Connecting and establishing consensus...');
+
+                // Config to use Nimiq Testnet
+                Nimiq.GenesisConfig.test();
+
+                // Getting a Nimiq Nano Client instance
+                const consensus = await Nimiq.Consensus.nano();
+
+                // Connecting to the network
+                consensus.network.connect();
+
+                status('Connected. Establishing consensus...');
+                // Waiting for consensus to be establish
+                consensus.on('established', () => status('Consensus established'));
+            });
+        };
+
+        // Start Nimiq when the pages is fully loaded.
+        window.onload = start;
+    </script>
+</head>
+<body>
+  <div id="message">loading...</div>
+  <p><small>Press F12 to open console and see full log.</small><p>
+</body>
+</html>
