@@ -1,4 +1,4 @@
-# Demo App Tutorial
+# Basics 1: Nano Client
 
 _TL;DR? [Run it on JS Bin](https://jsbin.com/babucur/edit) (press F12)._
 
@@ -115,3 +115,7 @@ If even after a long time the client can not establish consensus, something migh
 Check if you're online.
 
 [> See it in action](https://jsbin.com/babucur/edit)
+
+---
+
+[Next: Basics 2, Nimiq Style UI &raquo;](tutorial-basics-3-tx)
