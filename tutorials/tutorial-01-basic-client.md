@@ -63,6 +63,8 @@ And finally connect.
 
 This code is all that's needed to get a client connected to the network!
 
+## User feedback
+
 Great, but let's add some UI to see what's happening&hellip;
 
 A spot to print out status messages.
@@ -97,6 +99,7 @@ function start() {
 };
 ```
 
+## Next Steps
 Your turn! The link below gives you a chance to see it action and mess with it.
 
 Open the dev tools to see the logs from the Nano Client.
