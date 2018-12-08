@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Nimiq Demo App</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono&text=0123456789ABCDEFGHJKLMNPQRSTUVXY" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
+    <style>
+        .nq-card {
+            margin: 2rem auto;
+        }
+        #info span {
+            font-family: 'Fira Mono';
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script>
+        const $ = document.getElementById.bind(document);
+        const nimiq = {};
+
+        function status(text) {
+            $('message').innerText = text;
+        }
+
+        function onConsensusEstablished() {
+            status('Consensus established');
+            $('height').innerText = nimiq.blockchain.height;
+        }
+
+        function onPeersChanged() {
+            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
+            $('peers').innerText = nimiq.network.peerCount;
+        }
+
+        async function start() {
+            status('Nimiq loaded. Connecting and establishing consensus...');
+
+            // Config to use Nimiq Testnet
+            Nimiq.GenesisConfig.test();
+
+            // Getting a Nimiq Nano Client instance
+            const consensus = await Nimiq.Consensus.nano();
+
+            // Connecting to the network
+            consensus.network.connect();
+
+            const { blockchain, network } = consensus;
+
+            network.connect();
+            status('Connected. Establishing consensus...');
+
+            Object.assign(nimiq, { consensus, blockchain, network });
+
+            // Event handlers
+            consensus.on('established', onConsensusEstablished);
+            network.on('peers-changed', onPeersChanged);
+        }
+
+        window.onload = () => Nimiq.init(start);
+   </script>
+</head>
+
+<body>
+    <div class="nq-card">
+        <div class="nq-card-header">
+            <h1 class="nq-h1">Nimiq Demo App</h1>
+        </div>
+        <div class="nq-card-body">
+            <div id="info">
+                <p>Current block height: <span id="height">loading&hellip;</span></p>
+                <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
+            </div>
+        </div>
+        <div class="nq-card-footer">
+            <p>Status: <span id="message">loading&hellip;</span></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
