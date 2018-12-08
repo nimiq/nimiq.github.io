@@ -5,5 +5,5 @@ description: "Ecosystem"
 submodule_section: "Details"
 submodules: "detailed"
 
-exclude: ["node_modules/*", "./*/*/**", "_dev/*", "meta/doc-theme/libraries/**", "meta/email-template/**"]
+exclude: ["node_modules/*", "./*/*/**", "_dev/*", "meta/doc-theme/libraries/**", "meta/doc-theme/sub3/**", "meta/email-template/**"]
 
