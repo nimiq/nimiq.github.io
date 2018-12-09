@@ -11,3 +11,4 @@ labs
 .flooignore
 
 Nimiq-Safe-offline\.zip
+.vscode
