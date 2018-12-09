@@ -1,6 +1,6 @@
 # Basics 2: Nimiq Style UI
 
-*Just show me [the code](TODO jsbin)*
+*Skip tutorial and see [the code](https://jsbin.com/lukofer/edit?html,output).*
 
 Getting started? This tutorial is based on the ideas and code of [Tutorial 01: Basic Client](tutorial-01-basic-client.md).
 
@@ -41,12 +41,14 @@ async function start() {
     Object.assign(nimiq, { consensus, blockchain, network });
 ```
 
-Finally, add event handlers to get informed when something changes in the network.
+Finally, add event handlers to get informed about the connection status and changes in the network.
 
 ```js
 
     // Event handlers
     consensus.on('established', onConsensusEstablished);
+    consensus.on('lost', () => status('Consensus lost'));
+    blockchain.on('head-changed', onHeadChanged);
     network.on('peers-changed', onPeersChanged);
 ```
 
@@ -59,6 +61,10 @@ function status(text) {
 
 function onConsensusEstablished() {
     status('Consensus established');
+    $('height').innerText = nimiq.blockchain.height;
+}
+
+function onHeadChanged() {
     $('height').innerText = nimiq.blockchain.height;
 }
 
@@ -75,7 +81,7 @@ window.onload = () => Nimiq.init(start);
 
 But ok, that is all functional but not yet pretty&hellip;
 
-## Make it beautiful with Nimiq-Style
+## Make it beautiful with Nimiq Style
 
 Three CSS files are needed:
 * Muli font: the main font
@@ -137,6 +143,15 @@ And to have the box neatly centered, and the numbers printed in monospace&hellip
 **Much better!**
 
 [&raquo; Run and modify this code live](https://jsbin.com/lukofer/edit?html,output)
+
+This could be extended to a blockchain statistics viewer.
+
+**Idea**: Want to calculate and show the global hash rate?
+Get the difficulty from the latest block in `onHeadChange`,
+have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
+to turn the difficulty into the global hash rate&hellip;
+
+And how about adding some graphs? :)
 
 ---
 
