@@ -3,12 +3,12 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Nimiq Demo App</title>
+    <title>Nimiq Nano Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
     <style>
         .nq-card {
-            margin: 2rem auto;
+            margin: 0 auto;
         }
         .nq-label {
             display: inline-block;
@@ -18,6 +18,11 @@
         .nq-label + * {
             display: inline-block;
             width: 36rem;
+        }
+        @media(min-width: 800px) {
+            .nq-card {
+            margin-top: 10rem;
+            }
         }
     </style>
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
@@ -31,7 +36,6 @@
 
         function onConsensusEstablished() {
             status('Consensus established');
-            $('message').innerText = 'Consensus established.';
             $('height').innerText = nimiq.blockchain.height;
             $('address').innerText = nimiq.wallet.address.toUserFriendlyAddress();
 
@@ -62,6 +66,40 @@
                 });
         }
 
+        function sendTransaction(address, amount) {
+            const transaction = nimiq.wallet.createTransaction(
+                Nimiq.Address.fromUserFriendlyAddress(address),
+                Nimiq.Policy.coinsToSatoshis(amount),
+                0,
+                nimiq.blockchain.height
+            );
+            nimiq.consensus.relayTransaction(transaction);
+
+            // Give feedback on status of TX
+            function feedback(source, event, message) {
+                const id = source.on(event, tx => {
+                    if (tx.sender.equals(nimiq.wallet.address)) {
+                        status(message);
+                        console.log(message);
+                        source.off(event, id);
+                    }
+                });
+            };
+
+            feedback(
+                nimiq.mempool,
+                'transaction-added',
+                'Your transaction has been sent out.');
+            feedback(
+                nimiq.consensus,
+                'transaction-relayed',
+                'Your transaction arrived in the network.');
+            feedback(
+                nimiq.mempool,
+                'transaction-mined',
+                'Your transaction arrived.');
+        }
+
         async function start() {
             status('Nimiq loaded. Connecting and establishing consensus...');
 
@@ -89,7 +127,6 @@
             network.on('peers-changed', onPeersChanged);
             consensus.addSubscriptions([wallet.address]);
             mempool.on('transaction-added', tx => {
-                console.log(tx);
                 if (tx.recipient.equals(wallet.address)) {
                     status(`Incoming transaction of ${ Nimiq.Policy.satoshisToCoins(tx.value) } NIM.`);
                 }
@@ -99,78 +136,53 @@
                     $('tx_address').value,
                     parseInt($('tx_amount').value))
             );
-            // check for transaction_relayed && transaction_mined
         }
 
-        function sendTransaction(address, amount) {
-            const transaction = nimiq.wallet.createTransaction(
-                Nimiq.Address.fromUserFriendlyAddress(address),
-                Nimiq.Policy.coinsToSatoshis(amount) - 1,
-                1,
-                nimiq.blockchain.height
-            );
-            console.log(transaction);
-            nimiq.consensus.relayTransaction(transaction);
-
-            // Give feedback on status of TX
-            function feedback(source, event, match, message) {
-                const id = source.on(event, tx => {
-                    if (tx.sender.equals(nimiq.wallet.address)) {
-                        status(message);
-                        console.log(message);
-                        source.off(event, id);
-                    }
-                });
-            };
-
-            feedback(
-                nimiq.mempool,
-                'transaction-added',
-                'Your transaction has been sent out.');
-            feedback(
-                nimiq.consensus,
-                'transaction-relayed',
-                'Your transaction arrived in the network.');
-            feedback(
-                nimiq.mempool,
-                'transaction-mined',
-                'Your transaction is complete.');
+        function onError(code) {
+            switch (code) {
+                case Nimiq.ERR_WAIT:
+                    alert('Error: Already open in another tab or window.');
+                    break;
+                case Nimiq.ERR_UNSUPPORTED:
+                    alert('Error: Browser not supported');
+                    break;
+                default:
+                    alert('Error: Nimiq initialization error');
+                    break;
+            }
         }
 
-        window.onload = () => {
-            Nimiq.init(async function () {
-                start();
-            });
-        };
+        window.onload = () => Nimiq.init(start);
     </script>
 </head>
 
 <body class="nq-style">
     <div class="nq-card">
         <div class="nq-card-header">
-            <h1 class="nq-h1">Nimiq Nano Wallet Demo</h1>
+            <h1 class="nq-h1">Nimiq Nano Wallet</h1>
+            <div class="nq-text-s">Demo app for <a href="TODO">Basics 3: Transactions</a>.</div>
         </div>
         <div class="nq-card-body">
             <div id="info">
                 <h2>Wallet</h2>
                 <p>
-                    <label class="nq-label">Account address:</label>
+                    <span class="nq-label">Account address:</span>
                     <span id="address">loading&hellip;</span></p>
                 <p>
-                    <label class="nq-label">Balance: </label>
+                    <span class="nq-label">Balance: </span>
                     <span id="balance">loading&hellip;</span>
                 </p>
                 <h2>Network</h2>
                 <p>
-                    <label class="nq-label">Status: </label>
+                    <span class="nq-label">Status: </span>
                     <span id="message">loading&hellip;</span>
                 </p>
                 <p>
-                    <label class="nq-label">Block height: </label>
+                    <span class="nq-label">Block height: </span>
                     <span id="height">loading&hellip;</span>
                 </p>
                 <p>
-                    <label class="nq-label">Peers connected: </label>
+                    <span class="nq-label">Peers connected: </span>
                     <span id="peers">0</span>
                 </p>
             </div>
