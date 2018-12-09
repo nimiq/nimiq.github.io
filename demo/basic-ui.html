@@ -17,6 +17,10 @@
             $('height').innerText = nimiq.blockchain.height;
         }
 
+        function onHeadChanged() {
+            $('height').innerText = nimiq.blockchain.height;
+        }
+
         function onPeersChanged() {
             $('peers').innerText = nimiq.network.peerCount;
         }
@@ -39,6 +43,7 @@
 
             // Event handlers
             consensus.on('established', onConsensusEstablished);
+            blockchain.on('head-changed', onHeadChanged);
             network.on('peers-changed', onPeersChanged);
         }
 
