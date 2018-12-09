@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Nimiq Demo App</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
+    <style>
+        .nq-card {
+            margin: 2rem auto;
+        }
+        .nq-label {
+            display: inline-block;
+            width: 30rem;
+            vertical-align: top;
+        }
+        .nq-label + * {
+            display: inline-block;
+            width: 36rem;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script>
+        const $ = document.getElementById.bind(document);
+        const nimiq = {};
+
+        function status(text) {
+            document.getElementById('message').innerText = text;
+        }
+
+        function onConsensusEstablished() {
+            status('Consensus established');
+            $('message').innerText = 'Consensus established.';
+            $('height').innerText = nimiq.blockchain.height;
+            $('address').innerText = nimiq.wallet.address.toUserFriendlyAddress();
+
+            updateBalance();
+        }
+
+        function onHeadChanged() {
+            status('Consensus established.');
+            console.log(`Now at height ${nimiq.blockchain.height}.`);
+            $('height').innerText = nimiq.blockchain.height;
+
+            updateBalance();
+        }
+
+        function onPeersChanged() {
+            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
+            $('peers').innerText = nimiq.network.peerCount;
+        }
+
+        function updateBalance() {
+            // Nano Clients don't have the whole accounts state and have to request single accounts from their peers
+            nimiq.consensus
+                .getAccount(nimiq.wallet.address)
+                .then(account => {
+                    account = account || Nimiq.BasicAccount.INITIAL;
+                    $('balance').innerText = Nimiq.Policy.satoshisToCoins(account.balance).toFixed(2);
+                    console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${account.balance}.`);
+                });
+        }
+
+        async function start() {
+            status('Nimiq loaded. Connecting and establishing consensus...');
+
+            // Connect to the Nimiq Testnet
+            Nimiq.GenesisConfig.test();
+
+            // Getting a Nimiq Nano Client instance
+            const consensus = await Nimiq.Consensus.nano();
+            const { blockchain, mempool, network } = consensus;
+
+            // Load or generate a wallet.
+            const stored = JSON.parse(localStorage.getItem('wallet'));
+            const wallet = stored ? Nimiq.Wallet.loadPlain(stored) : await Nimiq.Wallet.generate();
+            localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
+
+            // Connecting to the network
+            network.connect();
+            status('Connected. Establishing consensus...');
+
+            Object.assign(nimiq, { consensus, blockchain, network, wallet, mempool });
+
+            // Event handlers
+            consensus.on('established', onConsensusEstablished);
+            blockchain.on('head-changed', onHeadChanged);
+            network.on('peers-changed', onPeersChanged);
+            consensus.addSubscriptions([wallet.address]);
+            mempool.on('transaction-added', tx => {
+                console.log(tx);
+                if (tx.recipient.equals(wallet.address)) {
+                    status(`Incoming transaction of ${ Nimiq.Policy.satoshisToCoins(tx.value) } NIM.`);
+                }
+            });
+            $('tx_send').addEventListener('click', () =>
+                sendTransaction(
+                    $('tx_address').value,
+                    parseInt($('tx_amount').value))
+            );
+            // check for transaction_relayed && transaction_mined
+        }
+
+        function sendTransaction(address, amount) {
+            const transaction = nimiq.wallet.createTransaction(
+                Nimiq.Address.fromUserFriendlyAddress(address),
+                Nimiq.Policy.coinsToSatoshis(amount) - 1,
+                1,
+                nimiq.blockchain.height
+            );
+            console.log(transaction);
+            nimiq.consensus.relayTransaction(transaction);
+
+            // Give feedback on status of TX
+            function feedback(source, event, match, message) {
+                const id = source.on(event, tx => {
+                    if (tx.sender.equals(nimiq.wallet.address)) {
+                        status(message);
+                        console.log(message);
+                        source.off(event, id);
+                    }
+                });
+            };
+
+            feedback(
+                nimiq.mempool,
+                'transaction-added',
+                'Your transaction has been sent out.');
+            feedback(
+                nimiq.consensus,
+                'transaction-relayed',
+                'Your transaction arrived in the network.');
+            feedback(
+                nimiq.mempool,
+                'transaction-mined',
+                'Your transaction is complete.');
+        }
+
+        window.onload = () => {
+            Nimiq.init(async function () {
+                start();
+            });
+        };
+    </script>
+</head>
+
+<body class="nq-style">
+    <div class="nq-card">
+        <div class="nq-card-header">
+            <h1 class="nq-h1">Nimiq Nano Wallet Demo</h1>
+        </div>
+        <div class="nq-card-body">
+            <div id="info">
+                <h2>Wallet</h2>
+                <p>
+                    <label class="nq-label">Account address:</label>
+                    <span id="address">loading&hellip;</span></p>
+                <p>
+                    <label class="nq-label">Balance: </label>
+                    <span id="balance">loading&hellip;</span>
+                </p>
+                <h2>Network</h2>
+                <p>
+                    <label class="nq-label">Status: </label>
+                    <span id="message">loading&hellip;</span>
+                </p>
+                <p>
+                    <label class="nq-label">Block height: </label>
+                    <span id="height">loading&hellip;</span>
+                </p>
+                <p>
+                    <label class="nq-label">Peers connected: </label>
+                    <span id="peers">0</span>
+                </p>
+            </div>
+            <div id="transaction">
+                <h2>Send Transaction</h2>
+                <p>
+                    <label class="nq-label" for="tx_address">Recipient Address</label>
+                    <input type="string" id="tx_address">
+                </p>
+                <p>
+                    <label class="nq-label" for="tx_amount">Amount</label>
+                    <input type="number" id="tx_amount">
+                </p>
+                <button id="tx_send" class="nq-button">Send Transaction</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
