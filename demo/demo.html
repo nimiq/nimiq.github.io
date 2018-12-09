@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Nimiq Demo</title>
+    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script>
+
+function _onConsensusEstablished() {
+    document.getElementById('message').innerText = 'Consensus established.';
+    document.getElementById('height').innerText = $.blockchain.height;
+    document.getElementById('address').innerText = $.wallet.address.toUserFriendlyAddress();
+
+    _updateBalance();
+
+    // Recheck balance on every head change.
+    $.blockchain.on('head-changed', _updateBalance);
+
+    // If we want to start mining.
+    // $.miner.startWork();
+}
+
+function _updateBalance() {
+    // Get current balance
+    if (window.clientType !== 'nano') {
+        $.accounts.get($.wallet.address)
+            .then(account => _onBalanceChanged(account));
+    } else {
+        // nano clients don't have the whole accounts state and have to request single accounts from their peers
+        $.consensus.getAccount($.wallet.address)
+            .then(account => _onBalanceChanged(account));
+    }
+}
+
+function _onBalanceChanged(account) {
+    account = account || Nimiq.BasicAccount.INITIAL;
+    console.log(`New balance of ${$.wallet.address.toUserFriendlyAddress()} is ${account.balance}.`);
+    document.getElementById('balance').innerText = Nimiq.Policy.satoshisToCoins(account.balance).toFixed(2);
+}
+
+function _onHeadChanged() {
+    const height = $.blockchain.height;
+    console.log(`Now at height ${height}.`);
+    document.getElementById('height').innerText = height;
+}
+
+function _onPeersChanged() {
+    console.log(`Now connected to ${$.network.peerCount} peers.`);
+    document.getElementById('peers').innerText = $.network.peerCount;
+}
+
+function init(clientType = 'full') {
+    Nimiq.init(async function() {
+        document.getElementById('message').innerText = 'Nimiq loaded. Connecting and establishing consensus.';
+
+        // Connect to the testnet.
+        Nimiq.GenesisConfig.test();
+
+        const $ = {};
+        window.$ = $;
+        if (clientType === 'light') {
+            $.consensus = await Nimiq.Consensus.light();
+        } else if (clientType === 'nano') {
+            $.consensus = await Nimiq.Consensus.nano();
+        }
+
+        $.blockchain = $.consensus.blockchain;
+        $.mempool = $.consensus.mempool;
+        $.network = $.consensus.network;
+
+        // Generate a temporary wallet.
+        $.wallet = await Nimiq.Wallet.generate();
+
+        // The nano client does not sync the full account info and cannot mine.
+        if (clientType !== 'nano') {
+            $.accounts = $.blockchain.accounts;
+            $.miner = new Nimiq.Miner($.blockchain, $.accounts, $.mempool, $.network.time, $.wallet.address);
+        }
+
+        $.consensus.on('established', () => _onConsensusEstablished());
+        $.consensus.on('lost', () => console.error('Consensus lost'));
+
+        $.blockchain.on('head-changed', () => _onHeadChanged());
+        $.network.on('peers-changed', () => _onPeersChanged());
+
+        $.network.connect();
+    }, function(code) {
+        switch (code) {
+            case Nimiq.ERR_WAIT:
+                alert('Error: Already open in another tab or window.');
+                break;
+            case Nimiq.ERR_UNSUPPORTED:
+                alert('Error: Browser not supported');
+                break;
+            default:
+                alert('Error: Nimiq initialization error');
+                break;
+        }
+    });
+}
+
+    </script>
+<script type="text/javascript" src="demo_files/web.js"></script><script type="text/javascript" src="demo_files/worker-wasm.js"></script></head>
+<body>
+    <h1>Getting started with the Nimiq API</h1>
+    This html file demonstrates the most simple way to build web applications on top of the <a target="_blank" href="https://nimiq.com/">Nimiq Blockchain</a>.
+    <h2>Most Simple Client</h2>
+    <p id="client-selector">Client type: nano</p>
+    <div id="client-info" style="display: block;">
+        <p>Status: <span id="message">Consensus established.</span></p>
+        <p>Account address: <span id="address">NQ88 89QL P3RJ Y0K5 GTKV 0MVN 2XTV TYS3 D0GP</span></p>
+        <p>Balance: <span id="balance">0.00</span></p>
+        <p>Current block height: <span id="height">244409</span></p>
+        <p>Current number of peers: <span id="peers">7</span></p>
+    </div>
+
+    <h2>Source Code</h2>
+    <a target="_blank" href="https://github.com/nimiq-network/nimiq-demo/blob/master/index.html">View Source Code on Github.</a>
+    <style>
+        body {
+            background:teal;
+            color:white;
+            font-family: sans-serif;
+            padding: 8%;
+        }
+
+        a {
+            color:white;
+        }
+
+        img.nimiq_currency {
+            height: 12px;
+        }
+    </style>
+
+    <script>
+        /* UI Stuff */
+        document.querySelectorAll('[client-type]').forEach(el => {
+            el.addEventListener('click', () => {
+                const type = el.getAttribute('client-type');
+                window.clientType = type;
+                document.getElementById('client-selector').textContent = 'Client type: ' + type;
+                document.getElementById('client-info').style.display = 'block';
+                init(type);
+            });
+        });
+    </script>
+
+
+</body></html>
