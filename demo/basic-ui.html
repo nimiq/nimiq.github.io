@@ -3,6 +3,16 @@
 <head>
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
+    <style>
+        .nq-card {
+            margin: 2rem auto;
+        }
+        #info span {
+            font-family: 'Fira Mono';
+        }
+    </style>
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script>
         const $ = document.getElementById.bind(document);
@@ -18,10 +28,12 @@
         }
 
         function onHeadChanged() {
+            console.log(`Now at height ${nimiq.blockchain.height}.`);
             $('height').innerText = nimiq.blockchain.height;
         }
 
         function onPeersChanged() {
+            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
             $('peers').innerText = nimiq.network.peerCount;
         }
 
@@ -51,11 +63,19 @@
     </script>
 </head>
 <body>
-    <h1>Nimiq Demo App</h1>
-    <p>Status: <span id="message">loading&hellip;</span></p>
-    <div id="info">
-        <p>Current block height: <span id="height">loading&hellip;</span></p>
-        <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
+    <div class="nq-card">
+        <div class="nq-card-header">
+            <h1 class="nq-h1">Nimiq Demo App</h1>
+        </div>
+        <div class="nq-card-body">
+            <div id="info">
+                <p>Current block height: <span id="height">loading&hellip;</span></p>
+                <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
+            </div>
+        </div>
+        <div class="nq-card-footer">
+            <p>Status: <span id="message">loading&hellip;</span></p>
+        </div>
     </div>
 </body>
 </html>

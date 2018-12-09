@@ -138,7 +138,7 @@ And to have the box neatly centered, and the numbers printed in monospace&hellip
 </style>
 ```
 
-[Look at it!](../demo/nimiq-style-ui.html)
+[Look at it!](../demo/basic-ui.html)
 
 **Much better!**
 
