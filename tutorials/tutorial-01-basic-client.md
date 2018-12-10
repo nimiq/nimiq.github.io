@@ -1,16 +1,16 @@
 # Basics 1: Nano Client
 
-_TL;DR? [Run it on JS Bin](https://jsbin.com/babucur/edit) (press F12)._
+_Skip tutorial and see [the code](https://jsbin.com/babucur/edit)._
 
-Goal: build a minimal app that connects to the Nimiq network and establishes consensus
+**Goal**: build a minimal app that connects to the Nimiq network and establishes consensus.
 
-Open the [source code](https://jsbin.com/babucur/edit) to modify, play, and see how it all fits together.
+At any time, feel free to open the [source code on JS Bin](https://jsbin.com/babucur/edit) to modify, play, and see how it all fits together.
 Or [just run it](../demo/basic-client.html) in your browser.
 This example can be used as base for building Nimiq-enabled apps.
 
 ## Getting started
 
-First, a simple HTML page and with the Nimiq library.
+The foundation, a simple HTML page and with the Nimiq library:
 
 ```HTML
 <!DOCTYPE html>
@@ -29,45 +29,48 @@ First, a simple HTML page and with the Nimiq library.
 </html>
 ```
 
-Run a script when the page is loaded to start the Nimiq Nano Client.
+Adding a script that will start the Nimiq Nano Client when the page is loaded:
 
 ```js
 function start() {
     Nimiq.start(async function() {
         ...
     }
+}
 
 window.onload = start;
-}
 ```
 
-Configure Nimiq to use the Testnet.
+Inside this function:
+
+1) We're going to configure Nimiq to use the Testnet.
 That's a good choice for playing and testing.
-To switch to Mainnet when the app is ready, replace this line with`Nimiq.GenesisConfig.main()`.
+To switch to Mainnet when the app is ready, replace this line with `Nimiq.GenesisConfig.main()`.
 
 ```js
-        Nimiq.GenesisConfig.test();
+Nimiq.GenesisConfig.test();
 ```
 
-The consensus is the client to the network.
+2) The prepare the nano consensus which will be our client to the network.
 
 ```js
-        const consensus = await Nimiq.Consensus.nano();
+const consensus = await Nimiq.Consensus.nano();
 ```
 
-And finally connect.
+3) And finally connect.
 
 ```js
-        consensus.network.connect();
+consensus.network.connect();
 ```
 
 This code is all that's needed to get a client connected to the network!
 
-## User feedback
-
 Great, but let's add some UI to see what's happening&hellip;
 
-A spot to print out status messages.
+## Adding user feedback
+
+
+Add a spot to print out status messages.
 
 ```html
 <body>
@@ -90,7 +93,7 @@ function start() {
     Nimiq.init(async function() {
         status('Nimiq loaded. Connecting and establishing consensus...');
 
-        ...
+        // ... test(), nano(), connect() ...
 
         status('Connected. Establishing consensus...');
 
@@ -99,26 +102,27 @@ function start() {
 };
 ```
 
-## Next Steps
-Your turn! The link below gives you a chance to see it action and mess with it.
+**The Nano Client is set up, it connected and synced with the network and established consensus!**
 
-Open the dev tools to see the logs from the Nano Client.
+## Next Steps
+Your turn! The link below gives you a chance to see the prototype in action and mess with it.
+
+Open the dev tools (press F12) to see the logs from the Nano Client.
 Some will be red and similar to
-`Firefox can’t establish a connection to the server at ws://pool.nimiq-testnet.com:8443/`.
-Nothing is broken.
+`Can’t establish a connection to the server at ws://pool.nimiq-testnet.com:8443/`.
+Nothing broken here.
 It simply means the client tried to connect to a node and that connection failed for some reason.
-It's normal.
+That's normal in a P2P world.
 
 Finally, you should see
 `BaseConsensus: Synced with all connected peers, consensus established`.
 
 **Welcome to the Nimiq Blockchain!** :)
 
-If even after a long time the client can not establish consensus, something might be wrong with your Internet connection.
-Check if you're online.
+If even after a long time the client can not establish consensus, something went wrong. Check your Internet connection.
 
-[> See it in action](https://jsbin.com/babucur/edit)
+[> See the prototype in action and modify it](https://jsbin.com/babucur/edit)
 
 ---
 
-[Next: Basics 2, Nimiq Style UI &raquo;](tutorial-basics-3-tx)
+Continue the tutorial: [Basics 2, Nimiq Style UI &raquo;](tutorial-basics-3-tx)
