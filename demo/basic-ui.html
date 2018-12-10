@@ -9,9 +9,6 @@
         .nq-card {
             margin: 2rem auto;
         }
-        #info span {
-            font-family: 'Fira Mono';
-        }
     </style>
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script>
@@ -28,12 +25,12 @@
         }
 
         function onHeadChanged() {
-            console.log(`Now at height ${nimiq.blockchain.height}.`);
+            console.log(`Now at height ${ nimiq.blockchain.height }.`);
             $('height').innerText = nimiq.blockchain.height;
         }
 
         function onPeersChanged() {
-            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
+            console.log(`Now connected to ${ nimiq.network.peerCount } peers.`);
             $('peers').innerText = nimiq.network.peerCount;
         }
 
@@ -55,6 +52,7 @@
 
             // Event handlers
             consensus.on('established', onConsensusEstablished);
+            consensus.on('lost', () => status('Consensus lost'));
             blockchain.on('head-changed', onHeadChanged);
             network.on('peers-changed', onPeersChanged);
         }
@@ -62,19 +60,17 @@
         window.onload = () => Nimiq.init(start);
     </script>
 </head>
-<body>
+<body class="nq-style">
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Demo App</h1>
         </div>
         <div class="nq-card-body">
             <div id="info">
+                <p>Status: <span id="message">loading&hellip;</span></p>
                 <p>Current block height: <span id="height">loading&hellip;</span></p>
                 <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
             </div>
-        </div>
-        <div class="nq-card-footer">
-            <p>Status: <span id="message">loading&hellip;</span></p>
         </div>
     </div>
 </body>

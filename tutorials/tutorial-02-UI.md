@@ -1,21 +1,23 @@
 # Basics 2: Nimiq Style UI
 
-*Skip tutorial and see [the code](https://jsbin.com/lukofer/edit?html,output).*
+_Skip tutorial and see [the code](https://jsbin.com/lukofer/edit?html,output)._
+https://jsbin.com/cibepapamo/edit?html,output
 
-Getting started? This tutorial is based on the ideas and code of [Tutorial 01: Basic Client](tutorial-01-basic-client.md).
+Getting started? This tutorial is based on the ideas and code of [Basics 1: Nano Client](tutorial-01-basic-client.md).
 
-Goal: Nimiq-style UI to show consensus and network statistics.
+**Goal**: Nimiq-style UI to show consensus and network statistics.
 
 ## Show some statistics
 
-Some plain HTML to show a status message, current block height, and how many peers are currently connected.
-We'll use the `span` tags with IDs to fill in the data later.
+Let's add some plain HTML to show a status message, the current block height,
+and how many peers are currently connected.
+We'll use `span` tags with IDs to fill in the data later.
 
 ```html
 <body>
     <h1>Nimiq Demo App</h1>
-    <p>Status: <span id="message">loading&hellip;</span></p>
     <div id="info">
+        <p>Status: <span id="message">loading&hellip;</span></p>
         <p>Current block height: <span id="height">loading&hellip;</span></p>
         <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
     </div>
@@ -30,31 +32,36 @@ We'll store references in the shared variable `nimiq` for later.
 const nimiq = {};
 
 async function start() {
-    // Use: Testnet and nano consensus
-    Nimiq.GenesisConfig.test();
-    const consensus = await Nimiq.Consensus.nano();
+    status('Nimiq loaded. Connecting and establishing consensus...');
 
+    Nimiq.GenesisConfig.test();
+
+    const consensus = await Nimiq.Consensus.nano();
     const { blockchain, network } = consensus;
 
     network.connect();
+    status('Connected. Establishing consensus...');
 
     Object.assign(nimiq, { consensus, blockchain, network });
+    ...
 ```
 
 Finally, add event handlers to get informed about the connection status and changes in the network.
 
 ```js
-
-    // Event handlers
+    ...
     consensus.on('established', onConsensusEstablished);
     consensus.on('lost', () => status('Consensus lost'));
     blockchain.on('head-changed', onHeadChanged);
     network.on('peers-changed', onPeersChanged);
+}
 ```
 
-Add some basic handlers before `start`.
+A little shortcut for `document.getElementById()` and some basic handlers:
 
 ```js
+const $ = document.getElementById.bind(document);
+
 function status(text) {
     $('message').innerText = text;
 }
@@ -73,24 +80,22 @@ function onPeersChanged() {
 }
 ```
 
-And run the `start` script when the page finished loading.
+And have the Nano Client being started when the page finished loading:
 
 ```js
 window.onload = () => Nimiq.init(start);
 ```
 
-But ok, that is all functional but not yet pretty&hellip;
+Now, let's make it beautiful!
 
 ## Make it beautiful with Nimiq Style
 
-Three CSS files are needed:
-* Muli font: the main font
-* Fira Mono: to print numbers in a monospace font
-* nimiq-style.css
+Two CSS files are needed:
+* **Muli font**: the main font of Nimiq
+* **nimiq-style.css**: the actual CSS definitions
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Fira+Mono&text=0123456789ABCDEFGHJKLMNPQRSTUVXY" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
 ```
 
@@ -99,60 +104,62 @@ More info on Nimiq Style:
 * [Documentation](TODO)
 * [Source code](https://github.com/nimiq/nimiq-style)
 * [Cheatsheet](TODO)
-* [Style guide](http://nimiq.com/styleguide)
+* [**Recommended: The Nimiq Style Guide**](http://nimiq.com/styleguide)
 
-Then some annotations of the HTML source to use the styling.
+The CSS framework provides CSS class to apply the styling.
 `nq-` is the namespace used for Nimiq Style,
-`nq-card` will create a nice box around.
+`nq-style` set on body will style general elements such as paragraphs and links,
+`nq-card` will create a nice box layout.
 
 ```html
-<body>
+<body class="nq-style">
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Demo App</h1>
         </div>
         <div class="nq-card-body">
             <div id="info">
-                <p>Current block height: <span id="height">loading&hellip;</span></p>
-                <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
+                <p>Status: <span id="message"></span></p>
+                <p>Current block height: <span id="height"></span></p>
+                <p>Current number of peers: <span id="peers"></span></p>
             </div>
         </div>
-        <div class="nq-card-footer">
-            <p>Status: <span id="message">loading&hellip;</span></p>
-        </div>
     </div>
-
 </body>
 ```
 
-And to have the box neatly centered, and the numbers printed in monospace&hellip;
+And to have the box full-screen for mobile and neatly centered for desktop:
 
 ```html
 <style>
     .nq-card {
-        margin: 2rem auto;
+        margin: 0 auto;
     }
-    #info span {
-        font-family: 'Fira Mono';
+    @media(min-width: 800px) {
+        .nq-card {
+        margin-top: 10rem;
+        }
     }
 </style>
 ```
 
 [Look at it!](../demo/basic-ui.html)
 
-**Much better!**
+**That's much better!**
 
 [&raquo; Run and modify this code live](https://jsbin.com/lukofer/edit?html,output)
 
-This could be extended to a blockchain statistics viewer.
+## What's next?
+
+This short demo could be extended to a little blockchain statistics viewer.
 
 **Idea**: Want to calculate and show the global hash rate?
-Get the difficulty from the latest block in `onHeadChange`,
-have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
+Get the difficulty from the latest block in `onHeadChange`
+and have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
 to turn the difficulty into the global hash rate&hellip;
 
 And how about adding some graphs? :)
 
 ---
 
-[&raquo; Next: Basics 3, Sending and Receiving Transactions](tutorial-basics-3-tx)
+Continue the tutorial: [Basics 3, Sending and Receiving Transactions &raquo;](tutorial-basics-3-tx)
