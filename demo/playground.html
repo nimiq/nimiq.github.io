@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code Playground</title>
+    <script src="playground/codemirror.js"></script>
+    <link rel="stylesheet" href="playground/codemirror.css">
+    <link rel="stylesheet" href="playground/darcula.css">
+    <script src="playground/xml.js"></script>
+    <script src="playground/javascript.js"></script>
+    <script src="playground/css.js"></script>
+    <script src="playground/htmlmixed.js"></script>
+    <style>
+        body {
+            background: #333;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        body>div {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50vw;
+        }
+
+        body>div>*,
+        body>div>.CodeMirror {
+            width: 100%;
+            height: 100%;
+        }
+
+        #editor_container {
+            left: 0;
+        }
+
+        #viewer_container {
+            right: 0;
+        }
+    </style>
+    <script>
+        const $ = document.getElementById.bind(document);
+
+        function load() {
+
+            let timeout;
+            function changed(html) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    $('viewer').contentDocument.documentElement.innerHTML = html;
+                }, 300);
+
+            }
+            // const myCodeMirror = CodeMirror($('editor'));
+            let editor;
+            window.editor = editor;
+            const url = location.hash || 'basic-transactions.html';
+            console.log(url);
+            fetch(url).then(async response => {
+                const html = await response.text();
+                console.log(html)
+                editor = CodeMirror($('editor_container'), {
+                    value: html,
+                    mode: 'htmlmixed',
+                    theme: 'darcula',
+                });
+                editor.on('change', editor => changed(editor.getValue()));
+                changed(html);
+            }).catch(reason => console.log(reason));
+
+        }
+
+        window.onload = load;
+    </script>
+</head>
+
+<body>
+    <div id="editor_container"></div>
+    <div id="viewer_container">
+        <iframe id="viewer"></iframe>
+    </div>
+</body>
+
+</html>
