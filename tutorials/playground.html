@@ -15,10 +15,11 @@
     <script src="playground/htmlmixed.js"></script>
     <style>
         body {
-            background: #333;
+            background: #2b2b2b;
             box-sizing: border-box;
             overflow: hidden;
         }
+
         body>div {
             position: absolute;
             top: 0;
@@ -38,6 +39,11 @@
 
         #viewer_container {
             right: 0;
+            background: #eee;
+        }
+
+        #viewer_container iframe {
+            border: none;
         }
     </style>
     <script>
@@ -49,18 +55,20 @@
             function changed(html) {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
-                    $('viewer').contentDocument.documentElement.innerHTML = html;
+                    //$('viewer').contentDocument.documentElement.innerHTML = html;
+                    const doc = $('viewer').contentDocument;
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
                 }, 300);
 
             }
-            // const myCodeMirror = CodeMirror($('editor'));
             let editor;
             window.editor = editor;
-            const url = location.hash || 'basic-transactions.html';
-            console.log(url);
+            const url = (location.hash || '#basic-transactions.html').substr(1);
+            console.log(`Playground: loading ${url}`);
             fetch(url).then(async response => {
                 const html = await response.text();
-                console.log(html)
                 editor = CodeMirror($('editor_container'), {
                     value: html,
                     mode: 'htmlmixed',
