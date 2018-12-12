@@ -1,8 +1,8 @@
 # Basics 3: Transactions
 
-_TL;DR? [Run it on JS Bin](https://jsbin.com/hucufav/edit?html,output)._
+_TL;DR? [Run the demo](playground.html#nano-client-3-transactions-demo.html)._
 
-Building on [Basics 2: Nimiq Style UI](tutorial-02-UI.md),
+Building on [Nano Client 2: Blockchain Events & User Interface](nano-client-2-events-and-ui),
 we're almost ready to receive some NIM.
 
 But first, we need a wallet. And a place to store it.
@@ -34,7 +34,7 @@ localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())))
 Let's keep a reference to our wallet:
 
 ```js
-nimiq.wallet = consensus.wallet;
+nimiq.wallet = wallet;
 ```
 
 For showing our wallet's address and balance, we add two fields to `<div class="nq-card-body">`:
@@ -44,7 +44,7 @@ For showing our wallet's address and balance, we add two fields to `<div class="
 <p>Balance: <span id="balance"></span></p>
 ```
 
-We update the balance as soon as consensus is established
+And update the balance as soon as consensus is established
 and again each time a new block gets minded, a.k.a. "the head of the blockchain has changed". The handlers now look like this:
 
 ```js
@@ -53,19 +53,18 @@ function onConsensusEstablished() {
     $('height').innerText = nimiq.blockchain.height;
     $('address').innerText = nimiq.wallet.address.toUserFriendlyAddress();
 
-    // Add this line
-    updateBalance();
+    updateBalance(); // <- Add this line
 }
 
 function onHeadChanged() {
     $('height').innerText = nimiq.blockchain.height;
 
-    // and this line
-    updateBalance();
+    updateBalance(); // <- and this line
 }
 ```
 
-In the Nano Client, the `consensus` object can get us the latest account status which includes the balance in Nimiq's smallest unit, *Luna* (100'000 Luna = 1 NIM). Add the handler below to the code:
+In the Nano Client, the `consensus` object can get us the latest account status which includes the balance in Luna.
+Luna is Nimiq's smallest unit, 100'000 Luna = 1 NIM. The following function will update the balance in the UI.
 
 ```js
 function async updateBalance() {
@@ -75,56 +74,56 @@ function async updateBalance() {
 }
 ```
 
-[//]: Sven (Exlain that/why empty accounts with a balance of 0 are not stored in the blockchain)
-
-Great! Your balance now updates on each new block. In the next step, we will receive and send a transaction.
-
->**Note:** To see your stored wallet, run [the example](https://jsbin.com/hucufav/edit?html,output), open your dev tools (F12), and enter:
+> **Note**: Accounts with balance `0` are not getting stored on the blockchain.
+> Thus, if no account for the address has been returned, we can safely assume `0`.
 >
->```js
->localStorage.getItem('wallet');
->```
+> **Play:** To see your stored wallet, run [the example](playground.html#nano-client-3-transactions-demo.html), open your dev tools (F12), and enter:
 >
->What you will get back is an array of bytes representing your serialized keypair consisting of public and private key.
+> ```js
+> localStorage.getItem('wallet');
+> ```
+>
+> What you will get back is an array of bytes representing your serialized key pair consisting of public and private key.
+
+**Great! Your balance now stays up-to-date.**
+All set to finally receive and send transactions NIMs around.
 
 ## Receive Transactions
-
-To receive a transaction, copy your address and send a transaction to it from your
-[Nimiq Safe](https://safe.nimiq-testnet.com) account (you can receive some NIM from our [faucet](https://getsome.nimiq-testnet.com)).
-Nimiq's block time is one minute on average,
-so it might take a few moments for the transaction to be confirmed.
 
 The Nano Client can monitor the network for incoming transaction:
 We subscribe (in `start()`) to all transactions related to our wallet's address and
 display a message if one is incoming:
 
 ```js
-consensus.addSubscriptions([wallet.address]);
+nimiq.consensus.addSubscriptions([wallet.address]);
 
-mempool.on('transaction-added', tx => {
+nimiq.mempool.on('transaction-added', tx => {
     if (tx.recipient.equals(wallet.address)) {
         status(`Incoming transaction of ${ Nimiq.Policy.satoshisToCoins(tx.value) } NIM.`);
     }
 });
 ```
 
+If you can't wait, copy your address and send a transaction to it from your
+[Nimiq Safe](https://safe.nimiq-testnet.com) account
+(you can receive some Testnet NIM from our [Testnet faucet](https://getsome.nimiq-testnet.com)).
+More details on this later.
+
 ## Send Transactions
 
-To send, we add a little form to the `nq-card-body` with address &amp; value and wire it up.
+To send, we add a little form to the `nq-card-body` with address & value and wire it up.
 
 ```html
-<div id="transaction">
-    <h2>Send Transaction</h2>
-    <p>
-        <label class="nq-label" for="tx_recipient">Recipient Address</label>
-        <input type="string" id="tx_recipient">
-    </p>
-    <p>
-        <label class="nq-label" for="tx_amount">Amount</label>
-        <input type="number" id="tx_amount">
-    </p>
-    <button id="tx_send" class="nq-button">Send Transaction</button>
-</div>
+<h2>Send Transaction</h2>
+<p>
+    <label class="nq-label" for="tx_recipient">Recipient Address</label>
+    <input type="string" id="tx_recipient">
+</p>
+<p>
+    <label class="nq-label" for="tx_amount">Amount</label>
+    <input type="number" id="tx_amount">
+</p>
+<button id="tx_send" class="nq-button">Send Transaction</button>
 ```
 
 Listen to the button being clicked in `start()`:
@@ -136,11 +135,13 @@ $('tx_send').addEventListener('click', () => {
 
     // We define this function in the next step
     sendTransaction(recipient, amount);
-);
+});
 ```
 
-In the function we create a transaction object and relay it to the network. `wallet.createTransaction()` is a short-hand for `new Nimiq.BasicTransaction(wallet.publicKey, recipient, ...)` and
-it also already takes care of signing the transaction for us.
+Within `sendTransaction`, we create a transaction object and relay it to the network.
+`wallet.createTransaction()` is a short-hand for
+`new Nimiq.BasicTransaction(wallet.publicKey, recipient, ...)` and
+it also takes care of signing the transaction for us.
 
 ```js
 function sendTransaction(recipient, amount) {
@@ -157,11 +158,11 @@ function sendTransaction(recipient, amount) {
     // continues in the next block
 ```
 
->**Fun fact:** The `0` in the middle is the **fee** in Luna.
->In Nimiq, up to ten transactions per block per sender are free
->*(precisely, nodes will accept only up to ten free transactions from the same sender in the `mempool` at the same time)*.
->If you want to send out more transactions at once, a minimum fee of one Luna per byte is required.
->A basic transaction (without a message) is 138 bytes, an extended transaction 144 bytes + the length of the message.
+> **Fun fact:** The `0` in the middle is the **fee** in Luna.
+> In Nimiq, up to ten transactions per block per sender are free.
+> To be precise, other nodes will accept maximum 10 free transactions from the same sender in the `mempool` at the same time.
+> If you want to send out more transactions at once, a minimum fee of one Luna per byte is required.
+> A basic transaction (without a message) is 138 bytes, an extended transaction 144 bytes + the byte length of the message.
 
 To show some feedback while the transaction is going out,
 we can listen for events (with `.on()`) to understand when
@@ -170,7 +171,8 @@ when it hits the network, and finally, when it got mined.
 After that, the event listeners will be removed with `off()`.
 
 ```js
-    ...
+    // ... continue in sendTransaction()
+
     function feedback(source, event, message) {
         const listenerId = source.on(event, tx => {
             if (tx.sender.equals(nimiq.wallet.address)) {
@@ -182,17 +184,17 @@ After that, the event listeners will be removed with `off()`.
 
     feedback(
         nimiq.mempool,
-        'transaction-added',   // tx arrived in our mempool
+        'transaction-added',   // TX arrived in our mempool
         'Your transaction has been sent out.');
 
     feedback(
         nimiq.consensus,
-        'transaction-relayed', // tx was sent to a peer
+        'transaction-relayed', // TX was sent to a peer
         'Your transaction is in the network.');
 
     feedback(
         nimiq.mempool,
-        'transaction-mined',   // tx was mined
+        'transaction-mined',   // TX was mined
         'Your transaction arrived.');
 }
 ```
@@ -204,7 +206,7 @@ After that, the event listeners will be removed with `off()`.
 
 This little demo app has all the basic functionality to be a minimal wallet app.
 So now we're ready to receive some NIM!
-Start the [example on JS Bin](https://jsbin.com/hucufav/edit?html,output)
+Start [the demo](playground.html#nano-client-3-transactions-demo.html)
 and switch to Mainnet in `start()`.
 
 ```js
@@ -213,7 +215,7 @@ Nimiq.GenesisConfig.main();
 
 Copy the `address` shown in the app and head over to
 [getsome.nimiq.com](https://getsome.nimiq.com).
-Follow the Nimiq Onboarding Guide, create a wallet in the Nimiq Account Manager and receive one NIM.
+Follow the Nimiq Onboarding Guide, create a wallet and receive one NIM.
 Finally you'll arrive in the Nimiq Safe from where you can send the NIM to your address here.
 And you can also send it back to keep it safe. :)
 

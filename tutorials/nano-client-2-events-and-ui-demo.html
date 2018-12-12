@@ -5,14 +5,15 @@
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Mono&text=0123456789ABCDEFGHJKLMNPQRSTUVXY" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
     <style>
         .nq-card {
-            margin: 2rem auto;
+            margin: 0 auto;
         }
-        #info span {
-            font-family: 'Fira Mono';
+        @media(min-width: 600px) {
+            .nq-card {
+                margin-top: 10rem;
+            }
         }
     </style>
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
@@ -26,6 +27,11 @@
 
         function onConsensusEstablished() {
             status('Consensus established');
+            $('height').innerText = nimiq.blockchain.height;
+        }
+
+        function onHeadChanged() {
+            console.log(`Now at height ${nimiq.blockchain.height}.`);
             $('height').innerText = nimiq.blockchain.height;
         }
 
@@ -45,39 +51,35 @@
 
             // Connecting to the network
             consensus.network.connect();
-
-            const { blockchain, network } = consensus;
-
-            network.connect();
             status('Connected. Establishing consensus...');
 
-            Object.assign(nimiq, { consensus, blockchain, network });
+            // Store references
+            nimiq.consensus = consensus;
+            nimiq.network = consensus.network;
+            nimiq.blockchain = consensus.blockchain;
 
             // Event handlers
-            consensus.on('established', onConsensusEstablished);
-            network.on('peers-changed', onPeersChanged);
+            nimiq.consensus.on('established', onConsensusEstablished);
+            nimiq.consensus.on('lost', () => status('Consensus lost'));
+            nimiq.blockchain.on('head-changed', onHeadChanged);
+            nimiq.network.on('peers-changed', onPeersChanged);
         }
 
         window.onload = () => Nimiq.init(start);
-   </script>
+    </script>
 </head>
 
-<body>
+<body class="nq-style">
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Demo App</h1>
         </div>
         <div class="nq-card-body">
-            <div id="info">
-                <p>Current block height: <span id="height">loading&hellip;</span></p>
-                <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
-            </div>
-        </div>
-        <div class="nq-card-footer">
             <p>Status: <span id="message">loading&hellip;</span></p>
+            <p>Current block height: <span id="height">loading&hellip;</span></p>
+            <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
         </div>
     </div>
-
 </body>
 
 </html>

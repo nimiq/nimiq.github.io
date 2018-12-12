@@ -1,12 +1,16 @@
-# Basics 2: Blockchain Events & Nimiq Style UI
+# Nano Client 2: Blockchain Events & User Interface
 
-_[Skip tutorial and see the code](https://jsbin.com/lukofer/edit?html,output)._
+**Goal**: We'll add listeners to events on the blockchain and network and show these updates in a beautiful Nimiq-style UI.
 
-Getting started? This tutorial is based on the ideas and code of [Basics 1: Nano Client](tutorial-01-basic-client.md).
+_[» Skip tutorial and see the code](playground.html#nano-client-2-events-and-ui-demo.html)._
 
-**Goal**: Nimiq-style UI to show consensus and network statistics.
+Just Getting started?
+This tutorial is based on the ideas and code of [Nano Client 1: Basics](tutorial-01-basic-client.md).
+So we have a nano client being connected and synced with the network but mostly printing out some logs.
 
-## Show Statistics
+We need some basic UI. And some more data to show.
+
+## Showing Statistics
 
 Let's add some plain HTML to show a status message, the current block height,
 and how many peers are currently connected.
@@ -15,38 +19,37 @@ We'll use `span` tags with IDs to fill in the data later.
 ```html
 <body>
     <h1>Nimiq Demo App</h1>
-    <div id="info">
-        <p>Status: <span id="message">loading...</span></p><!-- from Tutorial 1 -->
-        <p>Current block height: <span id="height">loading&hellip;</span></p>
-        <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
-    </div>
+    <p>Status: <span id="message"></span></p>
+    <p>Current block height: <span id="height"></span></p>
+    <p>Current number of peers: <span id="peers"></span></p>
 </body>
 ```
 
-The `start` function will connect to the network and establish nano consensus
-(see [Tutorial 1: Basic Client](tutorial-01-basic-client.md) for details).
-We will store references in the shared variable `nimiq` for later.
+In the `start` function, the nano client will connect to the network and
+establish consensus.
+See [Nano Client 1: Basics](nano-client-1-basics) for details.
+Below, we keep references to parts of the Nimiq blockchain in the shared variable `nimiq` so that we can listen for events on them later on.
+(More details on each part in the next tutorial.)
 
 ```js
 const nimiq = {};
 
 async function start() {
-    // Code from Tutorial 1
+    // Code from tutorial "Nano Client 1"
     status('Nimiq loaded. Connecting...');
     Nimiq.GenesisConfig.test();
     const consensus = await Nimiq.Consensus.nano();
     consensus.network.connect();
     status('Syncing and establishing consensus...');
 
-
     // Store references
-    nimiq.consensus = consensus;
-    nimiq.network = consensus.network;
+    nimiq.consensus  = consensus;
+    nimiq.network    = consensus.network;
     nimiq.blockchain = consensus.blockchain;
 }
 ```
 
-Next, add handler functions for events (we'll add those in the step after).
+Besides the `status` function from the previous tutorial, we prepare three event handlers:
 
 ```js
 // A little shortcut for `document.getElementById()`
@@ -61,20 +64,22 @@ function onConsensusEstablished() {
     $('height').textContent = nimiq.blockchain.height;
 }
 
+// A new block got mined and is now the latest block
 function onHeadChanged() {
     $('height').textContent = nimiq.blockchain.height;
 }
 
+// Number of connected peers has changed
 function onPeersChanged() {
     $('peers').textContent = nimiq.network.peerCount;
 }
 ```
 
-Now, add event listeners in the `start` function to get informed about the connection status and changes in the network.
+Now, let's connect the handlers to the parts by adding to the `start()` function:
 
 ```js
 async function start() {
-    ...
+    // ... previous code
 
     nimiq.consensus.on('established', onConsensusEstablished);
     nimiq.consensus.on('lost', () => status('Consensus lost'));
@@ -89,30 +94,27 @@ Finally, start the Nano Client when the page finished loading:
 window.onload = () => Nimiq.init(start);
 ```
 
-**Great, we defined the logic, but it still looks very simple. Let's make it beautiful!**
+**The logic is defined, let's make it look good!**
 
 ## Making it Beautiful with Nimiq Style
 
-Two CSS files are needed:
-* **nimiq-style.css**: Nimiq's CSS definitions
-* **Muli font**: The main font of Nimiq
+Nimiq Style requires two CSS files to be added to `<head>`:
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
 ```
 
->More info on Nimiq Style:
+> Learn more about Nimiq Style:
 >
->* [Documentation](TODO)
->* [Source code](https://github.com/nimiq/nimiq-style)
->* [Cheatsheet](TODO)
->* [**Recommended: The Nimiq Style Guide**](http://nimiq.com/styleguide)
+> * [The Nimiq Style Guide](http://nimiq.com/styleguide)
+> * [Documentation](http://nimiq.github.io/style/#nimiq-style-framework)
+> * [Source code](https://github.com/nimiq/nimiq-style)
+> * [Cheatsheet](http://nimiq.github.io/style/demo.html)
 
-The CSS framework provides CSS classes to apply the styling.
-The prefix `nq-` is used for Nimiq styles,
-setting the class `nq-style` on the `body` tag will style general elements such as paragraphs and links,
-and `nq-card` will create a nice box layout.
+The Nimiq Style CSS framework provides classes are prefixed with `nq-`.
+Setting `nq-style` on `<body>` will automatically style general elements such as paragraphs and links.
+`nq-card` will create a nice box layout to put content in.
 
 ```html
 <body class="nq-style">
@@ -145,23 +147,21 @@ To have the box full-screen for mobile and neatly centered for desktop, add thes
 </style>
 ```
 
-[Have a look at it!](../demo/basic-ui.html)
+Check it out. **That's much better with just a few lines of code!**
 
-**That's much better!**
 
-[&raquo; Run and modify this code live](https://jsbin.com/lukofer/edit?html,output)
+[» Run and modify this code live](playground.html#nano-client-2-events-and-ui-demo.html).
 
 ## What's next?
 
-This short demo could be extended to a little blockchain statistics viewer. Have a look at the [Nimiq Core API Documentation](#todo) to see what's possible.
+This short demo could be extended to a little blockchain statistics viewer.
 
 **Idea**: Want to calculate and show the global hash rate?
 Get the difficulty from the latest block in `onHeadChanged`
 and have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
 to turn the difficulty into the global hash rate.
-
-You could also add some graphs! :)
+And while you're at it, how about adding some graphs? :)
 
 ---
 
-Continue the tutorial: [Basics 3, Sending and Receiving Transactions &raquo;](tutorial-basics-3-tx)
+Continue the tutorial: [Nano Client 3, Sending and Receiving Transactions »](nano-client-3-transactions)
