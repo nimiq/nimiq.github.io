@@ -1,12 +1,39 @@
-# Nano Client 1: Basics 1
+# Nano Client 1: Basics
 
-**Goal**: To build a minimal app that connects to the Nimiq network and establishes consensus.
+**Goal**: Build a minimal app that connects to the Nimiq network and establishes consensus.
 
 _[» Skip tutorial and see the code](playground.html#nano-client-1-basics-demo.html)._
 
 It's a good idea to open the [source code](playground.html#basic-client.html)
 in parallel to see how it all fits together, but also to modify and play.
 The example we'll be building here can be used for building Nimiq-enabled apps.
+
+## Introduction
+Nimiq is a payment protocol based on blockchain technology.
+Blockchain technology is
+
+* Cencorship resistant: nobody can keep you from using it
+* Privacy oriented: you don't need to provide any personal information to open an account
+* Decentralized: not controlled by a single person but by it's users
+
+A blockchain is like a distributed database, called ledger.
+Getting in sync with the other nodes in the network about
+the latest version of that database is called
+[to establish consensus](https://en.bitcoin.it/wiki/Consensus).
+Most blockchain technologies "require" you to
+connect to the network via a third party,
+because otherwise you'd need to download
+the entire database of more than 100 GB of data
+to be able to run a node and establish consensus.
+Thus "forcing" you to trust that third party.
+With Nimiq you can connect directly with what we call a nano client.
+The concept is based on Ethereum's
+[light client](https://github.com/ethereum/wiki/wiki/Light-client-protocol).
+A nano client reaches consensus by just downloading a compressed form of the latest state of the blockchain
+which is only abut 1MB but still enables the nano client to verify all information.
+And that is what we're going to do!
+
+The goal of this little demo is to connect to the network and reach consensus.
 
 ## Getting started
 
@@ -20,21 +47,21 @@ We start from a standard HTML 5 page importing the Nimiq library:
     <title>Nimiq Demo App</title>
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script>
-        // Our code will live here
+        // The code below will go here
     </script>
-    </head>
+</head>
 <body>
     <h1>Nimiq Demo App</h1>
 </body>
 </html>
 ```
 
-And add a script that will start the Nimiq Nano Client when the page is loaded:
+Add a script that will start the Nimiq Nano Client when the page is loaded:
 
 ```js
 function start() {
     Nimiq.start(async function() {
-        // the code below will go here
+        // The code below will go here
     }
 }
 
@@ -43,7 +70,7 @@ window.onload = start;
 
 Inside this function:
 
-1) We're going to configure Nimiq to use the Testnet.
+1) We're going to configure Nimiq to use the testing network, known as "Testnet".
    That's a good choice for experimenting and testing.
 
    ```js
@@ -64,16 +91,18 @@ Inside this function:
 
 **These three lines are all it needs to get a Nimiq client connected to the network!**
 
+When you run this code, you'll notice it will take a few seconds to connect. Open the dev tools (F12) to see `.
+
 Great, let's add some UI to see what's happening behind the scenes.
 
 ## User Interface
 
-Make a spot in the HTML to print out the status messages.
+Add a `<div>` to print out the status messages like below:
 
 ```html
 <body>
     <h1>Nimiq Demo App</h1>
-    <div id="message"></div>
+    <div id="message"></div> <!-- this one -->
 </body>
 ```
 
