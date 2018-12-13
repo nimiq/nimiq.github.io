@@ -3,7 +3,7 @@
 _dev/todos
 research
 node_modules
-Gemfile*
+Gemfile.lock
 _site
 package*.json
 labs
