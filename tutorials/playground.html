@@ -67,17 +67,19 @@
             window.editor = editor;
             const url = (location.hash || '#basic-transactions.html').substr(1);
             console.log(`Playground: loading ${url}`);
-            fetch(url).then(async response => {
-                const html = await response.text();
-                editor = CodeMirror($('editor_container'), {
-                    value: html,
-                    mode: 'htmlmixed',
-                    theme: 'darcula',
-                });
-                editor.on('change', editor => changed(editor.getValue()));
-                changed(html);
-            }).catch(reason => console.log(reason));
-
+            fetch(url)
+                .then(response => {
+                    response.text().then(html => {
+                        editor = CodeMirror($('editor_container'), {
+                            value: html,
+                            mode: 'htmlmixed',
+                            theme: 'darcula',
+                        });
+                        editor.on('change', editor => changed(editor.getValue()));
+                        changed(html);
+                    });
+                })
+                .catch(reason => console.log(reason));
         }
 
         window.onload = load;

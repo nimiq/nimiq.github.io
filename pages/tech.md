@@ -1,4 +1,7 @@
-# Tech Choices
+# Tech Inside
+
+While working with Nimiq's libraries, you can rely on ES2015 compliance.
+But when looking inside, you'll find we use Vue.js and TypeScript.
 
 ## Why Vue.js
 
