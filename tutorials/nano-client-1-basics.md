@@ -2,13 +2,8 @@
 
 **Goal**: Build a minimal app that connects to the Nimiq network and establishes consensus.
 
-_[» Skip tutorial and see the code](playground.html#nano-client-1-basics-demo.html)._
+## About Blockchain
 
-It's a good idea to open the [source code](playground.html#basic-client.html)
-in parallel to see how it all fits together, but also to modify and play.
-The example we'll be building here can be used for building Nimiq-enabled apps.
-
-## Introduction
 Nimiq is a payment protocol based on blockchain technology.
 Blockchain technology is
 
@@ -16,16 +11,17 @@ Blockchain technology is
 * Privacy oriented: you don't need to provide any personal information to open an account
 * Decentralized: not controlled by a single person but by it's users
 
-A blockchain is like a distributed database, called ledger.
-Getting in sync with the other nodes in the network about
+A blockchain is like a distributed database, known as "ledger".
+Getting in sync with the other nodes in the network about what is
 the latest version of that database is called
-[to establish consensus](https://en.bitcoin.it/wiki/Consensus).
+[establishing consensus](https://en.bitcoin.it/wiki/Consensus).
 Most blockchain technologies "require" you to
 connect to the network via a third party,
 because otherwise you'd need to download
 the entire database of more than 100 GB of data
-to be able to run a node and establish consensus.
-Thus "forcing" you to trust that third party.
+to be able to run a
+[full node](https://en.bitcoin.it/wiki/Full_node) and establish consensus.
+Thus "forcing" you to trust that third party, take [MyEtherWallet for example](https://kb.myetherwallet.com/networks/run-your-own-node-with-myetherwallet.html).
 With Nimiq you can connect directly with what we call a nano client.
 The concept is based on Ethereum's
 [light client](https://github.com/ethereum/wiki/wiki/Light-client-protocol).
@@ -34,6 +30,12 @@ which is only abut 1MB but still enables the nano client to verify all informati
 And that is what we're going to do!
 
 The goal of this little demo is to connect to the network and reach consensus.
+
+_[» Skip tutorial and experiment with the code](playground.html#nano-client-1-basics-demo.html)._
+
+It's a good idea to [open the source code](playground.html#nano-client-1-basics-demo.html)
+in parallel to see how it all fits together, but also to modify and play.
+The example we'll be building here can be used for building Nimiq-enabled apps.
 
 ## Getting started
 
@@ -91,13 +93,14 @@ Inside this function:
 
 **These three lines are all it needs to get a Nimiq client connected to the network!**
 
-When you run this code, you'll notice it will take a few seconds to connect. Open the dev tools (F12) to see `.
+When you run this code, you'll notice it will take a moment to reach consensus.
+Open the dev tools (F12) to see logs of the Nano Client to better understand what's going on under the hood.
 
 Great, let's add some UI to see what's happening behind the scenes.
 
 ## User Interface
 
-Add a `<div>` to print out the status messages like below:
+Add a `<div>` with an ID to print out the status messages like below:
 
 ```html
 <body>
@@ -119,14 +122,14 @@ And then use it in your code.
 ```js
 function start() {
     Nimiq.init(async function() {
-        status('Nimiq loaded. Connecting...');           // <=
+        status('Nimiq loaded. Connecting...');           // <= here
 
         // Code from 'Getting started'
         Nimiq.GenesisConfig.test();
         const consensus = await Nimiq.Consensus.nano();
         consensus.network.connect();
 
-        status('Syncing and establishing consensus...');  // <=
+        status('Syncing and establishing consensus...');  // <= here and below
 
         // Using "on()" will be explained in the next tutorial
         consensus.on('established', () => status('Consensus established'));
@@ -134,11 +137,13 @@ function start() {
 };
 ```
 
-**The Nano Client is set up! It connected, synced with the network, and established consensus!**
+**The Nano Client is set up! It connects, syncs with the network, and establishes consensus!**
 
 ## Next Steps
 
-**Your turn!** Follow the link below to see the prototype in action and mess around with it.
+**Your turn!**
+
+Follow the link below to see the prototype in action and mess around with it.
 Open the dev tools in your browser (press F12) to see the full log output from the Nano Client.
 Some lines will be in red and similar to
 `Can’t establish a connection to the server at ws://some.address.com:8443/`.
@@ -148,6 +153,7 @@ That's normal in the peer-to-peer blockchain world.
 
 After a while, you should see
 `BaseConsensus: Synced with all connected peers, consensus established`.
+
 **Welcome to the Nimiq Blockchain! :)**
 
 [» See the prototype in action and modify it](playground.html#nano-client-1-basics-demo.html).
