@@ -1,20 +1,20 @@
 [submodule "meta/doc-theme"]
-	path = meta/doc-theme
+	path = submodules/doc-theme
 	url = ../doc-theme.git
 	branch = master
 [submodule "meta/email-template"]
-	path = meta/email-template
+	path = submodules/email-template
 	url = ../email-template.git
 	branch = master
 [submodule "accounts"]
-	path = accounts
+	path = submodules/accounts
 	url = ../accounts.git
 	branch = master
 [submodule "style"]
-	path = style
+	path = submodules/style
 	url = ../nimiq-style.git
 	branch = next
 [submodule "vue-components"]
-	path = vue-components
+	path = submodules/vue-components
 	url = ../vue-components
 	branch = master
