@@ -1,9 +1,10 @@
 # Nimiq Ecosystem
 
 By using Nimiq APIs and libraries you can
-- extend your projects, websites, and apps with a payment system; and
-- allow customers of your online shop to pay comfortably with NIM directly from their browser; or
-- build apps and services enriching the Nimiq apps ecosystem.
+
+* extend your projects, websites, and apps with a payment system; and
+* allow customers of your online shop to pay comfortably with NIM directly from their browser; or
+* build apps and services enriching the Nimiq apps ecosystem.
 
 The goal of this documentation is to get you started integrating Nimiq into your project.
 
@@ -13,14 +14,15 @@ The goal of this documentation is to get you started integrating Nimiq into your
 
 ## Content
 
-- **[Nimiq Accounts Manager](accounts)**:
-  Provide the users of your project to use their Nimiq Accounts during [checkout and pay for products and services in NIM](accounts/#checkout),
-  or to send [transactions](accounts/#sign-transaction), and more.
-- **[Nimiq Style](style) ([demo](style/demo.html))**:
+* **[Nimiq Accounts Manager](submodules/accounts)**:
+  Provide the users of your project to use their Nimiq Accounts during
+  [checkout and pay for products and services in NIM](submodules/accounts/#checkout),
+  or to send [transactions](submodules/accounts/#sign-transaction), and more.
+* **[Nimiq Style](submodules/style) ([demo](submodules/style/demo.html))**:
   This Reusable CSS framework will give your app the Nimiq UI look and feel.
-- **[Nimiq Vue.js Components](https://github.com/nimiq/vue-components/tree/master/src/components)**:
+* **[Nimiq Vue.js Components](https://github.com/nimiq/vue-components/tree/master/src/components)**:
   Reusable Vue.js components to build Nimiq-enabled websites and webapps.
-- **[Community Tools and APIs](community)**:
+* **[Community Tools and APIs](pages/community)**:
   Useful tools and APIs developed by the Nimiq Community.
 
 ## Terminology
@@ -75,7 +77,8 @@ Even if you clone the repository using HTTPS, submodules might require SSH.
 
 ### Build Documentation Locally
 
-Please refer to the [Doc-Theme documentation](meta/doc-theme/#installation).
+Please refer to the
+[Doc-Theme documentation](submodules/doc-theme/#installation).
 
 ### Modify Referred Repositories
 
