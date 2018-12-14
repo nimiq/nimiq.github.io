@@ -9,31 +9,19 @@ The goal of this documentation is to get you started integrating Nimiq into your
 
 [//]: Sven (add checkout plugin)
 [//]: Sven (add cashlink js lib)
-[//]: Sven (secondary: add nimiq style)
 [//]: Sven (secondary: add wallet file format)
 
 ## Content
-- [Nimiq Accounts Manager](accounts):
-  Enable users of your project to use their Nimiq Accounts to pay, for transactions, and more.
-- [Nimiq Style](style) ([demo](style/index.html)):
-  CSS framework defining UI look and feel.
-- [Nimiq Vue.js Components](vue-components):
+
+- **[Nimiq Accounts Manager](accounts)**:
+  Provide the users of your project to use their Nimiq Accounts during [checkout and pay for products and services in NIM](accounts/#checkout),
+  or to send [transactions](accounts/#sign-transaction), and more.
+- **[Nimiq Style](style) ([demo](style/demo.html))**:
+  This Reusable CSS framework will give your app the Nimiq UI look and feel.
+- **[Nimiq Vue.js Components](https://github.com/nimiq/vue-components/tree/master/src/components)**:
   Reusable Vue.js components to build Nimiq-enabled websites and webapps.
-
-## Tech
-
-[//]: Soeren (what version of TS, CSS, Vue do we official support/require?)
-[//]: Soeren (confirm ES2015 - had a look at tsconfig, but not sure)
-[//]: Soeren (I use Chromium, somebody else? Is it offical?)
-[//]: Soeren (More browsers? Add versions?)
-
-The Nimiq front-ends are build with
-[TypeScript 3](https://www.typescriptlang.org/) and CSS on [Vue.js](https://vuejs.org/)
-and delivered compiled to ES2015.
-The Front-ends are tested on latest versions of Firefox, Chrome/Chromium, and Safari.
-
-[//]: Sven (Paragraph on why TypeScript)
-[//]: Sven (Paragraph on why Vue.js)
+- **[Community Tools and APIs](community)**:
+  Useful tools and APIs developed by the Nimiq Community.
 
 ## Terminology
 
@@ -52,6 +40,13 @@ See the “Terminology” section in the [FAQs on nimiq.com](nimiq.com/#faq) for
 | Nimiq Account <br> _address + label_           | account  | account
 | Nimiq Wallet <br> _with one or more accounts_  | walletId | keyId or loginId
 | Account Recovery Words <br> _24 words_         | n/a      | mnemonicPhrase
+
+## Tech
+
+The Nimiq front-ends are build with
+[TypeScript 3](https://www.typescriptlang.org/) and CSS on [Vue.js](https://vuejs.org/)
+and delivered compiled to ES2015. Find more details [here](pages/tech).
+The Front-ends are tested on latest versions of Firefox, Chrome/Chromium, and Safari.
 
 ## Improve This Documentation
 
@@ -82,7 +77,7 @@ Even if you clone the repository using HTTPS, submodules might require SSH.
 
 Please refer to the [Doc-Theme documentation](meta/doc-theme/#installation).
 
-### Modify Refered Repositories
+### Modify Referred Repositories
 
 The documentation structure makes use of Git submodules, i.e. including source code from other repositories.
 
