@@ -1,9 +1,12 @@
 remote_theme: nimiq/doc-theme
 title: "Nimiq"
-description: "Ecosystem"
+description: "Front-end Documentation"
 
-submodule_section: "Details"
+submodule_section: "Libraries and frameworks"
 submodules: "detailed"
 
 exclude: ["node_modules/*", "./*/*/**", "_dev/*", "meta/doc-theme/libraries/**", "meta/doc-theme/sub3/**", "meta/email-template/**"]
 
+#custom_header_tags: "custom-header-tags.html"
+ignore: ["tutorials/"]
+debugging: false
