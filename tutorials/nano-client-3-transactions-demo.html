@@ -7,25 +7,7 @@
     <title>Nimiq Nano Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
-    <style>
-        .nq-card {
-            margin: 0 auto;
-        }
-        .nq-label {
-            display: inline-block;
-            width: 30rem;
-            vertical-align: top;
-        }
-        .nq-label + * {
-            display: inline-block;
-            width: 36rem;
-        }
-        @media(min-width: 600px) {
-            .nq-card {
-            margin-top: 10rem;
-            }
-        }
-    </style>
+    <link href="nano-client-3-transactions-demo.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script>
         const $ = document.getElementById.bind(document);
@@ -168,10 +150,10 @@
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Nano Wallet</h1>
-            <div class="nq-text-s">Demo app for <a href="TODO">Basics 3: Transactions</a>.</div>
+            <div class="nq-text">Demo app for <a href="TODO">Basics 3: Transactions</a>.</div>
         </div>
         <div class="nq-card-body">
-            <h2>Wallet</h2>
+            <h2><span>Wallet</span></h2>
             <p>
                 <span class="nq-label">Address: </span>
                 <span id="address">loading&hellip;</span></p>
@@ -179,7 +161,7 @@
                 <span class="nq-label">Balance: </span>
                 <span id="balance">loading&hellip;</span>
             </p>
-            <h2>Network</h2>
+            <h2><span>Network</span></h2>
             <p>
                 <span class="nq-label">Status: </span>
                 <span id="message">loading&hellip;</span>
@@ -192,16 +174,18 @@
                 <span class="nq-label">Peers connected: </span>
                 <span id="peers">0</span>
             </p>
-            <h2>Send Transaction</h2>
-            <p>
-                <label class="nq-label" for="tx_recipient">Recipient Address</label>
-                <input type="string" id="tx_recipient">
-            </p>
-            <p>
-                <label class="nq-label" for="tx_amount">Amount</label>
-                <input type="number" id="tx_amount">
-            </p>
-            <button id="tx_send" class="nq-button">Send Transaction</button>
+            <h2><span>Send Transaction</span></h2>
+            <div class="transactions">
+                <p>
+                    <label class="nq-label" for="tx_recipient">Recipient</label>
+                    <input type="string" id="tx_recipient" placeholder="NQ...">
+                </p>
+                <p>
+                    <label class="nq-label" for="tx_amount">Amount</label>
+                    <input type="number" id="tx_amount" placeholder="0.00">
+                </p>
+                <button id="tx_send" class="nq-button">Send Transaction</button>
+            </div>
         </div>
     </div>
 
