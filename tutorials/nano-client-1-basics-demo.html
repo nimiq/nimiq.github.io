@@ -12,27 +12,25 @@
             console.log(`Status: ${text}`);
         }
 
-        function start() {
-            Nimiq.init(async function () {
-                status('Nimiq loaded. Connecting and establishing consensus...');
+        async function start() {
+            status('Nimiq loaded. Connecting and establishing consensus...');
 
-                // Config to use Nimiq Testnet
-                Nimiq.GenesisConfig.test();
+            // Config to use Nimiq Testnet
+            Nimiq.GenesisConfig.test();
 
-                // Getting a Nimiq Nano Client instance
-                const consensus = await Nimiq.Consensus.nano();
+            // Getting a Nimiq Nano Client instance
+            const consensus = await Nimiq.Consensus.nano();
 
-                // Connecting to the network
-                consensus.network.connect();
+            // Connecting to the network
+            consensus.network.connect();
 
-                status('Connected. Establishing consensus...');
-                // Waiting for consensus to be establish
-                consensus.on('established', () => status('Consensus established'));
-            });
+            status('Connected. Establishing consensus...');
+            // Waiting for consensus to be establish
+            consensus.on('established', () => status('Consensus established'));
         };
 
         // Start Nimiq when the pages is fully loaded.
-        window.onload = start;
+        window.onload = () => Nimiq.init(start);
     </script>
 </head>
 

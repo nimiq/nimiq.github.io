@@ -61,13 +61,11 @@ We start from a standard HTML 5 page importing the Nimiq library:
 Add a script that will start the Nimiq Nano Client when the page is loaded:
 
 ```js
-function start() {
-    Nimiq.start(async function() {
-        // The code below will go here
-    }
+async function start() {
+    // The code below will go here
 }
 
-window.onload = start;
+window.onload = () => Nimiq.init(start);
 ```
 
 Inside this function:
@@ -120,20 +118,18 @@ function status(text) {
 And then use it in your code.
 
 ```js
-function start() {
-    Nimiq.init(async function() {
-        status('Nimiq loaded. Connecting...');           // <= here
+async function start() {
+    status('Nimiq loaded. Connecting...');           // <= here
 
-        // Code from 'Getting started'
-        Nimiq.GenesisConfig.test();
-        const consensus = await Nimiq.Consensus.nano();
-        consensus.network.connect();
+    // Code from 'Getting started'
+    Nimiq.GenesisConfig.test();
+    const consensus = await Nimiq.Consensus.nano();
+    consensus.network.connect();
 
-        status('Syncing and establishing consensus...');  // <= here and below
+    status('Syncing and establishing consensus...');  // <= here and below
 
-        // Using "on()" will be explained in the next tutorial
-        consensus.on('established', () => status('Consensus established'));
-    });
+    // Using "on()" will be explained in the next tutorial
+    consensus.on('established', () => status('Consensus established'));
 };
 ```
 
