@@ -1,6 +1,6 @@
 .DS_Store
 .idea
-_dev/todos
+_dev/*
 research
 node_modules
 Gemfile.lock

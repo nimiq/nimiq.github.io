@@ -14,10 +14,6 @@ The goal of this documentation is to get you started integrating Nimiq into your
 
 ## Content
 
-* **[Nimiq Accounts Manager](submodules/accounts)**:
-  Provide the users of your project to use their Nimiq Accounts during
-  [checkout and pay for products and services in NIM](submodules/accounts/#checkout),
-  or to send [transactions](submodules/accounts/#sign-transaction), and more.
 * **[Nimiq Style](submodules/style) ([demo](submodules/style/demo.html))**:
   This Reusable CSS framework will give your app the Nimiq UI look and feel.
 * **[Nimiq Vue.js Components](https://github.com/nimiq/vue-components/tree/master/src/components)**:
