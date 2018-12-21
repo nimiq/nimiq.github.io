@@ -4,11 +4,11 @@
 
 _[» Skip tutorial and see the code](playground.html#nano-client-2-events-and-ui-demo.html)._
 
-Just Getting started?
-This tutorial is based on the ideas and code of [Nano Client 1: Basics](tutorial-01-basic-client.md).
-So we have a nano client being connected and synced with the network but mostly printing out some logs.
+> **Just Getting started?**
+> This tutorial is based on the ideas and code of [Nano Client 1: Basics](tutorial-01-basic-client.md).
+> So we have a nano client being connected and synced with the network but mostly printing out some logs.
 
-We need some basic UI. And some more data to show.
+Our app needs some basic UI. And some more data to show.
 
 ## Showing Statistics
 
@@ -28,11 +28,12 @@ We'll use `span` tags with IDs to fill in the data later.
 In the `start` function, the nano client will connect to the network and
 establish consensus.
 See [Nano Client 1: Basics](nano-client-1-basics) for details.
-Below, we keep references to parts of the Nimiq blockchain in the shared variable `nimiq` so that we can listen for events on them later on.
+We will listen to events from various parts of the blockchain later on.
+Thus, we define a shared variable `nimiq` to keep references.
 (More details on each part in the next tutorial.)
 
 ```js
-const nimiq = {};
+const nimiq = {}; // < -- this is the shared variable
 
 async function start() {
     // Code from tutorial "Nano Client 1"

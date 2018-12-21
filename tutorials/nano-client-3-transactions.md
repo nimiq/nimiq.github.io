@@ -9,11 +9,11 @@ But first, we need a wallet. And a place to store it.
 
 ## Create and Store a Wallet
 
-Creating a Nimiq wallet is as simple as:
-
-```js
-const wallet = await Nimiq.Wallet.generate();
-```
+> Creating a Nimiq wallet is as simple as:
+>
+> ```js
+> const wallet = await Nimiq.Wallet.generate();
+> ```
 
 The code above will generate a new random wallet whenever you reload the page. But we can use `localStorage` to store our wallet.
 With the following snippet in `start()`, the app will try to load a previously stored wallet or
@@ -45,7 +45,11 @@ For showing our wallet's address and balance, we add two fields to `<div class="
 ```
 
 And update the balance as soon as consensus is established
-and again each time a new block gets minded, a.k.a. "the head of the blockchain has changed". The handlers now look like this:
+and again each time a new block gets mined,
+a.k.a. "there is an update on the blockchain",
+a.k.a. "the head of the blockchain has changed",
+
+The handlers now look like this:
 
 ```js
 function onConsensusEstablished() {
@@ -63,7 +67,7 @@ function onHeadChanged() {
 }
 ```
 
-In the Nano Client, the `consensus` object can get us the latest account status which includes the balance in Luna.
+In the Nano Client, the `consensus` object can get us the latest account status which includes the balance in _Luna_.
 Luna is Nimiq's smallest unit, 100'000 Luna = 1 NIM. The following function will update the balance in the UI.
 
 ```js
