@@ -1,0 +1,195 @@
+body {
+    padding: 0;
+    background: white;
+}
+
+ul {
+    padding-left: 2.5rem;
+}
+
+main,
+footer.nq-text {
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 2rem;
+    font-size: 1.75rem;
+}
+
+a:hover {
+    color: var(--nimiq-blue);
+}
+
+.three-parts {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.three-parts .nq-card {
+    display: block;
+    /* width: calc(33.3rem - 2*2rem); */
+    margin: 2rem 0;
+    text-decoration: none;
+}
+
+.three-parts .nq-card .nq-h3 {
+    font-weight: bold;
+}
+
+.three-parts .nq-card p {
+    opacity: 1;
+}
+
+.three-parts .nq-card-header {
+    padding-bottom: 2rem;
+    text-align: left;
+}
+
+.three-parts .nq-card:nth-child(2) {
+    margin: 2rem 4rem;
+}
+
+.three-parts .nq-card .nq-card-body a {
+    display: block;
+}
+
+.nq-style h1,
+.nq-h1,
+.nq-style h2,
+.nq-h2,
+.nq-style h3,
+.nq-h3 ,
+.nq-style h4,
+.nq-h4 {
+    box-sizing: border-box;
+    font-family: "Muli";
+    color: rgb(31, 35, 72);
+    text-decoration: none;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.nq-style h1,
+.nq-h1 {
+    font-size: 4.875rem;
+    font-weight: bold;
+    line-height: 6.3375rem;
+    margin: 2.5rem 0 2.625rem 0;
+    padding-bottom: 1.1875rem;
+}
+
+.nq-style h2,
+.nq-h2 {
+    font-size: 4rem;
+    margin: 12rem 0 2.625rem 0;
+    padding-bottom: 1.1875rem
+}
+
+.nq-style h3,
+.nq-h3 {
+    font-size: 3.25rem;
+    margin: 5rem 0 1.3rem 0;
+}
+
+.nq-style h4,
+.nq-h4 {
+    font-size: 2.5rem;
+    margin: 5rem 0 1.3rem 0;
+}
+
+.first-phrase {
+    font-weight: bold;
+    font-size: 2.25rem;
+}
+
+p,
+.nq-text,
+p.nq-text,
+.nq-style p {
+    font-size: 2.25rem;
+    margin: 1rem 0 3.25rem 0;
+    line-height: 1.5;
+}
+
+p.nq-note {
+    font-size: 1.75rem;
+}
+
+*.nimiq-logo,
+.nq-style .nimiq-logo {
+    background: no-repeat url(nimiq_signet.svg);
+    background-position: 0 center;
+    background-size: 3.375rem;
+    font-size: 2.5rem;
+    font-weight: normal;
+    line-height: 3.375rem;
+    padding: 0;
+    margin: 3.5rem 3rem;
+}
+
+.nimiq-logo:before,
+.nq-style .nimiq-logo:before {
+    content: "NIMIQ";
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    padding: 0 .25rem 0 calc(1.382 * 3.375rem);
+}
+
+pre,
+pre.nq-text {
+    border: 1px solid var(--nimiq-gray);
+    border-left-width: 1rem;
+    padding: 1.333rem 2.333rem;
+    background: var(--nimiq-light-gray);
+    max-width: 100%;
+    overflow: auto;
+}
+
+.nq-style .nq-big-text {
+    font-size: 3rem;
+}
+
+:target {
+    position: relative;
+    animation: target-highlight 600ms ease-in-out 150ms 1 forwards;
+}
+
+:target:before {
+    content: "»";
+    position: absolute;
+    left: -1em;
+}
+
+li :target:before {
+    left: -5rem;
+}
+
+@keyframes target-highlight {
+    0% {
+        opacity: 1;
+    }
+    30% {
+        opacity: .1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .three-parts {
+        flex-direction: column;
+    }
+
+    .three-parts .nq-card, .three-parts .nq-card:nth-child(2) {
+        margin: 1.333rem 0;
+    }
+
+    .three-parts .nq-card-header {
+        padding: 2.666rem 3rem;
+    }
+
+    .three-parts .nq-card-body {
+        display: none;
+    }
+}

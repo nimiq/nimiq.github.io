@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono&text=0123456789ABCDEFGHJKLMNPQRSTUVXY" rel="stylesheet">
+    <link href="resources/style.css" rel="stylesheet">
+    <title>Nimiq Developer Center</title>
+</head>
+
+<body class="nq-style">
+    <header>
+        <h2 class="nimiq-logo">
+            Developer Center
+        </h2>
+    </header>
+    <main>
+        <section class="intro">
+            <h1>Welcome to the Nimiq Developer Center!</h1>
+            <p class="nq-big-text">
+                Dive into the Nimiq Ecosystem documentation
+                with links to resources, tutorials, and assets.
+            </p>
+        </section>
+        <section class="three-parts">
+            <div class="nq-card">
+                <div class="nq-card-header">
+                    <a href="#get-started" class="nq-h3">
+                        Get Started
+                    </a>
+                </div>
+                <div class="nq-card-body">
+                    <p>
+                        <a href="#tutorials">
+                            Tutorials
+                        </a>
+                        <a href="#run-node">
+                            Run a node
+                        </a>
+                        <a href="#integrate-checkout">
+                            Integrate checkout
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="nq-card">
+                <div class="nq-card-header">
+                    <a href="#apis" class="nq-h3">
+                        Documentation
+                    </a>
+                </div>
+                <div class="nq-card-body">
+                    <p>
+                        <a href="#core-doc">
+                            Core
+                        </a>
+                        <a href="#front-end-doc">
+                            Front-end
+                        </a>
+                        <a href="#protocol-ref">
+                            Protocol reference
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="nq-card">
+                <div class="nq-card-header">
+                    <a href="#assets" class="nq-h3">
+                        Assets
+                    </a>
+                </div>
+                <div class="nq-card-body">
+                    <p>
+                        <a href="#nimiq-style">
+                            Nimiq Style<br>
+                            Logos and Signets
+                        </a>
+                        <a href="#source-code">
+                            Source Code
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="get-started">
+            <h2 class="nq-h2" id="get-started">Get Started</h2>
+            <p>
+                <strong>Build you own Nimiq-enabled app.</strong>
+                Step by step with code snippets and a full running example at the end of each tutorial.
+            </p>
+            <h3 class="nq-h3" id="tutorials">Tutorials</h3>
+            <p>
+                You can set up a Nimiq node within your browser that will connect to the Nimiq network and reach consensus
+                using the Nimiq library at <code>https://cdn.nimiq.com/nimiq.js</code> in basically three lines:
+            </p>
+            <pre class="nq-text">
+window.onload = function(){
+    Nimiq.init(async function() {
+
+        // Configure for testing / otherwise main()
+        Nimiq.GenesisConfig.test();
+
+        // Getting a Nimiq Nano Client instance
+        const consensus = await Nimiq.Consensus.nano();
+
+        // Connecting to the network
+        consensus.network.connect();
+    }
+}</pre>
+            <p>
+                <strong>But there is more!</strong> Learn in the tutorials below how to build a small webapp
+                with JavaScript, HTML, and CSS that manages a wallet, send and receive transactions, and
+                looks neat using Nimiq's look &amp; feel.
+            </p>
+            <ul class="nq-text">
+                <li>
+                    <a href="nimiq.github.io/tutorials/nano-client-1-basics.html" class="first-phrase">
+                        1: Basics</a>.
+                    Set up a node in a website, connect to the Nimiq network and reach consensus.
+                </li>
+                <li>
+                    <a href="nimiq.github.io/tutorials/nano-client-2-events-and-ui.html" class="first-phrase">
+                        2: Blockchain Events and User Interface</a>.
+                    Use Nimiq Style to add UI to the basic client.
+                </li>
+                <li>
+                    <a href="nimiq.github.io/tutorials/nano-client-3-transactions.html" class="first-phrase">
+                        3: Transactions</a>.
+                    Send and receive transactions directly from within the browser.
+                </li>
+            </ul>
+            <p>
+                <strong> More to come. </strong>
+                Want to contribute? Please <a href="mailto:sven@nimiq.com">get in touch</a>.
+            </p>
+
+
+            <h3 class="nq-h3" id="run-node">Run a node</h3>
+            <p>
+                <strong>The minimum example:</strong> On Linux and Mac, all you need is an IP and an open or forwarded port to run a full node.
+            </p>
+            <pre class="nq-text">
+git clone https://github.com/nimiq-network/core.git nimiq && cd nimiq
+yarn && yarn build
+clients/nodejs/nimiq --host=IP --port=PORT --protocol=ws </pre>
+            <p class="nq-note">
+                Note: For further details and instructions for Windows users, refer to the
+                <a href="https://github.com/nimiq-network/core">Nimiq Core Documentation</a>.
+            </p>
+            <p>
+                <strong>Run a miner</strong>: just add configuration for threads and address
+                <pre class="nq-text">
+--miner=auto --wallet-address=ADDRESS </pre>
+            </p>
+            <p>
+                For more details, see:
+            </p>
+            <ul class="nq-text">
+                <li>
+                    <a href="https://github.com/nimiq-network/core/blob/master/doc/nodejs-client.md" class="first-phrase">
+                        Node.js client</a>.
+                    Details and all parameters for full, light, and nano clients.
+                </li>
+                <li>
+                    <a href="https://github.com/nimiq-network/core/blob/master/doc/json-rpc-client.md" class="first-phrase">
+                        JSON-RPC client</a>.
+                    Run a node that exposes APIs to connect to via the JSON-RPC client.
+                </li>
+                <li>
+                    <a href="https://github.com/nimiq-network/core/blob/master/doc/docker.md" class="first-phrase">
+                        Use Docker</a>.
+                    How to setup Nimiq to run in a Docker image.
+                </li>
+            </ul>
+            <h3 class="nq-h3" id="integrate-checkout">Integrate checkout</h3>
+            <p>
+                <strong>Coming soon.</strong> Team Nimiq is preparing to release a plugin to integrate Nimiq with WooCommerce in Q1 2019.
+                Together with this we plan to publish detailed instructions on how to use it here.
+            </p>
+        </section>
+
+
+
+        <section class="apis">
+            <h2 class="nq-h2" id="apis">API Documentation</h2>
+            <p>
+                <strong>Nuts and bolts of Nimiq. </strong>
+                Detailed documentation of front-end, core and community-provided APIs and frameworks.
+            </p>
+            <ul class="nq-text">
+                <li>
+                    <a href="https://nimiq.github.io" id="front-end-doc" class="first-phrase">
+                        Front-end Documentation</a>.
+                    Start using Nimiq in your webapp and website.
+                    Detailed documentation on Account Manager, checkout flow, Nimiq Style, and more.
+                </li>
+                <li>
+                    <a href="https://nimiq-network.github.io/developer-reference" id="protocol-ref" class="first-phrase">
+                        Protocol Reference</a>.
+                    An in-depth look at the bits and bytes of the Nimiq Protocol.
+                    Reference for messages with their fields and types on the network level.
+                </li>
+                <li>
+                    <a href="https://doc.esdoc.org/github.com/nimiq-network/core/" id="core-doc" class="first-phrase">
+                        Nimiq Core Documentation</a>.
+                    Full Nimiq Core ES6 source code documentation.
+                </li>
+                <li>
+                    <a href="https://medium.com/nimiq-network/nimiq-a-peer-to-peer-payment-protocol-native-to-the-web-ffd324bb084"
+                        id="whitepaper" class="first-phrase">
+                        Nimiq Whitepaper</a>.
+                    Better understand the technical aspects and goals of the Nimiq Blockchain.
+                </li>
+                <li>
+                    <a href="https://nimiq.github.io/pages/community.html" id="community-tools" class="first-phrase">
+                        Community Tools and APIs</a>.
+                    Useful tools and APIs developed by the Nimiq Community.
+                </li>
+            </ul>
+        </section>
+
+
+
+        <section class="assets">
+            <h2 class="nq-h2" id="assets">Assets</h2>
+            <p>
+                <strong>Bits and bytes.</strong>
+                Browse through Nimiq's source code. New to Nimiq's look &amp;
+                feel? Checkout
+                Nimiq's Style Guide and download brand assets such as logos and signets.
+            </p>
+            <h3 class="nq-h3" id="nimiq-style">Nimiq Style</h3>
+            <p>
+                The Nimiq CSS framework to give your webapp or website the Nimiq look &amp; feel.
+            </p>
+            <ul class="nq-text">
+                <li>
+                    <a href="https://nimiq.github.io/style/demo.html" id="style-examples" class="first-phrase">
+                        Examples</a>.
+                    Buttons, labels, boxes, and colors of the Nimiq Style.
+                </li>
+                <li>
+                    <a href="https://github.com/nimiq/nimiq-style" id="style-repo" class="first-phrase">
+                        GitHub Repository</a>.
+                    The source code and basic instructions.
+                </li>
+                <li>
+                    <a href="https://nimiq.com/styleguide" id="style-guide" class="first-phrase">
+                        Nimiq Style Guide</a>.
+                    A general introduction to the concepts, colors, and typography.
+                </li>
+                <li>
+                    <a href="https://www.dropbox.com/sh/83v08gr5ej9zvy4/AACHryG7umH9oKQXpFkdBI0Sa?dl=0" id="logos-and-signets"
+                        class="first-phrase">
+                        Logos and Signets</a>.
+                    All resources, in color and monochrome, for print and digital use.
+                </li>
+            </ul>
+            <h3 class="nq-h3" id="source-code">Source Code</h3>
+
+            <p>
+                The Nimiq Source Code is hosted on GitHub in two separate projects.
+            </p>
+            <ul class="nq-text">
+                <li>
+                    <a href="https://github.com/nimiq-network" id="source-core" class="first-phrase">
+                        Nimiq Core</a>.
+                    Blockchain, node, core library&hellip;
+                </li>
+                <li>
+                    <a href="https://github.com/nimiq" id="source-front-end" class="first-phrase">
+                        Nimiq Front-end</a>.
+                    Nimiq apps, CSS, Vue.js components&hellip;
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer class="nq-text">
+        © Nimiq 2017-2018. Released under the MIT license. The Nimiq Developer Center is part of <a href="../">nimiq.com</a>.
+    </footer>
+</body>
+
+</html>
