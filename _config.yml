@@ -5,7 +5,14 @@ description: "Front-end Documentation"
 submodule_section: "Libraries and frameworks"
 submodules: "detailed"
 
-exclude: ["node_modules/*", "./*/*/**", "_dev/*", "submodules/doc-theme/libraries/**", "submodules/doc-theme/sub3/**", "submodules/email-template/**", "*vue-components/**"]
+exclude: [
+  "node_modules/*",
+  "./*/*/**",
+  "_dev/*",
+  "submodules/doc-theme/libraries/**",
+  "submodules/doc-theme/sub3/**",
+  "submodules/email-template/**",
+  "*vue-components/**"]
 
 #custom_header_tags: "custom-header-tags.html"
 ignore: ["tutorials/"]
