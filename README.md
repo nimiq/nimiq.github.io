@@ -24,7 +24,7 @@ The goal of this documentation is to get you started integrating Nimiq into your
   Reusable Vue.js components to build Nimiq-enabled websites and webapps.
 * **[Community Tools and APIs](pages/community)**:
   Useful tools and APIs developed by the Nimiq Community.
-* **[Tutorials](tutorials)**: Learn how to build a small app that can manage
+* **[Tutorials](pages/tutorials)**: Learn how to build a small app that can manage
   a wallet, send and receive transactions,
   and looks neat using Nimiq's look & feel in three short tutorials.
 

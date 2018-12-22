@@ -18,6 +18,6 @@ but Vue.js ended up convincing us for the following reasons:
 
 ## Why TypeScript
 
-We have been using type annotations in JavaScript in the Nimiq Core as well as in the Keyguard for a long time.
-These annotations where then checked with the TypeScript compiler providing type safety and better test-ability.
-So it was a logical step to start using TypeScript directly. it's boosting our productivity.
+We have been using type JSDoc annotations in JavaScript in the Nimiq Core as well as in the Keyguard for a long time.
+These annotations where then checked and thus we had a situation very similar to using TypeScript.
+So it was just a logical step to start using TypeScript directly. it's boosting our productivity.
