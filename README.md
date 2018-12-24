@@ -14,11 +14,11 @@ The goal of this documentation is to get you started integrating Nimiq into your
 
 ## Content
 
-* **[Nimiq Accounts Manager](submodules/accounts)**:
+* **[Nimiq Accounts Manager](submodules/accounts/)**:
   Provide the users of your project to use their Nimiq Accounts during
   [checkout and pay for products and services in NIM](submodules/accounts/#checkout),
   or to send [transactions](submodules/accounts/#sign-transaction), and more.
-* **[Nimiq Style](submodules/style) ([demo](submodules/style/demo.html))**:
+* **[Nimiq Style](submodules/style/) ([demo](submodules/style/demo.html))**:
   This Reusable CSS framework will give your app the Nimiq UI look and feel.
 * **[Nimiq Vue.js Components](https://github.com/nimiq/vue-components/tree/master/src/components)**:
   Reusable Vue.js components to build Nimiq-enabled websites and webapps.
@@ -37,7 +37,7 @@ we highly recommend using the same terminology for all user facing parts.
 
 While using layman terms in the UI, within the code, typical terms of the crypto space are being used.
 The following map will give you an idea which term to use when.
-See the “Terminology” section in the [FAQs on nimiq.com](nimiq.com/#faq) for more details on each term.
+See the “Terminology” section in the [FAQs on nimiq.com](https://nimiq.com/#faq) for more details on each term.
 
 | Layman term (for UI use)                       | API term | Term in code
 |------------------------------------------------|----------|---

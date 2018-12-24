@@ -5,7 +5,7 @@
 _[» Skip tutorial and see the code](playground.html#nano-client-2-events-and-ui-demo.html)._
 
 > **Just Getting started?**
-> This tutorial is based on the ideas and code of [Nano Client 1: Basics](tutorial-01-basic-client.md).
+> This tutorial is based on the ideas and code of [Nano Client 1: Basics](nano-client-1-basics.md).
 > So we have a nano client being connected and synced with the network but mostly printing out some logs.
 
 Our app needs some basic UI. And some more data to show.
@@ -108,10 +108,10 @@ Nimiq Style requires two CSS files to be added to `<head>`:
 
 > Learn more about Nimiq Style:
 >
-> * [The Nimiq Style Guide](http://nimiq.com/styleguide)
-> * [Documentation](http://nimiq.github.io/style/#nimiq-style-framework)
+> * [The Nimiq Style Guide](http://nimiq.com/styleguide/)
+> * [Documentation](https://nimiq.github.io/submodules/style/#nimiq-style-framework)
 > * [Source code](https://github.com/nimiq/nimiq-style)
-> * [Cheatsheet](http://nimiq.github.io/style/demo.html)
+> * [Cheatsheet](https://nimiq.github.io/submodules/style/demo.html)
 
 The Nimiq Style CSS framework provides classes are prefixed with `nq-`.
 Setting `nq-style` on `<body>` will automatically style general elements such as paragraphs and links.
