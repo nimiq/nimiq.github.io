@@ -281,4 +281,5 @@ window.onload = () => Nimiq.init(start, onError);
 
 ---
 
-Find more help and documentation in the [Nimiq Developer Center](https://nimiq.com/developers/).
+Find more help and documentation in the [Nimiq Developer Center](https://nimiq.com/developers/) and
+get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!

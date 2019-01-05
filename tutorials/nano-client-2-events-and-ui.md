@@ -165,4 +165,6 @@ And while you're at it, how about adding some graphs? :)
 
 ---
 
-Continue the tutorial: [Nano Client 3, Sending and Receiving Transactions »](nano-client-3-transactions)
+**Continue the tutorial**: [Nano Client 3, Sending and Receiving Transactions »](nano-client-3-transactions)
+
+_Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_

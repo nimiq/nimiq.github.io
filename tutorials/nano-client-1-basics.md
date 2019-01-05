@@ -159,4 +159,6 @@ Check your Internet connection and try disabling your browser's ad blocker.
 
 ---
 
-Continue the tutorial: [Basics 2, Blockchain Events and User Interface »](nano-client-2-events-and-ui)
+**Continue the tutorial**: [Basics 2, Blockchain Events and User Interface »](nano-client-2-events-and-ui)
+
+_Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_
