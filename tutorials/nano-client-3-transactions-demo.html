@@ -38,7 +38,7 @@
             $('peers').innerText = nimiq.network.peerCount;
         }
 
-        function updateBalance() {
+        async function updateBalance() {
             // Nano Clients don't have the whole accounts state and have to request single accounts from their peers
             const account = await nimiq.consensus.getAccount(nimiq.wallet.address)
             const balance = account ? Nimiq.Policy.satoshisToCoins(account.balance) : 0;
@@ -98,16 +98,16 @@
             const wallet = stored ? Nimiq.Wallet.loadPlain(stored) : await Nimiq.Wallet.generate();
             localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 
-            // Connecting to the network
-            network.connect();
-            status('Connected. Establishing consensus...');
-
             // Store references
             nimiq.consensus = consensus;
             nimiq.network = consensus.network;
             nimiq.blockchain = consensus.blockchain;
             nimiq.mempool = consensus.mempool;
             nimiq.wallet = wallet;
+
+            // Connecting to the network
+            nimiq.network.connect();
+            status('Connected. Establishing consensus...');
 
             // Event handlers
             nimiq.consensus.on('established', onConsensusEstablished);
