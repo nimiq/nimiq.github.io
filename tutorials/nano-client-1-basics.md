@@ -7,7 +7,7 @@
 Nimiq is a payment protocol based on blockchain technology.
 Blockchain technology is
 
-* Cencorship resistant: nobody can keep you from using it
+* Censorship resistant: nobody can keep you from using it
 * Privacy oriented: you don't need to provide any personal information to open an account
 * Decentralized: not controlled by a single person but by it's users
 
