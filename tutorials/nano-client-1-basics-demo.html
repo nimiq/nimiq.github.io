@@ -26,11 +26,11 @@
 
             status('Connected. Establishing consensus...');
             // Waiting for consensus to be establish
-            consensus.on('established', () => status('Consensus established'));
+            consensus.on('established', () => status('Consensus established.'));
         };
 
-        // Start Nimiq when the pages is fully loaded.
-        window.onload = () => Nimiq.init(start);
+        // Start loading the Nimiq client library
+        Nimiq.init(start);
     </script>
 </head>
 

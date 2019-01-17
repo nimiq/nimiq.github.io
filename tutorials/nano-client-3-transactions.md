@@ -20,8 +20,8 @@ With the following snippet in `start()`, the app will try to load a previously s
 otherwise create a new wallet and store it.
 
 ```js
-const stored = JSON.parse(localStorage.getItem('wallet'));
-const wallet = stored ? Nimiq.Wallet.loadPlain(stored) : await Nimiq.Wallet.generate();
+const stored = localStorage.getItem('wallet');
+const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
 localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 ```
 
@@ -57,6 +57,7 @@ function onConsensusEstablished() {
     $('height').innerText = nimiq.blockchain.height;
     $('address').innerText = nimiq.wallet.address.toUserFriendlyAddress();
 
+    nimiq.blockchain.on('head-changed', onHeadChanged);
     updateBalance(); // <- Add this line
 }
 
@@ -81,7 +82,8 @@ function async updateBalance() {
 > **Note**: Accounts with balance `0` are not getting stored on the blockchain.
 > Thus, if no account for the address has been returned, we can safely assume `0`.
 >
-> **Play:** To see your stored wallet, run [the example](playground.html#nano-client-3-transactions-demo.html), open your dev tools (F12), and enter:
+> **Play:** To see your stored wallet, run [the example](playground.html#nano-client-3-transactions-demo.html),
+> open your dev tools (F12), and enter:
 >
 > ```js
 > localStorage.getItem('wallet');
@@ -90,7 +92,7 @@ function async updateBalance() {
 > What you will get back is an array of bytes representing your serialized key pair consisting of public and private key.
 
 **Great! Your balance now stays up-to-date.**
-All set to finally receive and send transactions NIMs around.
+All set to finally send and receive NIMs.
 
 ## Receive Transactions
 
@@ -264,19 +266,19 @@ A basic version could be something along the lines of:
 function onError(code) {
     switch (code) {
         case Nimiq.ERR_WAIT:
-            alert('Error: Already open in another tab or window.');
+            alert('Error: Nimiq is already running in another tab or window.');
             break;
         case Nimiq.ERR_UNSUPPORTED:
-            alert('Error: Browser not supported');
+            alert('Error: Browser not supported.');
             break;
         default:
-            alert('Error: Nimiq initialization error');
+            alert('Error: Nimiq initialization error.');
             break;
     }
 }
 
 // Nimiq.init() accepts an error handler as a second parameter
-window.onload = () => Nimiq.init(start, onError);
+Nimiq.init(start, onError);
 ```
 
 ---

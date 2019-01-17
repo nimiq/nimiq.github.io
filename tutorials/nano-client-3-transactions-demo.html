@@ -22,6 +22,7 @@
             $('height').innerText = nimiq.blockchain.height;
             $('address').innerText = nimiq.wallet.address.toUserFriendlyAddress();
 
+            nimiq.blockchain.on('head-changed', onHeadChanged);
             updateBalance();
         }
 
@@ -40,10 +41,12 @@
 
         async function updateBalance() {
             // Nano Clients don't have the whole accounts state and have to request single accounts from their peers
-            const account = await nimiq.consensus.getAccount(nimiq.wallet.address)
+            // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
+            const account = await nimiq.consensus.getAccount(nimiq.wallet.address);
             const balance = account ? Nimiq.Policy.satoshisToCoins(account.balance) : 0;
+
             $('balance').innerText = balance.toFixed(2);
-            console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${account.balance}.`);
+            console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${balance}.`);
         }
 
         function sendTransaction(address, amount) {
@@ -94,8 +97,8 @@
             const consensus = await Nimiq.Consensus.nano();
 
             // Load or generate a wallet.
-            const stored = JSON.parse(localStorage.getItem('wallet'));
-            const wallet = stored ? Nimiq.Wallet.loadPlain(stored) : await Nimiq.Wallet.generate();
+            const stored = localStorage.getItem('wallet');
+            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
             localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 
             // Store references
@@ -111,7 +114,6 @@
 
             // Event handlers
             nimiq.consensus.on('established', onConsensusEstablished);
-            nimiq.blockchain.on('head-changed', onHeadChanged);
             nimiq.network.on('peers-changed', onPeersChanged);
             nimiq.consensus.addSubscriptions([wallet.address]);
             nimiq.mempool.on('transaction-added', tx => {
@@ -130,19 +132,19 @@
         function onError(code) {
             switch (code) {
                 case Nimiq.ERR_WAIT:
-                    alert('Error: Already open in another tab or window.');
+                    alert('Error: Nimiq is already running in another tab or window.');
                     break;
                 case Nimiq.ERR_UNSUPPORTED:
-                    alert('Error: Browser not supported');
+                    alert('Error: Browser not supported.');
                     break;
                 default:
-                    alert('Error: Nimiq initialization error');
+                    alert('Error: Nimiq initialization error.');
                     break;
             }
         }
 
         // Nimiq.init() accepts an error handler as a second parameter
-        window.onload = () => Nimiq.init(start, onError);
+        Nimiq.init(start, onError);
     </script>
 </head>
 

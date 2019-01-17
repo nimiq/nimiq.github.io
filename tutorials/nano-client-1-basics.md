@@ -58,14 +58,14 @@ We start from a standard HTML 5 page importing the Nimiq library:
 </html>
 ```
 
-Add a script that will start the Nimiq Nano Client when the page is loaded:
+Add a script that will load and start the Nimiq client library:
 
 ```js
 async function start() {
     // The code below will go here
 }
 
-window.onload = () => Nimiq.init(start);
+Nimiq.init(start);
 ```
 
 Inside this function:

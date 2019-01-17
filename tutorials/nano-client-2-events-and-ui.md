@@ -61,8 +61,11 @@ function status(text) {
 }
 
 function onConsensusEstablished() {
-    status('Consensus established');
+    status('Consensus established.');
     $('height').textContent = nimiq.blockchain.height;
+
+    // Now start listening for new blocks, the latest block is called head
+    nimiq.blockchain.on('head-changed', onHeadChanged);
 }
 
 // A new block got mined and is now the latest block
@@ -84,15 +87,15 @@ async function start() {
 
     nimiq.consensus.on('established', onConsensusEstablished);
     nimiq.consensus.on('lost', () => status('Consensus lost'));
-    nimiq.blockchain.on('head-changed', onHeadChanged);
     nimiq.network.on('peers-changed', onPeersChanged);
 }
 ```
 
-Finally, start the Nano Client when the page finished loading:
+Finally, start the Nimiq client library.
+You will have this line already if you continued from tutorial 1.
 
 ```js
-window.onload = () => Nimiq.init(start);
+Nimiq.init(start);
 ```
 
 **The logic is defined, let's make it look good!**

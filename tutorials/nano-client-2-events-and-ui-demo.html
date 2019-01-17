@@ -26,8 +26,11 @@
         }
 
         function onConsensusEstablished() {
-            status('Consensus established');
+            status('Consensus established.');
             $('height').innerText = nimiq.blockchain.height;
+
+            // Now start listening for new blocks, the latest block is called head
+            nimiq.blockchain.on('head-changed', onHeadChanged);
         }
 
         function onHeadChanged() {
@@ -60,12 +63,11 @@
 
             // Event handlers
             nimiq.consensus.on('established', onConsensusEstablished);
-            nimiq.consensus.on('lost', () => status('Consensus lost'));
-            nimiq.blockchain.on('head-changed', onHeadChanged);
+            nimiq.consensus.on('lost', () => status('Consensus lost.'));
             nimiq.network.on('peers-changed', onPeersChanged);
         }
 
-        window.onload = () => Nimiq.init(start);
+        Nimiq.init(start);
     </script>
 </head>
 
