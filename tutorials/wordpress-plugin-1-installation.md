@@ -1,4 +1,4 @@
-# Nimiq WordPress WooCommerce Plugin: Installation
+# Nimiq Payment Plugin for WordPress WooCommerce
 
 WooCommerce is one of the most common online shop systems used on the Web.
 Integrated into WordPress, it allows you to quickly set up your own online shop.
@@ -20,10 +20,16 @@ by manually installing all requirements.
 
 As prerequisite, you need to install Docker and Docker Compose.
 Please refer to [this page](https://docs.docker.com/compose/install/) for detailed instructions for all operating systems.
-As an extra, you can add command-line completion for Docker following [this guide](https://docs.docker.com/compose/completion/).
+
+**For Linux users**: Make sure to follow the
+[post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).
+They will also explain how to make Docker start with the system.
+Otherwise, before using Docker or Docker-compose, you'll need to start Docker with `sudo systemctl start docker`.
+As an extra, you can also add command-line completion for Docker-compose following [this guide](https://docs.docker.com/compose/completion/).
 
 To get a basic version of WordPress in a Docker container for local testing use
 [Docker's official guide for WordPress]( https://docs.docker.com/compose/wordpress/).
+It's a "one-time installation", i.e. it won't keep your settings and plugins.
 
 To setup an online shop online, we need an installation that keeps plugins and other configurations despite being restarted.
 
@@ -82,19 +88,7 @@ To setup an online shop online, we need an installation that keeps plugins and o
    (replace `localhost` with the IP of your VPS/server), your newly installed WordPress
    will greet you with an installation wizard, go through it to set up a user account and other details.
 
-[done until here]
----
-
-BUG/TODO:
-Asks for "Connection Information" > something wrong with permissions on `.wordpress`
-
----
-[continue here when bug is solved.]
-
-Start and stop your WordPress container:
-
-
-Clean-up and reset your installation:
+To clean-up and reset your installation use:
 
 ```bash
 docker container prune       # delete docker instances
@@ -117,28 +111,37 @@ and
 ## WooCommerce
 
 Log into the the admin panel of your WordPress installation at `/wp-admin/`,
-select _Plugins_ > _Add New_ > search for "woocommerce" > and hit _install_.
+select _Plugins_ > _Add New_ > search for "woocommerce" > and hit _Install Now_.
 
 ![Install WooCommerce plugin](resources/woocommerce-plugin.png)
 
----
+**Note**: If a popup asking for FTP credentials shows up when clicking _Install Now_ make sure the `~/wordpress` folder
+and all its subfolders are writable for the `docker` group with `chmod -R g+w ~/wordpress`.
 
-Asks for "Connection Information" > add `.wordpress` to docker group (docker volume permissions)
-From market place
-activate
-run or skip setup?
-Instructions on how to click through the setup dialog
-> ideally screenshots of
+After the installation completed click _Activate_ and follow the setup process.
+FYI, WooCommerce will suggest to install and sign-up for a lot of other third-party plugins.
+Take your time and decide wisely. :)
 
-Disclaimer: check out the legal and tax requirements of your country before starting to sell with your shop.
+![WooCommerce activation process](resources/woocommerce-activation.png)
 
-compose down > plugin still there? >
+During the process, disable able all other payment options.
+A later version of the Nimiq Payment Plugin will allow to combine other payment methods.
 
-docker prune
+![WooCommerce activation process](resources/woocommerce-activation-payments.png)
 
 ## Nimiq Plugin
 
-Upload plugin
-(future: Wordpress market place)
+Download the latest Nimiq Payment Plugin as ZIP file [here](https://github.com/nimiq/woocommerce-gateway-nimiq/releases).
+Go to _Plugins_ > _Add New_ > click select _Upload Plugin_, upload the ZIP file you just downloaded >
+and click _Activate_ after the installation.
 
-## Plugin Setup
+You'll now find _WooCommerce Nimiq Gateway_ in your plugin list. Click _Configure_.
+You need to setup your Nimiq Address to receive transactions and might want to adjust other settings.
+
+Next, go to _WooCommerce_ > _Settings_ > _General_ and select at the bottom of the page _Currency_ "Nimiq (NIM)".
+
+**Notes**: For now, the Nimiq Payment Plugin is available for the Nimiq Testnet only.
+The Mainnet version is expected to be ready by the end of Q1 2019.
+The Mainnet version will also be available trough Wordpress' marketplace.
+
+**Disclaimer**: please check the legal and tax requirements of your country before starting to sell with your shop.
