@@ -5,6 +5,12 @@ Integrated into WordPress, it allows you to quickly set up your own online shop.
 
 _TL;DR? Check out the [Nimiq Shop](https://shop.nimiq.com/) to see the plugin in action._
 
+The installation will be three steps:
+
+1) Preparing the server and setting up WordPress
+1) Adding the WooCommerce plugin and configuring it
+1) Finally, adding the Nimiq plugin plus a quick setup
+
 ## WordPress
 
 If you are using a managed service,
