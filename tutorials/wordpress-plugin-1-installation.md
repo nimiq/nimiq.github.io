@@ -7,9 +7,9 @@ _TL;DR? Check out the [Nimiq Shop](https://shop.nimiq.com/) to see the plugin in
 
 The installation will be three steps:
 
-1) Preparing the server and setting up WordPress
-1) Adding the WooCommerce plugin and configuring it
-1) Finally, adding the Nimiq plugin plus a quick setup
+1. [Preparing the server and setting up WordPress](#wordpress)
+1. [Adding the WooCommerce plugin and configuring it](#woocommerce)
+1. [Finally, adding the Nimiq plugin plus a quick setup](#nimiq-plugin)
 
 ## WordPress
 
@@ -45,13 +45,13 @@ For the online shop, we're going to setup Docker to store
 all configurations, user uploads, the database content as well as all plugins outside the Docker container.
 This way we can 1) easily backup all relevant data and 2) keep all configurations even if we restart the service.
 
-1) **Storage location**: Create a folder in you home directory to store the custom WordPress data:
+1. **Storage location**: Create a folder in you home directory to store the custom WordPress data:
 
    ```bash
    mkdir -p ~/wordpress/data ~/wordpress/database
    ```
 
-2) **Docker compose**: Create a `docker-compose.yaml` file in `~/wordpress`
+1. **Docker compose**: Create a `docker-compose.yaml` file in `~/wordpress`
    (or [download it](resources/docker-compose.yaml)) with the following content.
    This will instruct Docker to setup a MySQL database and install WordPress
    but store all the data in the folder created before.
@@ -88,7 +88,7 @@ This way we can 1) easily backup all relevant data and 2) keep all configuration
                - ~/wordpress/data:/var/www/html/wp-content
    ```
 
-3) **Start and stop**: Open a terminal, go to `~/wordpress` and run your docker with `up` and stop it with `down`.
+1. **Start and stop**: Open a terminal, go to `~/wordpress` and run your docker with `up` and stop it with `down`.
 
    ```bash
    docker-compose up     # start docker with logs printed to stdout
@@ -96,7 +96,7 @@ This way we can 1) easily backup all relevant data and 2) keep all configuration
    docker-compose down   # shutdown detached docker instances
    ```
 
-4) **WordPress installation**: Going to [localhost:8080](http://localhost:8080)
+1. **WordPress installation**: Going to [localhost:8080](http://localhost:8080)
    (replace `localhost` with the IP of your VPS/server), your newly installed WordPress
    will greet you with an installation wizard, go through it to set up a user account and other details.
 
