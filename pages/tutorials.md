@@ -15,4 +15,9 @@ in three short tutorials.
 * **[Nano Client 3: Transactions](../tutorials/nano-client-3-transactions).**
   Send and receive transactions directly from within the browser.
 
+## Nimiq Payment Plugin
+
+**[WordPress Payment Plugin 1: Installation.](../tutorials/wordpress-payment-plugin-1-installation)**
+Setup an online shop with WordPress + WooCommerce and configure the Nimiq Payment Plugin to receive payments in NIM.
+
 **More to come.** Want to contribute? Please [get in touch](mailto:sven@nimiq.com).
