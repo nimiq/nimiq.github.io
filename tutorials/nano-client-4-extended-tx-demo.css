@@ -1,0 +1,88 @@
+.nq-text,
+.nq-style p {
+    opacity: 1;
+}
+
+.nq-text {
+    margin-top: 3rem;
+}
+
+.nq-text a:hover {
+    text-decoration: underline;
+}
+
+.nq-button {
+    margin: 4rem auto 0;
+}
+
+.nq-card {
+    margin: 0 auto;
+}
+
+@media(min-width: 600px) {
+    .nq-card {
+    margin-top: 10rem;
+    }
+}
+
+.nq-card-header {
+    padding: 5rem 5rem 0;
+}
+
+.nq-label {
+    display: inline-block;
+    width: 30rem;
+    vertical-align: top;
+}
+
+.nq-label+* {
+    display: inline-block;
+    width: 36rem;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+h2 span {
+    flex: 0 0 auto;
+}
+
+h2:after {
+    content: "";
+    height: 1px;
+    width: 100%;
+    background: var(--nimiq-blue);
+    opacity: .1;
+    margin-left: 2rem;
+}
+
+input {
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--nimiq-blue);
+    background: var(--nimiq-white);
+    padding: 1rem;
+    border: 2px solid rgba(31, 35, 72, .1);
+    border-radius: 4px;
+}
+
+input:focus {
+    border-color: rgba(31, 35, 72, .16);
+    outline: none;
+}
+
+*::placeholder {
+    color: var(--nimiq-light-blue);
+}
+
+.transactions label {
+    width: 14rem;
+    vertical-align: middle;
+}
+
+.transactions input {
+    width: 52rem;
+}
