@@ -63,21 +63,22 @@
 
             // create an extended transaction that will carry the message as "extra data"
             function extendedTransaction() {
-                // const extraData = Utf8Tools.stringToUtf8ByteArray(message);
+                // turn string into a safely encoded list of bytes
                 const extraData = Nimiq.BufferUtils.fromAscii(message);
 
                 const transaction = new Nimiq.ExtendedTransaction(
-                    nimiq.wallet.address,
-                    Nimiq.Account.Type.BASIC,
+                    nimiq.wallet.address,       // sender address
+                    Nimiq.Account.Type.BASIC,   // and account type
                     Nimiq.Address.fromUserFriendlyAddress(address),
-                    Nimiq.Account.Type.BASIC,
+                    Nimiq.Account.Type.BASIC,   // <- recipient -^
                     Nimiq.Policy.coinsToSatoshis(amount),
-                    0,
+                    0,                          // fee
                     nimiq.blockchain.height,
                     Nimiq.Transaction.Flag.NONE,
-                    extraData
+                    extraData                   // the message
                 );
 
+                // sign transaction with key pair of our wallet
                 const keyPair = nimiq.wallet._keyPair;
                 const signature = Nimiq.Signature.create(
                     keyPair.privateKey,
