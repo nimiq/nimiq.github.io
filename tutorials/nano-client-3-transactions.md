@@ -167,7 +167,7 @@ function sendTransaction(recipient, amount) {
 > **Fun fact:** The `0` in the middle is the **fee** in Luna.
 > In Nimiq, up to ten transactions per block per sender are free.
 > To be precise, other nodes will accept maximum 10 free transactions from the same sender in the `mempool` at the same time.
-> If you want to send out more transactions at once, a minimum fee of one Luna per byte is required.
+> If you want to send out more transactions at once, a minimum fee of two Luna per byte is required.
 > A basic transaction (without a message) is 138 bytes, an extended transaction 144 bytes + the byte length of the message.
 
 To show some feedback while the transaction is going out,
