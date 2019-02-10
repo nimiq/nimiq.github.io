@@ -14,6 +14,8 @@ in three short tutorials.
   Use Nimiq Style to add UI to the basic client.
 * **[Nano Client 3: Transactions](../tutorials/nano-client-3-transactions).**
   Send and receive transactions directly from within the browser.
+* **[Nano Client 4: Extended Transactions](../tutorials/nano-client-4-extended-tx).**
+  Add a message to your transactions using extended transactions.
 
 ## Nimiq Payment Plugin
 
