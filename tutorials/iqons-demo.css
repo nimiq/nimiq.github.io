@@ -1,0 +1,63 @@
+.nq-label {
+    width: 25rem;
+}
+
+.nq-label+* {
+    width: 41rem;
+}
+
+#address,
+#balance {
+    width: 22rem;
+}
+
+#iqon {
+    float: right;
+    margin-top: -1rem;
+}
+
+#iqon svg {
+    width: 16rem;
+    height: 16rem;
+}
+
+#transaction {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s;
+}
+
+.consensus-established #transaction {
+    max-height: 63rem;
+}
+
+#transaction label {
+    width: 14rem;
+    vertical-align: middle;
+}
+
+#transaction input {
+    width: 52rem;
+}
+
+#tx_overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s;
+}
+
+#transaction.ready #tx_overview {
+    max-height: 21rem;
+}
+
+#tx_overview span {
+    font-size: 150%;
+}
+
+#tx_overview_sender svg, #tx_overview_recipient svg {
+    width: 15rem;
+    height: 15rem;
+}
