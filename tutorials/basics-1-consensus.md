@@ -1,4 +1,4 @@
-# Nano Client 1: Basics
+# Basics 1: Establishing Consensus
 
 **Goal**: Build a minimal app that connects to the Nimiq network and establishes consensus.
 
@@ -31,9 +31,9 @@ And that is what we're going to do!
 
 The goal of this little demo is to connect to the network and reach consensus.
 
-_[» Skip tutorial and experiment with the code](playground.html#nano-client-1-basics-demo.html)._
+_[» Skip tutorial and experiment with the code](playground.html#basics-1-consensus-demo.html)._
 
-It's a good idea to [open the source code](playground.html#nano-client-1-basics-demo.html)
+It's a good idea to [open the source code](playground.html#basics-1-consensus-demo.html)
 in parallel to see how it all fits together, but also to modify and play.
 The example we'll be building here can be used for building Nimiq-enabled apps.
 
@@ -152,13 +152,13 @@ After a while, you should see
 
 **Welcome to the Nimiq Blockchain! :)**
 
-[» See the prototype in action and modify it](playground.html#nano-client-1-basics-demo.html).
+[» See the prototype in action and modify it](playground.html#basics-1-consensus-demo.html).
 
 If even after a long time the client can not establish consensus, something went wrong.
 Check your Internet connection and try disabling your browser's ad blocker.
 
 ---
 
-**Continue the tutorial**: [Basics 2, Blockchain Events and User Interface »](nano-client-2-events-and-ui)
+**Continue the tutorial**: [Basics 2, Blockchain Events and User Interface »](basics-2-events-and-ui)
 
 _Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_

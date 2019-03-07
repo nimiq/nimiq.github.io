@@ -1,11 +1,11 @@
-# Nano Client 2: Blockchain Events & User Interface
+# Basics 2: Blockchain Events & User Interface
 
 **Goal**: We'll add listeners to events on the blockchain and network and show these updates in a beautiful Nimiq-style UI.
 
-_[» Skip tutorial and see the code](playground.html#nano-client-2-events-and-ui-demo.html)._
+_[» Skip tutorial and see the code](playground.html#basics-2-events-and-ui-demo.html)._
 
 > **Just Getting started?**
-> This tutorial is based on the ideas and code of [Nano Client 1: Basics](nano-client-1-basics.md).
+> This tutorial is based on the ideas and code of [Basics 1: Consensus](basics-1-consensus.md).
 > So we have a nano client being connected and synced with the network but mostly printing out some logs.
 
 Our app needs some basic UI. And some more data to show.
@@ -27,7 +27,7 @@ We'll use `span` tags with IDs to fill in the data later.
 
 In the `start` function, the nano client will connect to the network and
 establish consensus.
-See [Nano Client 1: Basics](nano-client-1-basics) for details.
+See [Nano Client 1: Basics](basics-1-consensus) for details.
 We will listen to events from various parts of the blockchain later on.
 Thus, we define a shared variable `nimiq` to keep references.
 (More details on each part in the next tutorial.)
@@ -154,7 +154,7 @@ To have the box full-screen for mobile and neatly centered for desktop, add thes
 Check it out. **That's much better with just a few lines of code!**
 
 
-[» Run and modify this code live](playground.html#nano-client-2-events-and-ui-demo.html).
+[» Run and modify this code live](playground.html#basics-2-events-and-ui-demo.html).
 
 ## What's next?
 
@@ -168,6 +168,6 @@ And while you're at it, how about adding some graphs? :)
 
 ---
 
-**Continue the tutorial**: [Nano Client 3, Sending and Receiving Transactions »](nano-client-3-transactions)
+**Continue the tutorial**: [Nano Client 3, Sending and Receiving Transactions »](basics-3-transactions)
 
 _Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_

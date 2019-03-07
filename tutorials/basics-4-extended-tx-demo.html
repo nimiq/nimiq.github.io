@@ -7,7 +7,7 @@
     <title>Nimiq Nano Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
-    <link href="nano-client-3-transactions-demo.css" rel="stylesheet">
+    <link href="basics-3-transactions-demo.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script>
         const $ = document.getElementById.bind(document);
@@ -49,13 +49,50 @@
             console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${balance}.`);
         }
 
-        function sendTransaction(address, amount) {
-            const transaction = nimiq.wallet.createTransaction(
-                Nimiq.Address.fromUserFriendlyAddress(address),
-                Nimiq.Policy.coinsToSatoshis(amount),
-                0, // fee
-                nimiq.blockchain.height
-            );
+        function sendTransaction(address, amount, message) {
+
+            // helper function to create the basic transaction used in tutorial 3
+            function basicTransaction() {
+                return nimiq.wallet.createTransaction(
+                    Nimiq.Address.fromUserFriendlyAddress(address),
+                    Nimiq.Policy.coinsToSatoshis(amount),
+                    0, // fee
+                    nimiq.blockchain.height
+                );
+            }
+
+            // create an extended transaction that will carry the message as "extra data"
+            function extendedTransaction() {
+                // turn string into a safely encoded list of bytes
+                const extraData = Nimiq.BufferUtils.fromAscii(message);
+
+                const transaction = new Nimiq.ExtendedTransaction(
+                    nimiq.wallet.address,       // sender address
+                    Nimiq.Account.Type.BASIC,   // and account type
+                    Nimiq.Address.fromUserFriendlyAddress(address),
+                    Nimiq.Account.Type.BASIC,   // <- recipient -^
+                    Nimiq.Policy.coinsToSatoshis(amount),
+                    0,                          // fee
+                    nimiq.blockchain.height,
+                    Nimiq.Transaction.Flag.NONE,
+                    extraData                   // the message
+                );
+
+                // sign transaction with key pair of our wallet
+                const keyPair = nimiq.wallet._keyPair;
+                const signature = Nimiq.Signature.create(
+                    keyPair.privateKey,
+                    keyPair.publicKey,
+                    transaction.serializeContent()
+                );
+                const proof = Nimiq.SignatureProof.singleSig(keyPair.publicKey, signature);
+                transaction.proof = proof.serialize();
+
+                return transaction;
+            }
+
+            // create an extended transaction if the message is not empty
+            const transaction = message.trim().length > 0 ? extendedTransaction() : basicTransaction();
 
             // Send to the Nimiq network
             nimiq.consensus.relayTransaction(transaction);
@@ -124,8 +161,9 @@
             $('tx_send').addEventListener('click', () => {
                 const recipient = $('tx_recipient').value;
                 const amount = parseInt($('tx_amount').value);
+                const message = $('tx_message').value;
 
-                sendTransaction(recipient, amount);
+                sendTransaction(recipient, amount, message);
             });
         }
 
@@ -152,7 +190,7 @@
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Nano Wallet</h1>
-            <div class="nq-text">Demo app for <a href="../tutorials/nano-client-3-transactions.html">Basics 3: Transactions</a>.</div>
+            <div class="nq-text">Demo app for <a href="../tutorials/basics-4-extended-tx.html">Basics 4: Extended Transactions</a>.</div>
         </div>
         <div class="nq-card-body">
             <h2><span>Wallet</span></h2>
@@ -185,6 +223,10 @@
                 <p>
                     <label class="nq-label" for="tx_amount">Amount</label>
                     <input type="number" id="tx_amount" placeholder="0.00">
+                </p>
+                <p>
+                    <label class="nq-label" for="tx_message">Message</label>
+                    <input type="text" id="tx_message" placeholder="A message for the recipient (optional)">
                 </p>
                 <button id="tx_send" class="nq-button">Send Transaction</button>
             </div>

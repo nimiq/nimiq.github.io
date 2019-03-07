@@ -8,13 +8,13 @@ send and receive transactions,
 and looks neat using Nimiq's look & feel
 in three short tutorials.
 
-* **[Nano Client 1: Basics](../tutorials/nano-client-1-basics).**
+* **[Nano Client 1: Basics](../tutorials/basics-1-consensus).**
   Set up a node in a website, connect it and reach consensus.
-* **[Nano Client 2: Blockchain Events and User Interface](../tutorials/nano-client-2-events-and-ui).**
+* **[Nano Client 2: Blockchain Events and User Interface](../tutorials/basics-2-events-and-ui).**
   Use Nimiq Style to add UI to the basic client.
-* **[Nano Client 3: Transactions](../tutorials/nano-client-3-transactions).**
+* **[Nano Client 3: Transactions](../tutorials/basics-3-transactions).**
   Send and receive transactions directly from within the browser.
-* **[Nano Client 4: Extended Transactions](../tutorials/nano-client-4-extended-tx).**
+* **[Nano Client 4: Extended Transactions](../tutorials/basics-4-extended-tx).**
   Add a message to your transactions using extended transactions.
 
 ## Nimiq Payment Plugin

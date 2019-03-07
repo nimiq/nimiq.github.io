@@ -1,8 +1,8 @@
 # Basics 3: Transactions
 
-_TL;DR? [Run the demo](playground.html#nano-client-3-transactions-demo.html)._
+_TL;DR? [Run the demo](playground.html#basics-3-transactions-demo.html)._
 
-Building on [Nano Client 2: Blockchain Events & User Interface](nano-client-2-events-and-ui),
+Building on [Basics 2: Blockchain Events & User Interface](basics-2-events-and-ui),
 we're almost ready to receive some NIM.
 
 But first, we need a wallet. And a place to store it.
@@ -82,7 +82,7 @@ function async updateBalance() {
 > **Note**: Accounts with balance `0` are not getting stored on the blockchain.
 > Thus, if no account for the address has been returned, we can safely assume `0`.
 >
-> **Play:** To see your stored wallet, run [the example](playground.html#nano-client-3-transactions-demo.html),
+> **Play:** To see your stored wallet, run [the example](playground.html#basics-3-transactions-demo.html),
 > open your dev tools (F12), and enter:
 >
 > ```js
@@ -212,7 +212,7 @@ After that, the event listeners will be removed with `off()`.
 
 This little demo app has all the basic functionality to be a minimal wallet app.
 So now we're ready to receive some NIM!
-Start [the demo](playground.html#nano-client-3-transactions-demo.html)
+Start [the demo](playground.html#basics-3-transactions-demo.html)
 and switch to Mainnet in `start()`.
 
 ```js
@@ -231,6 +231,6 @@ Want to send a little message with each transaction? Yes, off to extended transa
 
 ---
 
-**Continue the tutorial**: [Nano Client 4, Extended  Transactions »](nano-client-4-extended-tx)
+**Continue the tutorial**: [Basics 4, Extended  Transactions »](basics-4-extended-tx)
 
 _Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_
