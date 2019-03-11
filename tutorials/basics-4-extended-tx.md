@@ -2,7 +2,7 @@
 
 _TL;DR? [Run the demo](playground.html#basics-4-extneded-tx-demo.html)._
 
-Building on the tutorial [Nano Client 3: Transactions](basics-3-transactions),
+Building on the tutorial [Basics 3: Transactions](basics-3-transactions),
 we'll augment the basic transaction with an extended transaction to also be able to send a message with each transaction.
 
 ## Message Input
@@ -38,7 +38,7 @@ Otherwise, we keep the code for creating a basic transaction and send that inste
 This will save bytes being sent out to the network and in case we send out more than 10 transactions per block,
 it will reduce the fee to be paid.
 See the note in "Send Transaction" in
-[Nano Client 3: Transactions](basics-3-transactions#send-transactions) for details.
+[Basics 3: Transactions](basics-3-transactions#send-transactions) for details.
 
 Step one, let's move the basic transaction code into it's own
 helper function.

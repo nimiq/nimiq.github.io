@@ -1,20 +1,19 @@
 # Tutorials
 
-
-## Nano Client
+## Basics
 
 Learn how to build a small app that can manage a wallet,
 send and receive transactions,
 and looks neat using Nimiq's look & feel
-in three short tutorials.
+in a few short tutorials.
 
-* **[Nano Client 1: Basics](../tutorials/basics-1-consensus).**
+* **[Basics 1: Basics](../tutorials/basics-1-consensus).**
   Set up a node in a website, connect it and reach consensus.
-* **[Nano Client 2: Blockchain Events and User Interface](../tutorials/basics-2-events-and-ui).**
+* **[Basics 2: Blockchain Events and User Interface](../tutorials/basics-2-events-and-ui).**
   Use Nimiq Style to add UI to the basic client.
-* **[Nano Client 3: Transactions](../tutorials/basics-3-transactions).**
+* **[Basics 3: Transactions](../tutorials/basics-3-transactions).**
   Send and receive transactions directly from within the browser.
-* **[Nano Client 4: Extended Transactions](../tutorials/basics-4-extended-tx).**
+* **[Basics 4: Extended Transactions](../tutorials/basics-4-extended-tx).**
   Add a message to your transactions using extended transactions.
 
 ## Nimiq Payment Plugin

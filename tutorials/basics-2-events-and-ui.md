@@ -27,7 +27,7 @@ We'll use `span` tags with IDs to fill in the data later.
 
 In the `start` function, the nano client will connect to the network and
 establish consensus.
-See [Nano Client 1: Basics](basics-1-consensus) for details.
+See [Basics 1: Establishing Consensus](basics-1-consensus) for details.
 We will listen to events from various parts of the blockchain later on.
 Thus, we define a shared variable `nimiq` to keep references.
 (More details on each part in the next tutorial.)
@@ -36,7 +36,7 @@ Thus, we define a shared variable `nimiq` to keep references.
 const nimiq = {}; // < -- this is the shared variable
 
 async function start() {
-    // Code from tutorial "Nano Client 1"
+    // Code from tutorial "Basics 1: Establishing Consensus"
     status('Nimiq loaded. Connecting...');
     Nimiq.GenesisConfig.test();
     const consensus = await Nimiq.Consensus.nano();
@@ -168,6 +168,6 @@ And while you're at it, how about adding some graphs? :)
 
 ---
 
-**Continue the tutorial**: [Nano Client 3, Sending and Receiving Transactions »](basics-3-transactions)
+**Continue the tutorial**: [Basics 3, Sending and Receiving Transactions »](basics-3-transactions)
 
 _Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_
