@@ -105,7 +105,7 @@ Finally, checking if we got a message, we can use the two helper functions to pu
 
 Continuing from this line, the code about relaying the transaction and giving feedback will stay the same.
 
-This completes your first small Nimiq wallet with all the basic features of
+Now you have completed all basic features of your Nimiq wallet web-app:
 storing the keys, sending and receiving transactions.
 
 Try it out!
@@ -138,36 +138,14 @@ Congratulations, and welcome to the Nimiq Ecosystem!**
 
 &nbsp;
 
-## Need more ideas?
+## What's next?
 
-Sure!
-
-**Encryption**: Right now, your private key is stored unencrypted.
-You can replace `exportPlain()` with `exportEncrypted(password)` and `loadPlain()` with `loadEncrypted(stored, password)`.
-
-**Error handling**: Finally, before publishing this Nano Wallet, we should add some error handling.
-A basic version could be something along the lines of:
-
-```js
-function onError(code) {
-    switch (code) {
-        case Nimiq.ERR_WAIT:
-            alert('Error: Nimiq is already running in another tab or window.');
-            break;
-        case Nimiq.ERR_UNSUPPORTED:
-            alert('Error: Browser not supported.');
-            break;
-        default:
-            alert('Error: Nimiq initialization error.');
-            break;
-    }
-}
-
-// Nimiq.init() accepts an error handler as a second parameter
-Nimiq.init(start, onError);
-```
+How about visualizing the addresses and help our users avoiding typos and clipboard attacks?
+The next tutorial will show you how to use Nimiq Iqons.
+![](resources/iqons.png)
 
 ---
 
-Find more help and documentation in the [Nimiq Developer Center](https://nimiq.com/developers/) and
-get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!
+**Continue the tutorial**: [Basics 5, Nimiq Iqons »](basics-5-iqons)
+
+_Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_

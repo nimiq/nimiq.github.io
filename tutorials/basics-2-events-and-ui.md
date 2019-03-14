@@ -160,11 +160,35 @@ Check it out. **That's much better with just a few lines of code!**
 
 This short demo could be extended to a little blockchain statistics viewer.
 
-**Idea**: Want to calculate and show the global hash rate?
+More ideas:
+
+**Global hash rate**: Want to calculate and show the global hash rate?
 Get the difficulty from the latest block in `onHeadChanged`
 and have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
 to turn the difficulty into the global hash rate.
 And while you're at it, how about adding some graphs? :)
+
+**Error handling**: Before publishing this your Nimiq Nano Wallet, you should add some error handling.
+A basic version could be something along the lines of:
+
+```js
+function onError(code) {
+    switch (code) {
+        case Nimiq.ERR_WAIT:
+            alert('Error: Nimiq is already running in another tab or window.');
+            break;
+        case Nimiq.ERR_UNSUPPORTED:
+            alert('Error: Browser not supported.');
+            break;
+        default:
+            alert('Error: Nimiq initialization error.');
+            break;
+    }
+}
+
+// Nimiq.init() accepts an error handler as a second parameter
+Nimiq.init(start, onError);
+```
 
 ---
 

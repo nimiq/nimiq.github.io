@@ -157,6 +157,13 @@ After a while, you should see
 If even after a long time the client can not establish consensus, something went wrong.
 Check your Internet connection and try disabling your browser's ad blocker.
 
+## Need more ideas?
+
+Sure!
+
+**Encryption**: Right now, your private key is stored unencrypted.
+You can replace `exportPlain()` with `exportEncrypted(password)` and `loadPlain()` with `loadEncrypted(stored, password)`.
+
 ---
 
 **Continue the tutorial**: [Basics 2, Blockchain Events and User Interface »](basics-2-events-and-ui)
