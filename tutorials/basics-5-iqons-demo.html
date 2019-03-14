@@ -3,16 +3,14 @@
 
 <head>
     <meta charset=utf-8 />
-    <meta name="description" content="Basics 3: Transactions - nimiq.com/developers">
+    <meta name="description" content="Basics 5: Using Iqons - nimiq.com/developers">
     <title>Nimiq Nano Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
-    <link href="nano-client-3-transactions-demo.css" rel="stylesheet">
-    <link href="iqons-demo.css" rel="stylesheet">
+    <link href="basics-3-transactions-demo.css" rel="stylesheet">
+    <link href="basics-5-iqons-demo.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
     <script type="module">
-        // import Nimiq from "https://unpkg.com/@nimiq/core-web";
-        // import Nimiq from "https://unpkg.com/@nimiq/core-web@1.4.1/nimiq.js";
         import Iqons from "https://unpkg.com/@nimiq/iqons@1.2.0/dist/iqons.bundle.min.js";
 
         const $ = document.getElementById.bind(document);
@@ -134,10 +132,12 @@
             try {
                 const recipientAddress = Nimiq.Address.fromUserFriendlyAddress($('tx_recipient').value.trim())
                                                       .toUserFriendlyAddress();
+
                 await Iqons.render(nimiq.wallet.address.toUserFriendlyAddress(), $('tx_overview_sender'));
-                const amount = parseInt($('tx_amount').value || '0');
+                const amount = parseFloat($('tx_amount').value || '0');
                 $('tx_overview_amount').innerText = `${amount} NIM`;
                 await Iqons.render(recipientAddress, $('tx_overview_recipient'));
+
                 ready = amount > 0;
             } catch (error) { }
 
@@ -217,8 +217,9 @@
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Nano Wallet</h1>
-            <div class="nq-text">Demo app for <a href="../tutorials/nano-client-4-extended-tx.html">Basics 4: Extended
-                    Transactions</a>.</div>
+            <div class="nq-text">Demo app for
+                <a href="../tutorials/basics-5-iqons.html">Basics 5: Nimiq Iqons</a>.
+            </div>
         </div>
         <div class="nq-card-body">
             <h2><span>Wallet</span></h2>
