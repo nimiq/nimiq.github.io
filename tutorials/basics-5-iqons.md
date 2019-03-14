@@ -5,7 +5,7 @@ _TL;DR? [Run the demo](playground.html#basics-5-iqons-demo.html)._
 Building on the tutorial [Basics 4: Extended Transactions](basics-4-extended-tx),
 we can add one of Nimiq's unique features: [Iqons](https://github.com/nimiq/iqons).
 
-Iqons help user to identify addresses,
+Iqons help user to identify and verify addresses,
 for example helping them to make sure that they entered the correct recipient.
 Here is an example: the address `NQ45 RGMN JG3R MQ4S TS19 M1YM 46KS Q7D2 15EE` corresponds to the Iqon in the screenshot.
 

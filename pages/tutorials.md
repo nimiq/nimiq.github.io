@@ -15,6 +15,8 @@ in a few short tutorials.
   Send and receive transactions directly from within the browser.
 * **[Basics 4: Extended Transactions](../tutorials/basics-4-extended-tx).**
   Add a message to your transactions using extended transactions.
+* **[Basics 4: Nimiq Iqons](../tutorials/basics-5-iqons).**
+  Using Nimiq Iqons to help user identifying and verifying addresses.
 
 ## Nimiq Payment Plugin
 
