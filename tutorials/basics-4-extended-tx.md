@@ -1,6 +1,6 @@
 # Basics 4: Extended Transactions
 
-_TL;DR? [Run the demo](playground.html#basics-4-extneded-tx-demo.html)._
+_TL;DR? [Run the demo](playground.html#basics-4-extended-tx-demo.html)._
 
 Building on the tutorial [Basics 3: Transactions](basics-3-transactions),
 we'll augment the basic transaction with an extended transaction to also be able to send a message with each transaction.
@@ -108,11 +108,11 @@ Continuing from this line, the code about relaying the transaction and giving fe
 Now you have completed all basic features of your Nimiq wallet web-app:
 storing the keys, sending and receiving transactions.
 
-Try it out!
+[Try it out!](playground.html#basics-4-extended-tx-demo.html).
 
 **Your Nano Wallet is a full member of the Nimiq network.
-The transaction going in and out are using the nano client directly from within your browser
-without any trusted third party, to server-side application or API!
+Transactions are going in and out are using the nano client directly from within your browser
+without any trusted third party, server-side application, nor API!
 And all of this with not much more than 100 lines of JavaScript!
 Congratulations, and welcome to the Nimiq Ecosystem!**
 
