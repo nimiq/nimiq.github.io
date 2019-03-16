@@ -7,7 +7,7 @@ send and receive transactions,
 and looks neat using Nimiq's look & feel
 in a few short tutorials.
 
-* **[Basics 1: Basics](../tutorials/basics-1-consensus).**
+* **[Basics 1: Establishing Consensus](../tutorials/basics-1-consensus).**
   Set up a node in a website, connect it and reach consensus.
 * **[Basics 2: Blockchain Events and User Interface](../tutorials/basics-2-events-and-ui).**
   Use Nimiq Style to add UI to the basic client.
