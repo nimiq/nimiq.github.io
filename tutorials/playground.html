@@ -20,29 +20,60 @@
             overflow: hidden;
         }
 
-        body>div {
+        #editor,
+        #viewer {
             position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50vw;
         }
 
-        body>div>*,
-        body>div>.CodeMirror {
+        @media screen and (min-aspect-ratio: 4/3) {
+
+            #editor,
+            #viewer {
+                top: 0;
+                bottom: 0;
+                width: 50vw;
+            }
+
+            #editor {
+                left: 0;
+            }
+
+            #viewer {
+                right: 0;
+                width: 50vw;
+            }
+        }
+
+        @media screen and (max-aspect-ratio: 4/3) {
+
+            #editor,
+            #viewer {
+                left: 0;
+                right: 0;
+                height: 50vh;
+            }
+
+            #editor {
+                top: 0;
+            }
+
+            #viewer {
+                bottom: 0;
+            }
+        }
+
+        .CodeMirror,
+        #viewer_frame {
+            position: absolute;
             width: 100%;
             height: 100%;
         }
 
-        #editor_container {
-            left: 0;
-        }
-
-        #viewer_container {
-            right: 0;
+        #viewer {
             background: #eee;
         }
 
-        #viewer_container iframe {
+        #viewer_frame {
             border: none;
         }
     </style>
@@ -55,22 +86,19 @@
             function changed(html) {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
-                    //$('viewer').contentDocument.documentElement.innerHTML = html;
-                    const doc = $('viewer').contentDocument;
+                    const doc = $('viewer_frame').contentDocument;
                     doc.open();
                     doc.write(html);
                     doc.close();
                 }, 300);
 
             }
-            let editor;
-            window.editor = editor;
             const url = (location.hash || '#basic-transactions.html').substr(1);
             console.log(`Playground: loading ${url}`);
             fetch(url)
                 .then(response => {
                     response.text().then(html => {
-                        editor = CodeMirror($('editor_container'), {
+                        let editor = CodeMirror($('editor'), {
                             value: html,
                             mode: 'htmlmixed',
                             theme: 'darcula',
@@ -87,9 +115,9 @@
 </head>
 
 <body>
-    <div id="editor_container"></div>
-    <div id="viewer_container">
-        <iframe id="viewer"></iframe>
+    <div id="editor"></div>
+    <div id="viewer">
+        <iframe id="viewer_frame"></iframe>
     </div>
 </body>
 
