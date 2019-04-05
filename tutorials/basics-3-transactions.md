@@ -74,7 +74,7 @@ Luna is Nimiq's smallest unit, 100'000 Luna = 1 NIM. The following function will
 ```js
 function async updateBalance() {
     const account = await nimiq.consensus.getAccount(nimiq.wallet.address)
-    const balance = account ? Nimiq.Policy.satoshisToCoins(account.balance) : 0;
+    const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
     $('balance').innerText = balance.toFixed(2);
 }
 ```
@@ -105,7 +105,7 @@ nimiq.consensus.addSubscriptions([wallet.address]);
 
 nimiq.mempool.on('transaction-added', tx => {
     if (tx.recipient.equals(wallet.address)) {
-        status(`Incoming transaction of ${ Nimiq.Policy.satoshisToCoins(tx.value) } NIM.`);
+        status(`Incoming transaction of ${ Nimiq.Policy.lunasToCoins(tx.value) } NIM.`);
     }
 });
 ```
@@ -153,7 +153,7 @@ it also takes care of signing the transaction for us.
 function sendTransaction(recipient, amount) {
     const transaction = nimiq.wallet.createTransaction(
         Nimiq.Address.fromUserFriendlyAddress(recipient),
-        Nimiq.Policy.coinsToSatoshis(amount),
+        Nimiq.Policy.coinsToLunas(amount),
         0, // fee
         nimiq.blockchain.height
     );
