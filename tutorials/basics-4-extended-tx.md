@@ -49,7 +49,7 @@ function sendTransaction(address, amount, message) {
     function basicTransaction() {
         return nimiq.wallet.createTransaction(
             Nimiq.Address.fromUserFriendlyAddress(address),
-            Nimiq.Policy.coinsToSatoshis(amount),
+            Nimiq.Policy.coinsToLunas(amount),
             0, // fee
             nimiq.blockchain.height
         );
@@ -70,7 +70,7 @@ Two, add another helper function for extended transactions just below:
             Nimiq.Account.Type.BASIC,   // and account type
             Nimiq.Address.fromUserFriendlyAddress(address),
             Nimiq.Account.Type.BASIC,   // <- recipient -^
-            Nimiq.Policy.coinsToSatoshis(amount),
+            Nimiq.Policy.coinsToLunas(amount),
             0,                          // fee
             nimiq.blockchain.height,
             Nimiq.Transaction.Flag.NONE,
