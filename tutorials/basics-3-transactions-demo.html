@@ -98,7 +98,7 @@
 
             // Load or generate a wallet.
             const stored = localStorage.getItem('wallet');
-            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
+            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : Nimiq.Wallet.generate();
             localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 
             // Store references
