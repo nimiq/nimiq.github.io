@@ -12,7 +12,7 @@ But first, we need a wallet. And a place to store it.
 > Creating a Nimiq wallet is as simple as:
 >
 > ```js
-> const wallet = await Nimiq.Wallet.generate();
+> const wallet = Nimiq.Wallet.generate();
 > ```
 
 The code above will generate a new random wallet whenever you reload the page. But we can use `localStorage` to store our wallet.
@@ -21,7 +21,7 @@ otherwise create a new wallet and store it.
 
 ```js
 const stored = localStorage.getItem('wallet');
-const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
+const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : Nimiq.Wallet.generate();
 localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 ```
 
