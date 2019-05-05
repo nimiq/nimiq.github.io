@@ -1,26 +1,18 @@
 [submodule "elements"]
 	path = elements
 	url = ../elements.git
-	branch = master
-[submodule "apps/wallet"]
-	path = apps/wallet
-	url = ../wallet.git
-	branch = master
+	branch = legacy
 [submodule "libraries/nano-api"]
 	path = libraries/nano-api
 	url = ../nano-api.git
-	branch = master
+	branch = legacy
 [submodule "libraries/qr-encoder"]
 	path = libraries/qr-encoder
 	url = ../qr-encoder.git
-	branch = master
+	branch = legacy
 [submodule "libraries/qr-scanner"]
 	path = libraries/qr-scanner
 	url = ../qr-scanner.git
-	branch = master
-[submodule "libraries/identicon"]
-	path = libraries/identicon
-	url = ../identicon.git
 	branch = master
 [submodule "libraries/robohash"]
 	path = libraries/robohash
@@ -29,7 +21,7 @@
 [submodule "libraries/iqons"]
 	path = libraries/iqons
 	url = ../iqons.git
-	branch = master
+	branch = legacy
 [submodule "libraries/mnemonic-phrase"]
 	path = libraries/mnemonic-phrase
 	url = ../mnemonic-phrase.git
@@ -45,11 +37,11 @@
 [submodule "libraries/nimiq-style"]
 	path = libraries/nimiq-style
 	url = ../nimiq-style.git
-	branch = master
+	branch = legacy
 [submodule "libraries/nimiq-utils"]
 	path = libraries/nimiq-utils
 	url = ../nimiq-utils.git
-	branch = master
+	branch = legacy
 [submodule "apps/nimiq-activation"]
 	path = apps/nimiq-activation
 	url = ../nimiq-activation.git
@@ -57,10 +49,6 @@
 [submodule "meta/doc-theme"]
 	path = meta/doc-theme
 	url = ../doc-theme.git
-	branch = master
-[submodule "meta/email-template"]
-	path = meta/email-template
-	url = ../email-template.git
 	branch = master
 [submodule "meta/build-process"]
 	path = meta/build-process
@@ -73,7 +61,7 @@
 [submodule "apps/safe"]
 	path = apps/safe
 	url =../safe.git
-	branch = master
+	branch = legacy
 [submodule "libraries/keyguard"]
 	path = libraries/keyguard
 	url =../keyguard.git
@@ -81,7 +69,7 @@
 [submodule "libraries/network"]
 	path = libraries/network
 	url =../network.git
-	branch = master
+	branch = legacy
 [submodule "libraries/es6-router"]
 	path = libraries/es6-router
 	url = ../es6-router.git
@@ -100,8 +88,8 @@
 	branch = master
 [submodule "libraries/account-manager"]
 	path = libraries/account-manager
-	url = ../account-manager.git
-	branch = master
+	url = <please enter the url of the private repository manually>
+	branch = legacy
 [submodule "secure-elements"]
 	path = secure-elements
 	url = ../secure-elements.git
@@ -109,7 +97,7 @@
 [submodule "libraries/backup-file"]
 	path = libraries/backup-file
 	url = ../backup-file.git
-	branch = master
+	branch = legacy
 [submodule "libraries/secure-utils"]
 	path = libraries/secure-utils
 	url = ../secure-utils.git
@@ -128,5 +116,6 @@
 	branch = master
 [submodule "libraries/cashlink"]
 	path = libraries/cashlink
-	url = ../cashlink.git
+	url = <please enter the url of the private repository manually>
 	branch = master
+
