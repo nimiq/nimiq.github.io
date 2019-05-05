@@ -43,7 +43,7 @@
             // Nano Clients don't have the whole accounts state and have to request single accounts from their peers
             // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
             const account = await nimiq.consensus.getAccount(nimiq.wallet.address);
-            const balance = account ? Nimiq.Policy.satoshisToCoins(account.balance) : 0;
+            const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
 
             $('balance').innerText = balance.toFixed(2);
             console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${balance}.`);
@@ -55,7 +55,7 @@
             function basicTransaction() {
                 return nimiq.wallet.createTransaction(
                     Nimiq.Address.fromUserFriendlyAddress(address),
-                    Nimiq.Policy.coinsToSatoshis(amount),
+                    Nimiq.Policy.coinsToLunas(amount),
                     0, // fee
                     nimiq.blockchain.height
                 );
@@ -71,7 +71,7 @@
                     Nimiq.Account.Type.BASIC,   // and account type
                     Nimiq.Address.fromUserFriendlyAddress(address),
                     Nimiq.Account.Type.BASIC,   // <- recipient -^
-                    Nimiq.Policy.coinsToSatoshis(amount),
+                    Nimiq.Policy.coinsToLunas(amount),
                     0,                          // fee
                     nimiq.blockchain.height,
                     Nimiq.Transaction.Flag.NONE,
@@ -135,7 +135,7 @@
 
             // Load or generate a wallet.
             const stored = localStorage.getItem('wallet');
-            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
+            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : Nimiq.Wallet.generate();
             localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
 
             // Store references
@@ -155,7 +155,7 @@
             nimiq.consensus.addSubscriptions([wallet.address]);
             nimiq.mempool.on('transaction-added', tx => {
                 if (tx.recipient.equals(wallet.address)) {
-                    status(`Incoming transaction of ${Nimiq.Policy.satoshisToCoins(tx.value)} NIM.`);
+                    status(`Incoming transaction of ${Nimiq.Policy.lunasToCoins(tx.value)} NIM.`);
                 }
             });
             $('tx_send').addEventListener('click', () => {
