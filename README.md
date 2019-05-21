@@ -14,7 +14,7 @@ The goal of this documentation is to get you started integrating Nimiq into your
 
 ## Content
 
-* **[Nimiq Accounts Manager](submodules/accounts/)**:
+* **[Nimiq Hub](submodules/accounts/)**:
   Provide the users of your project to use their Nimiq Accounts during
   [checkout and pay for products and services in NIM](submodules/accounts/#checkout),
   or to send [transactions](submodules/accounts/#sign-transaction), and more.
