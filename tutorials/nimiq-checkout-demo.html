@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Airy Ice Creme Shop</title>
+    <!-- 1. Include the Hub API from the CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@nimiq/hub-api@v1.0/dist/standalone/HubApi.standalone.umd.js"
+        integrity="sha256-HZuohwzM5nRdRQh3HLpAcYGbpNe6PtqZRyK+VvUI+nU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Airy Ice Cream Shop</h1>
+    <img src="resources/ice-cream.jpg" alt="Yummy, ice cream!">
+    <button id="checkout">I want to buy an ice cream!</button>
+    <div id="result"></div>
+
+    <script>
+        // 2. Initialize the Hub API for the Testnet (for Mainnet use 'https://hub.nimiq.com')
+        const hubApi = new HubApi('https://hub.nimiq-testnet.com');
+
+        const options = {
+            appName: 'Airy Ice Cream Shop',
+            recipient: 'NQ07 0000 0000 0000 0000 0000 0000 0000 0000',
+            value: 3.14 * 1e5, // 3.14 NIM
+            fee: 0,
+            shopLogoUrl: `${location.origin}/resources/ice-cream-thumb.jpg`,
+        };
+
+        // 3. Add a click handler to start a Hub API request
+        document.getElementById('checkout').addEventListener('click', async function (event) {
+            const output = document.getElementById('result');
+
+            try {
+                // All client requests are async and return a promise
+                const signedTransaction = await hubApi.checkout(options);
+                output.textContent = `Thank you for your order! Your transaction hash is ${signedTransaction.hash}. Enjoy!`;
+            } catch (error) {
+                output.textContent = `An error occurred: ${error.message}. No ice cream for you.`;
+            }
+        });
+    </script>
+
+    <a href="https://www.pexels.com/photo/man-holding-ice-cream-cone-under-cloud-1262302/" target="_blank">
+        Photo by Rakicevic Nenad from Pexels
+    </a>
+
+</body>
+
+</html>
