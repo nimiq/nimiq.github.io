@@ -6,25 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Airy Ice Creme Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.7.4/nimiq-style.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
+    <style>
+        .nq-card {
+            margin: 10rem auto;
+        }
+
+        img {
+            margin: auto;
+            display: block;
+        }
+    </style>
     <!-- 1. Include the Hub API from the CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@nimiq/hub-api@v1.0/dist/standalone/HubApi.standalone.umd.js"
         integrity="sha256-HZuohwzM5nRdRQh3HLpAcYGbpNe6PtqZRyK+VvUI+nU=" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <h1>Airy Ice Cream Shop</h1>
-
-    <p>
-        <img src="resources/ice-cream.jpg" alt="Yummy, ice cream!">
-    </p>
-
-    <p>
-        <button id="checkout">I want to buy an ice cream!</button>
-        <div id="result"></div>
-    </p>
+<body class="nq-style">
+    <div class="nq-card">
+        <div class="nq-card-header">
+            <h1 class="nq-h1">Airy Ice Cream Shop</h1>
+            <p class="nq-notice">The loftiest ice cream in town.</p>
+        </div>
+        <div class="nq-card-body">
+            <p>
+                <img src="resources/ice-cream.jpg" alt="Yummy, ice cream!">
+                <button id="checkout" class="nq-button">I want to buy an ice cream!</button>
+                <div id="result"></div>
+            </p>
+        </div>
+        <div class="nq-card-footer">
+            <a href="https://www.pexels.com/photo/man-holding-ice-cream-cone-under-cloud-1262302/" target="_blank">
+                Photo by Rakicevic Nenad from Pexels
+            </a>
+        </div>
+    </div>
 
     <script>
-        // 2. Initialize the Hub API for the Testnet (for Mainnet use 'https://hub.nimiq.com')
+        // 2. Initialize the Hub API for the Testnet - for Mainnet use 'https://hub.nimiq.com'
         const hubApi = new HubApi('https://hub.nimiq-testnet.com');
 
         const options = {
@@ -48,13 +68,6 @@
             }
         });
     </script>
-
-    <p>
-        <a href="https://www.pexels.com/photo/man-holding-ice-cream-cone-under-cloud-1262302/" target="_blank">
-            Photo by Rakicevic Nenad from Pexels
-        </a>
-    </p>
-
 </body>
 
 </html>
