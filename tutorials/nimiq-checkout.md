@@ -8,7 +8,7 @@ You will see how easy it is to add Nimiq Payments with the [Nimiq Hub API](https
 The little [demo webapp](playground.html#nimiq-checkout-demo.html) is using the [Nimiq Style](https://github.com/nimiq/nimiq-style) &mdash;
 some basics are explained in
 [this part](https://nimiq.github.io/tutorials/basics-2-events-and-ui#making-it-beautiful-with-nimiq-style)
-of another tutorial &mdash; but it's not important to undertand how Nimiq Checkout works.
+of another tutorial &mdash; but it's not important for understanding how Nimiq Checkout works.
 
 ## HTML
 
