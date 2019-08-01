@@ -18,6 +18,11 @@ in a few short tutorials.
 * **[Basics 5: Nimiq Iqons](../tutorials/basics-5-iqons).**
   Using Nimiq Iqons to help user identifying and verifying addresses.
 
+## Nimiq Hub
+
+**[Nimiq Checkout.](../tutorials/nimiq-checkout)**
+Set up a simple web shop and receive payments in NIM.
+
 ## Nimiq Payment Plugin
 
 **[WordPress Payment Plugin 1: Installation.](../tutorials/wordpress-payment-plugin-1-installation)**
