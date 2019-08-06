@@ -5,7 +5,7 @@
     <meta name="description" content="Connect Nimiq Client - Tutorial 1 - https://nimiq.com/developers">
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
-    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5.0/nimiq.js"></script>
     <script>
         function status(text) {
             document.getElementById('message').innerText = text;
@@ -15,18 +15,27 @@
         async function start() {
             status('Nimiq loaded. Connecting and establishing consensus...');
 
-            // Config to use Nimiq Testnet
+            // Config to use Nimiq Testnet - change to 'main()' for Mainnet.
             Nimiq.GenesisConfig.test();
 
-            // Getting a Nimiq Nano Client instance
-            const consensus = await Nimiq.Consensus.nano();
+            // the config builder will create the minimal necessary client for you.
+            const configBuilder = Nimiq.Client.Configuration.builder();
 
-            // Connecting to the network
-            consensus.network.connect();
+            // By not requesting any addition features, a Nimiq Pico Client instance will be created
+            // E.g. to be able to mine, we can add a Mempool here: 'configBuilder.feature(Nimiq.Client.Feature.MEMPOOL);'
 
-            status('Connected. Establishing consensus...');
+            // Create a client based on your configuration;
+            // It will automatically connect to the network.
+            const client = configBuilder.instantiateClient();
+
             // Waiting for consensus to be establish
-            consensus.on('established', () => status('Consensus established.'));
+            client.addConsensusChangedListener((consensus) =>
+                status(
+                    consensus == Nimiq.Client.ConsensusState.ESTABLISHED
+                    ? 'Consensus established.'
+                    : 'Establishing consensus...'
+                )
+            );
         };
 
         // Start loading the Nimiq client library
