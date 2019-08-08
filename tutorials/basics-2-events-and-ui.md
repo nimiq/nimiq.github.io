@@ -36,7 +36,7 @@ const nimiq = {}; // < -- this is the shared variable
 
 async function start() {
     // Code from tutorial "Basics 1: Establishing Consensus"
-    status('Nimiq loaded. Connecting...');
+    status('Nimiq loaded. Establishing consensus...');
     Nimiq.GenesisConfig.test();
     const configBuilder = Nimiq.Client.Configuration.builder();
     const client = configBuilder.instantiateClient();

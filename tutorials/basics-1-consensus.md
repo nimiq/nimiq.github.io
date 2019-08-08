@@ -140,7 +140,7 @@ And then use it in the code:
 
 ```js
 async function start() {
-    status('Nimiq loaded. Connecting...');           // <= here
+    status('Nimiq loaded. Establishing consensus...');           // <= here
 
     // Code from 'Getting started'
     Nimiq.GenesisConfig.test();
