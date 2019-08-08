@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="description" content="Connect Nimiq Client - Tutorial 1 - https://nimiq.com/developers">
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
@@ -10,13 +11,14 @@
         .nq-card {
             margin: 0 auto;
         }
+
         @media(min-width: 600px) {
             .nq-card {
                 margin-top: 10rem;
             }
         }
     </style>
-    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5.0/nimiq.js"></script>
     <script>
         const $ = document.getElementById.bind(document);
         const nimiq = {};
@@ -25,48 +27,50 @@
             $('message').innerText = text;
         }
 
-        function onConsensusEstablished() {
-            status('Consensus established.');
-            $('height').innerText = nimiq.blockchain.height;
-
-            // Now start listening for new blocks, the latest block is called head
-            nimiq.blockchain.on('head-changed', onHeadChanged);
+        function onConsensusChanged(consensus) {
+            status(
+                consensus == Nimiq.Client.ConsensusState.ESTABLISHED
+                    ? 'Consensus established.'
+                    : 'Establishing consensus...'
+            );
         }
 
-        function onHeadChanged() {
-            console.log(`Now at height ${nimiq.blockchain.height}.`);
-            $('height').innerText = nimiq.blockchain.height;
-        }
+        async function onHeadChanged() {
+            const height = await nimiq.client.getHeadHeight();
+            $('height').innerText = height;
 
-        function onPeersChanged() {
-            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
-            $('peers').innerText = nimiq.network.peerCount;
+            const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
+            $('network').innerText = `${totalPeerCount} peers connected, ${bytesSent} bytes sent, ${bytesReceived} received.`;
+
+            console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
         }
 
         async function start() {
             status('Nimiq loaded. Connecting and establishing consensus...');
 
-            // Config to use Nimiq Testnet
+            // Config to use Nimiq Testnet - change to 'main()' for Mainnet.
             Nimiq.GenesisConfig.test();
 
-            // Getting a Nimiq Nano Client instance
-            const consensus = await Nimiq.Consensus.nano();
+            // the config builder will create the minimal necessary client for you.
+            const configBuilder = Nimiq.Client.Configuration.builder();
 
-            // Connecting to the network
-            consensus.network.connect();
-            status('Connected. Establishing consensus...');
+            // By not requesting any addition features, a Nimiq Pico Client instance will be created
+            // E.g. to be able to mine, we can add a Mempool here: 'configBuilder.feature(Nimiq.Client.Feature.MEMPOOL);'
+
+            // Create a client based on your configuration;
+            // It will automatically connect to the network.
+            const client = configBuilder.instantiateClient();
 
             // Store references
-            nimiq.consensus = consensus;
-            nimiq.network = consensus.network;
-            nimiq.blockchain = consensus.blockchain;
+            nimiq.client = client;
+            nimiq.network = client.network;
 
             // Event handlers
-            nimiq.consensus.on('established', onConsensusEstablished);
-            nimiq.consensus.on('lost', () => status('Consensus lost.'));
-            nimiq.network.on('peers-changed', onPeersChanged);
+            client.addConsensusChangedListener(onConsensusChanged);
+            client.addHeadChangedListener(onHeadChanged);
         }
 
+        // Start loading the Nimiq client library
         Nimiq.init(start);
     </script>
 </head>
@@ -79,7 +83,7 @@
         <div class="nq-card-body">
             <p>Status: <span id="message">loading&hellip;</span></p>
             <p>Current block height: <span id="height">loading&hellip;</span></p>
-            <p>Current number of peers: <span id="peers">loading&hellip;</span></p>
+            <p>Network: <span id="network">loading&hellip;</span></p>
         </div>
     </div>
 </body>
