@@ -31,19 +31,20 @@
 
 .nq-label {
     display: inline-block;
-    width: 30rem;
+    width: 17rem;
     vertical-align: top;
 }
 
 .nq-label+* {
     display: inline-block;
-    width: 36rem;
+    width: 49rem;
+    margin-top: .3rem;
 }
 
 h2 {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    white-space: nowrap;
 }
 
 h2 span {
@@ -79,10 +80,5 @@ input:focus {
 }
 
 .transactions label {
-    width: 14rem;
     vertical-align: middle;
-}
-
-.transactions input {
-    width: 52rem;
 }
