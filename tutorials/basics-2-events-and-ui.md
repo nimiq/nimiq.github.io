@@ -201,6 +201,8 @@ function onError(code) {
 Nimiq.init(start, onError);
 ```
 
+_Note:_ Basic error handling will be part of the code from the next tutorial.
+
 ---
 
 **Continue the tutorial**: [Basics 3, Sending and Receiving Transactions »](basics-3-transactions)
