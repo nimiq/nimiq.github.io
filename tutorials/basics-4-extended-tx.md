@@ -13,11 +13,11 @@ in the same fashion as the other ones, just before the "Send Transaction" button
 ```html
 <p>
     <label class="nq-label" for="tx_message">Message</label>
-    <input type="text" id="tx_message" placeholder="A message for the recipient (optional)">
+    <input type="text" id="tx_message" placeholder="...">
 </p>
 ```
 
-In the `click` handler, we extract the message entered by the user:
+In the `click` handler in `start()`, we extract the message entered by the user:
 
 ```js
 $('tx_send').addEventListener('click', () => {
@@ -29,56 +29,57 @@ $('tx_send').addEventListener('click', () => {
 });
 ```
 
-Now we need to update the `sendTransaction(...)` function.
+Now we need to update the `sendTransaction(...)` function&hellip;
 
 ## Extended Transaction
 
 If `sendTransaction(...)` gets a message passed, we'll create and send out an extended transaction.
-Otherwise, we keep the code for creating a basic transaction and send that instead.
-This will save bytes being sent out to the network and in case we send out more than 10 transactions per block,
+Otherwise, a basic transaction will be sent instead.
+This will save bytes in the network and on the blockchain.
+And in case you want to send out a lot transactions,
 it will reduce the fee to be paid.
 See the note in "Send Transaction" in
 [Basics 3: Transactions](basics-3-transactions#send-transactions) for details.
 
 Step one, let's move the basic transaction code into it's own
-helper function.
+helper function:
 
 ```js
-function sendTransaction(address, amount, message) {
+async function sendTransaction(address, amount, message) {
 
-    function basicTransaction() {
+    async function basicTransaction() {
         return nimiq.wallet.createTransaction(
             Nimiq.Address.fromUserFriendlyAddress(address),
             Nimiq.Policy.coinsToLunas(amount),
             0, // fee
-            nimiq.blockchain.height
+            await nimiq.client.getHeadHeight()
         );
     }
     ...
 ```
 
-Two, add another helper function for extended transactions just below:
+Step two, add another helper function for extended transactions just below:
 
 ```js
     ...
-    function extendedTransaction() {
+    async function extendedTransaction() {
         // turn string into a safely encoded list of bytes
-        const extraData = Nimiq.BufferUtils.fromAscii(message);
+        const extraData = Nimiq.BufferUtils.fromUtf8(message);
 
         const transaction = new Nimiq.ExtendedTransaction(
-            nimiq.wallet.address,       // sender address
-            Nimiq.Account.Type.BASIC,   // and account type
-            Nimiq.Address.fromUserFriendlyAddress(address),
-            Nimiq.Account.Type.BASIC,   // <- recipient -^
+            nimiq.wallet.address,                           // sender address
+            Nimiq.Account.Type.BASIC,                       // and account type
+            Nimiq.Address.fromUserFriendlyAddress(address), // recipient address
+            Nimiq.Account.Type.BASIC,                       // and type
             Nimiq.Policy.coinsToLunas(amount),
-            0,                          // fee
-            nimiq.blockchain.height,
+            0,                                              // fee
+            await nimiq.client.getHeadHeight(),
             Nimiq.Transaction.Flag.NONE,
-            extraData                   // the message
+            extraData                                       // the message
         );
 
-        // sign transaction with the key pair of our wallet
-        const keyPair = nimiq.wallet._keyPair;
+        // sign transaction with the key pair from our wallet
+        const keyPair = nimiq.wallet.keyPair;
         const signature = Nimiq.Signature.create(
             keyPair.privateKey,
             keyPair.publicKey,
@@ -98,21 +99,22 @@ Finally, checking if we got a message, we can use the two helper functions to pu
     ...
     // create an extended transaction if the message is not empty
     const transaction = message.trim().length > 0
-                        ? extendedTransaction()
-                        : basicTransaction();
-    ...
+        ? await extendedTransaction()
+        : await basicTransaction();
+
+    // Send to the Nimiq network
+    nimiq.client.sendTransaction(transaction);
+}
 ```
 
-Continuing from this line, the code about relaying the transaction and giving feedback will stay the same.
+Now, the basic features of your Nimiq Wallet web app are complete:
+Syncing, consensus, storing keys, sending and receiving transactions!
 
-Now you have completed all basic features of your Nimiq wallet web-app:
-storing the keys, sending and receiving transactions.
+[Try it out!](playground.html#basics-4-extended-tx-demo.html)
 
-[Try it out!](playground.html#basics-4-extended-tx-demo.html).
-
-**Your Nano Wallet is a full member of the Nimiq network.
-Transactions are going in and out are using the nano client directly from within your browser
-without any trusted third party, server-side application, nor API!
+**Your Nimiq Wallet is a full member of the Nimiq network.
+Transactions are sent directly from your browser to the network.
+No trusted third parties, no server-side applications, no remote APIs!
 And all of this with not much more than 100 lines of JavaScript!
 Congratulations, and welcome to the Nimiq Ecosystem!**
 
@@ -141,11 +143,14 @@ Congratulations, and welcome to the Nimiq Ecosystem!**
 ## What's next?
 
 How about visualizing the addresses and help our users avoiding typos and clipboard attacks?
-The next tutorial will show you how to use Nimiq Iqons.
-![](resources/iqons.png)
+The next tutorial will show you how to use Nimiq Identicons.
+![Nimiq Identicons](resources/nimiq-identicons.png)
 
 ---
 
-**Continue the tutorial**: [Basics 5, Nimiq Iqons »](basics-5-iqons)
+**Continue the tutorial**: [Basics 5, Nimiq Identicons »](basics-5-identicons)
 
-_Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_
+_Find more help and documentation in the [Nimiq Developer Center](https://nimiq.com/developers/).
+Share your ideas and feedback on the [Nimiq Community Forum](https://forum.nimiq.community),
+you'll also find a dedicated section for [discussions and ideas](https://forum.nimiq.community/c/documentation/drafts).
+Or get in touch at [sven@nimiq.com](mailto:sven@nimiq.com)._
