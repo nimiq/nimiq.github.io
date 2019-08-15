@@ -134,7 +134,7 @@ Listen to the button being clicked in `start()`:
 ```js
 $('tx_send').addEventListener('click', () => {
     const recipient = $('tx_recipient').value;
-    const amount = parseInt($('tx_amount').value);
+    const amount = parseFloat($('tx_amount').value);
 
     // We define this function in the next step
     sendTransaction(recipient, amount);
@@ -147,7 +147,7 @@ Within `sendTransaction(...)`, we create a transaction object and relay it to th
 it also takes care of signing the transaction for us.
 
 ```js
-function sendTransaction(recipient, amount) {
+async function sendTransaction(recipient, amount) {
     const transaction = nimiq.wallet.createTransaction(
         Nimiq.Address.fromUserFriendlyAddress(recipient),
         Nimiq.Policy.coinsToLunas(amount),
@@ -179,20 +179,17 @@ function onTransaction(txDetails) {
 
     if (txDetails.sender.equals(nimiq.wallet.address)) {
         switch (txDetails.state) {
-            case Nimiq.Client.TransactionState.PENDING: {
+            case Nimiq.Client.TransactionState.PENDING:
                 status('Transaction is in the network...');
                 break;
-            }
-            // Transaction has been confirmed once
-            case Nimiq.Client.TransactionState.MINED: {
+            case Nimiq.Client.TransactionState.MINED:
+                // Transaction has been confirmed once
                 status('Transaction confirmed once, looking good...');
                 break;
-            }
-            // Requires 10 confirmations by default
-            case Nimiq.Client.TransactionState.CONFIRMED: {
+            case Nimiq.Client.TransactionState.CONFIRMED:
+                // Requires 10 confirmations by default
                 status('Transaction arrived for good. :)');
                 break;
-            }
         }
     }
 }

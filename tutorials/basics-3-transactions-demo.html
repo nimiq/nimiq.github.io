@@ -30,7 +30,7 @@
             $('height').innerText = height;
 
             const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
-            $('network').innerText =
+            $('network').textContent =
                 `${totalPeerCount} peers connected,
                  ${bytesSent >> 10} kB sent,
                  ${bytesReceived >> 10} received.`;
@@ -52,20 +52,17 @@
             }
             if (txDetails.sender.equals(nimiq.wallet.address)) {
                 switch (txDetails.state) {
-                    case Nimiq.Client.TransactionState.PENDING: {
+                    case Nimiq.Client.TransactionState.PENDING:
                         status('Transaction is in the network...');
                         break;
-                    }
-                    // Transaction has been confirmed once
-                    case Nimiq.Client.TransactionState.MINED: {
+                    case Nimiq.Client.TransactionState.MINED:
+                        // Transaction has been confirmed once
                         status('Transaction confirmed once, looking good...');
                         break;
-                    }
-                    // Requires 10 confirmations by default
-                    case Nimiq.Client.TransactionState.CONFIRMED: {
+                    case Nimiq.Client.TransactionState.CONFIRMED:
+                        // Requires 10 confirmations by default
                         status('Transaction arrived for good. :)');
                         break;
-                    }
                 }
             }
         }
@@ -118,6 +115,9 @@
                 const amount = parseFloat($('tx_amount').value);
 
                 sendTransaction(recipient, amount);
+
+                // clear the form 
+                $('tx_recipient').value = $('tx_amount').value = '';
             });
         }
 
@@ -144,8 +144,9 @@
     <div class="nq-card">
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Wallet</h1>
-            <div class="nq-text">Demo app for <a href="../tutorials/basics-3-transactions.html">Basics 3:
-                    Transactions</a>.</div>
+            <div class="nq-text">
+                Demo app for <a href="../tutorials/basics-3-transactions.html">Basics 3: Transactions</a>.
+            </div>
         </div>
         <div class="nq-card-body">
             <h2>Wallet</h2>

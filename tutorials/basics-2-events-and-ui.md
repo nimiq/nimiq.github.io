@@ -74,7 +74,7 @@ async function onHeadChanged() {
     // Show some network statistics
     const stats = await nimiq.network.getStatistics();
     const { totalPeerCount, bytesReceived, bytesSent } = stats;
-    $('network').innerText =
+    $('network').textContent =
         `${totalPeerCount} peers connected,
          ${bytesSent} bytes sent,
          ${bytesReceived} received.`;
@@ -164,7 +164,6 @@ Check it out:
 
 That's starting to look more like a real UI.
 **And just with a few lines of code!**
-
 
 [» Run and modify this code live](playground.html#basics-2-events-and-ui-demo.html).
 

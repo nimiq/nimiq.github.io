@@ -40,7 +40,10 @@
             $('height').innerText = height;
 
             const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
-            $('network').innerText = `${totalPeerCount} peers connected, ${bytesSent} bytes sent, ${bytesReceived} received.`;
+            $('network').textContent =
+                `${totalPeerCount} peers connected,
+                 ${bytesSent} bytes sent,
+                 ${bytesReceived} received.`;
 
             console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
         }
