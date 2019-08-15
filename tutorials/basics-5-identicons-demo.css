@@ -11,12 +11,12 @@
     width: 22rem;
 }
 
-#iqon {
+#identicon {
     float: right;
     margin-top: -1rem;
 }
 
-#iqon svg {
+#identicon svg {
     width: 16rem;
     height: 16rem;
 }

@@ -2,87 +2,103 @@
 <html>
 
 <head>
+    <meta name="description" content="Basics 5: Nimiq Identicons - nimiq.com/developers">
     <meta charset=utf-8 />
-    <meta name="description" content="Basics 5: Using Iqons - nimiq.com/developers">
-    <title>Nimiq Nano Wallet Demo</title>
+    <title>Nimiq Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0.4/nimiq-style.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
     <link href="basics-3-transactions-demo.css" rel="stylesheet">
-    <link href="basics-5-iqons-demo.css" rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+    <link href="basics-5-identicons-demo.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5.0/nimiq.js"></script>
     <script type="module">
-        import Iqons from "https://unpkg.com/@nimiq/iqons@1.2.0/dist/iqons.bundle.min.js";
+        import Identicons from "https://unpkg.com/@nimiq/iqons@1.5/dist/iqons.bundle.min.js";
 
         const $ = document.getElementById.bind(document);
         const nimiq = {};
 
         function status(text) {
-            document.getElementById('message').innerText = text;
+            $('message').innerText = text;
         }
 
-        function onConsensusEstablished() {
-            status('Consensus established.');
-            $('height').innerText = nimiq.blockchain.height;
-            document.body.classList.add('consensus-established');
-
-            nimiq.blockchain.on('head-changed', onHeadChanged);
-            updateBalance();
+        function onConsensusChanged(consensus) {
+            const established = consensus == Nimiq.Client.ConsensusState.ESTABLISHED;
+            status(established ? 'Consensus established.' : 'Establishing consensus...');
+            document.body.classList.toggle('consensus-established', established);
         }
 
-        function onHeadChanged() {
-            status('Consensus established.');
-            console.log(`Now at height ${nimiq.blockchain.height}.`);
-            $('height').innerText = nimiq.blockchain.height;
+        async function onHeadChanged() {
+            const height = await nimiq.client.getHeadHeight();
+            $('height').innerText = height;
 
-            updateBalance();
-        }
+            const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
+            $('network').textContent =
+                `${totalPeerCount} peers connected,
+                 ${bytesSent >> 10} kB sent,
+                 ${bytesReceived >> 10} received.`;
 
-        function onPeersChanged() {
-            console.log(`Now connected to ${nimiq.network.peerCount} peers.`);
-            $('peers').innerText = nimiq.network.peerCount;
-        }
-
-        async function updateBalance() {
-            // Nano Clients don't have the whole accounts state and have to request single accounts from their peers
+            // Pico Clients safe bandwidth by not automatically downloading all accounts.
+            // Instead, the account must be loaded from our network peers on demand.
             // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
-            const account = await nimiq.consensus.getAccount(nimiq.wallet.address);
-            const balance = account ? Nimiq.Policy.satoshisToCoins(account.balance) : 0;
+            const account = await nimiq.client.getAccount(nimiq.wallet.address);
+            const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
+            $('balance').innerText = `${balance.toFixed(2)} NIM`;
 
-            $('balance').innerText = balance.toFixed(2);
-            console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${balance}.`);
+            console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
+            console.log(`New balance of ${nimiq.address} is ${balance}.`);
         }
 
-        function sendTransaction(address, amount, message) {
+        function onTransaction(txDetails) {
+            if (txDetails.recipient.equals(nimiq.wallet.address)) {
+                status(`Incoming transaction of ${Nimiq.Policy.lunasToCoins(tx.value)} NIM.`);
+            }
+            if (txDetails.sender.equals(nimiq.wallet.address)) {
+                switch (txDetails.state) {
+                    case Nimiq.Client.TransactionState.PENDING:
+                        status('Transaction is in the network...');
+                        break;
+                    case Nimiq.Client.TransactionState.MINED:
+                        // Transaction has been confirmed once
+                        status('Transaction confirmed once, looking good...');
+                        break;
+                    case Nimiq.Client.TransactionState.CONFIRMED:
+                        // Requires 10 confirmations by default
+                        status('Transaction arrived for good. :)');
+                        break;
+                }
+            }
+        }
+
+        async function sendTransaction(address, amount, message) {
 
             // helper function to create the basic transaction used in tutorial 3
-            function basicTransaction() {
+            async function basicTransaction() {
                 return nimiq.wallet.createTransaction(
                     Nimiq.Address.fromUserFriendlyAddress(address),
-                    Nimiq.Policy.coinsToSatoshis(amount),
+                    Nimiq.Policy.coinsToLunas(amount),
                     0, // fee
-                    nimiq.blockchain.height
+                    await nimiq.client.getHeadHeight()
                 );
             }
 
             // create an extended transaction that will carry the message as "extra data"
-            function extendedTransaction() {
+            async function extendedTransaction() {
                 // turn string into a safely encoded list of bytes
-                const extraData = Nimiq.BufferUtils.fromAscii(message);
+                const extraData = Nimiq.BufferUtils.fromUtf8(message);
 
                 const transaction = new Nimiq.ExtendedTransaction(
-                    nimiq.wallet.address,       // sender address
-                    Nimiq.Account.Type.BASIC,   // and account type
-                    Nimiq.Address.fromUserFriendlyAddress(address),
-                    Nimiq.Account.Type.BASIC,   // <- recipient -^
-                    Nimiq.Policy.coinsToSatoshis(amount),
-                    0,                          // fee
-                    nimiq.blockchain.height,
+                    nimiq.wallet.address,                           // sender address
+                    Nimiq.Account.Type.BASIC,                       // and account type
+                    Nimiq.Address.fromUserFriendlyAddress(address), // recipient address
+                    Nimiq.Account.Type.BASIC,                       // and type
+                    Nimiq.Policy.coinsToLunas(amount),
+                    0,                                              // fee
+                    await nimiq.client.getHeadHeight(),
                     Nimiq.Transaction.Flag.NONE,
-                    extraData                   // the message
+                    extraData                                       // the message
                 );
 
-                // sign transaction with key pair of our wallet
-                const keyPair = nimiq.wallet._keyPair;
+                // sign transaction with key pair from our wallet
+                const keyPair = nimiq.wallet.keyPair;
                 const signature = Nimiq.Signature.create(
                     keyPair.privateKey,
                     keyPair.publicKey,
@@ -95,48 +111,23 @@
             }
 
             // create an extended transaction if the message is not empty
-            const transaction = message.trim().length > 0 ? extendedTransaction() : basicTransaction();
+            const transaction = message.trim().length > 0 ? await extendedTransaction() : await basicTransaction();
 
             // Send to the Nimiq network
-            nimiq.consensus.relayTransaction(transaction);
-
-            // Give feedback on status of TX
-            function feedback(source, event, message) {
-                const id = source.on(event, tx => {
-                    if (tx.sender.equals(nimiq.wallet.address)) {
-                        status(message);
-                        console.log(`${address}: ${message}`);
-                        source.off(event, id);
-                    }
-                });
-            };
-
-            feedback(
-                nimiq.mempool,
-                'transaction-added',   // TX arrived in our mempool
-                'Your transaction has been sent out.');
-
-            feedback(
-                nimiq.consensus,
-                'transaction-relayed', // TX was sent to a peer
-                'Your transaction is in the network.');
-
-            feedback(
-                nimiq.mempool,
-                'transaction-mined',   // TX was mined
-                'Your transaction arrived.');
+            nimiq.client.sendTransaction(transaction);
         }
 
         async function transactionOverview() {
             let ready = false;
             try {
-                const recipientAddress = Nimiq.Address.fromUserFriendlyAddress($('tx_recipient').value.trim())
-                                                      .toUserFriendlyAddress();
+                const recipientAddress = Nimiq.Address
+                    .fromUserFriendlyAddress($('tx_recipient').value.trim())
+                    .toUserFriendlyAddress();
 
-                await Iqons.render(nimiq.wallet.address.toUserFriendlyAddress(), $('tx_overview_sender'));
+                await Identicons.render(nimiq.address, $('tx_overview_sender'));
                 const amount = parseFloat($('tx_amount').value || '0');
-                $('tx_overview_amount').innerText = `${amount} NIM`;
-                await Iqons.render(recipientAddress, $('tx_overview_recipient'));
+                $('tx_overview_amount').textContent = `${amount} NIM`;
+                await Identicons.render(recipientAddress, $('tx_overview_recipient'));
 
                 ready = amount > 0;
             } catch (error) { }
@@ -146,49 +137,48 @@
         }
 
         async function start() {
-            status('Nimiq loaded. Connecting...');
+            status('Nimiq loaded. Establishing consensus...');
 
-            // Connect to the Nimiq Testnet
+            // Config to use Nimiq Testnet - change to 'main()' for Mainnet
             Nimiq.GenesisConfig.test();
 
-            // Getting a Nimiq Nano Client instance
-            const consensus = await Nimiq.Consensus.nano();
+            // the config builder will create the minimal necessary client for you
+            const configBuilder = Nimiq.Client.Configuration.builder();
 
-            // Load or generate a wallet.
-            const stored = localStorage.getItem('wallet');
-            const wallet = stored ? Nimiq.Wallet.loadPlain(JSON.parse(stored)) : await Nimiq.Wallet.generate();
-            localStorage.setItem('wallet', JSON.stringify(Array.from(wallet.exportPlain())));
+            // By not requesting any addition features, a Nimiq Pico Client instance will be created
+            // E.g. to be able to mine, we can add a Mempool: 'configBuilder.feature(Nimiq.Client.Feature.MEMPOOL);'
+
+            // The created client will automatically connect to the network.
+            const client = configBuilder.instantiateClient();
+
+            // Load or generate a wallet
+            const wallet = localStorage.wallet
+                ? Nimiq.Wallet.loadPlain(JSON.parse(localStorage.wallet))
+                : Nimiq.Wallet.generate();
+            localStorage.wallet = JSON.stringify(Array.from(wallet.exportPlain()));
 
             const address = wallet.address.toUserFriendlyAddress();
             $('address').innerText = address;
-            await Iqons.render(address, $('iqon'));
+            await Identicons.render(address, $('identicon'));
 
             // Store references
-            nimiq.consensus = consensus;
-            nimiq.network = consensus.network;
-            nimiq.blockchain = consensus.blockchain;
-            nimiq.mempool = consensus.mempool;
+            nimiq.client = client;
+            nimiq.network = client.network;
             nimiq.wallet = wallet;
-
-            // Connecting to the network
-            nimiq.network.connect();
-            status('Connected. Establishing consensus...');
+            nimiq.address = address;
 
             // Event handlers
-            nimiq.consensus.on('established', onConsensusEstablished);
-            nimiq.network.on('peers-changed', onPeersChanged);
-            nimiq.consensus.addSubscriptions([wallet.address]);
-            nimiq.mempool.on('transaction-added', tx => {
-                if (tx.recipient.equals(wallet.address)) {
-                    status(`Incoming transaction of ${Nimiq.Policy.satoshisToCoins(tx.value)} NIM.`);
-                }
-            });
+            client.addConsensusChangedListener(onConsensusChanged);
+            client.addHeadChangedListener(onHeadChanged);
+            client.addTransactionListener(onTransaction, [wallet.address]);
             $('tx_send').addEventListener('click', () => {
                 const recipient = $('tx_recipient').value;
-                const amount = parseInt($('tx_amount').value);
+                const amount = parseFloat($('tx_amount').value);
                 const message = $('tx_message').value;
 
                 sendTransaction(recipient, amount, message);
+
+                $('tx_recipient').value = $('tx_amount').value = $('tx_message').value = '';
             });
             $('tx_amount').addEventListener('keyup', transactionOverview);
             $('tx_recipient').addEventListener('keyup', transactionOverview);
@@ -216,14 +206,14 @@
 <body class="nq-style">
     <div class="nq-card">
         <div class="nq-card-header">
-            <h1 class="nq-h1">Nimiq Nano Wallet</h1>
-            <div class="nq-text">Demo app for
-                <a href="../tutorials/basics-5-iqons.html">Basics 5: Nimiq Iqons</a>.
+            <h1 class="nq-h1">Nimiq Wallet</h1>
+            <div class="nq-text">
+                Demo app for <a href="../tutorials/basics-5-identicons">Basics 5: Nimiq Identicons</a>.
             </div>
         </div>
         <div class="nq-card-body">
-            <h2><span>Wallet</span></h2>
-            <div id="iqon"></div>
+            <h2>Wallet</h2>
+            <div id="identicon"></div>
             <p>
                 <span class="nq-label">Address: </span>
                 <span id="address">loading&hellip;</span></p>
@@ -231,7 +221,7 @@
                 <span class="nq-label">Balance: </span>
                 <span id="balance">loading&hellip;</span>
             </p>
-            <h2><span>Network</span></h2>
+            <h2>Network</h2>
             <p>
                 <span class="nq-label">Status: </span>
                 <span id="message">loading&hellip;</span>
@@ -241,11 +231,11 @@
                 <span id="height">loading&hellip;</span>
             </p>
             <p>
-                <span class="nq-label">Peers connected: </span>
-                <span id="peers">0</span>
+                <span class="nq-label">Stats: </span>
+                <span id="network">loading&hellip;</span>
             </p>
             <div id="transaction">
-                <h2><span>Send Transaction</span></h2>
+                <h2>Send Transaction</h2>
                 <p>
                     <label class="nq-label" for="tx_recipient">Recipient</label>
                     <input type="string" id="tx_recipient" placeholder="NQ...">
