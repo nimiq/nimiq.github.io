@@ -24,7 +24,7 @@
         const nimiq = {};
 
         function status(text) {
-            $('message').innerText = text;
+            $('message').textContent = text;
         }
 
         function onConsensusChanged(consensus) {
@@ -37,7 +37,7 @@
 
         async function onHeadChanged() {
             const height = await nimiq.client.getHeadHeight();
-            $('height').innerText = height;
+            $('height').textContent = height;
 
             const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
             $('network').textContent =

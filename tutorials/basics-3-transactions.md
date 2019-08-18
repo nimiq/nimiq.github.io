@@ -24,7 +24,7 @@ otherwise create a new wallet, then display the wallet's address, and finally ma
 const wallet = localStorage.wallet
     ? Nimiq.Wallet.loadPlain(JSON.parse(localStorage.wallet))
     : Nimiq.Wallet.generate();
-$('address').innerText = wallet.address.toUserFriendlyAddress();
+$('address').textContent = wallet.address.toUserFriendlyAddress();
 localStorage.wallet = JSON.stringify(Array.from(wallet.exportPlain()));
 ```
 
@@ -63,7 +63,7 @@ function onHeadChanged() {
 
     const account = await nimiq.client.getAccount(nimiq.wallet.address);
     const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
-    $('balance').innerText = `${balance.toFixed(2)} NIM`;
+    $('balance').textContent = `${balance.toFixed(2)} NIM`;
 }
 ```
 

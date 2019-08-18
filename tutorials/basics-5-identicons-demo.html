@@ -17,7 +17,7 @@
         const nimiq = {};
 
         function status(text) {
-            $('message').innerText = text;
+            $('message').textContent = text;
         }
 
         function onConsensusChanged(consensus) {
@@ -28,7 +28,7 @@
 
         async function onHeadChanged() {
             const height = await nimiq.client.getHeadHeight();
-            $('height').innerText = height;
+            $('height').textContent = height;
 
             const { totalPeerCount, bytesReceived, bytesSent } = await nimiq.network.getStatistics();
             $('network').textContent =
@@ -41,7 +41,7 @@
             // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
             const account = await nimiq.client.getAccount(nimiq.wallet.address);
             const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
-            $('balance').innerText = `${balance.toFixed(2)} NIM`;
+            $('balance').textContent = `${balance.toFixed(2)} NIM`;
 
             console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
             console.log(`New balance of ${nimiq.address} is ${balance}.`);
@@ -158,7 +158,7 @@
             localStorage.wallet = JSON.stringify(Array.from(wallet.exportPlain()));
 
             const address = wallet.address.toUserFriendlyAddress();
-            $('address').innerText = address;
+            $('address').textContent = address;
             await Identicons.render(address, $('identicon'));
 
             // Store references

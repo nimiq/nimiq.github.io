@@ -69,7 +69,7 @@ function onConsensusChanged(consensus) {
 // Head change means a new block got mined, replacing the old "head block"
 async function onHeadChanged() {
     const height = await nimiq.client.getHeadHeight();
-    $('height').innerText = height;
+    $('height').textContent = height;
 
     // Show some network statistics
     const stats = await nimiq.network.getStatistics();
