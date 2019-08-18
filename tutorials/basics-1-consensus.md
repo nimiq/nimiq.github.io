@@ -5,10 +5,12 @@ Hope you're going to have a good time checking out these tutorials,
 experimenting with the code, breaking stuff, fixing it, breaking it more.
 You know how that goes. :)
 If something seems unclear or can be improved,
-please get in touch with me directly at [sven@nimiq.com](sven@nimiq.com) and
-also join the Nimiq dev community on [Telegram](https://t.me/joinchat/AAAAAEJW-ozFwo7Er9jpHw) and
+please share your ideas and feedback on the [Nimiq Community Forum](https://forum.nimiq.community),
+especially in the dedicated section for [discussions and ideas](https://forum.nimiq.community/c/documentation/drafts).
+Also join the friendly Nimiq Community on [Telegram](https://t.me/joinchat/AAAAAEJW-ozFwo7Er9jpHw) and
 [Discord](https://discord.gg/cMHemg8), fellow devs are keen to help.
-Enjoy!
+And of course feel free to get in touch with me directly at [sven@nimiq.com](sven@nimiq.com) and
+**Enjoy!**
 
 **Goal of this first tutorial**:
 Getting started by building a minimal app that connects to the Nimiq network and establishes consensus.
