@@ -62,7 +62,7 @@ We start from an empty HTML 5 page and load the Nimiq library in the `<head>` se
 <head>
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
-    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5.0/nimiq.js"></script>
+    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5/nimiq.js"></script>
     <script>
         // The code below will go here
     </script>
