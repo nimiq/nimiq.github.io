@@ -5,10 +5,12 @@ Hope you're going to have a good time checking out these tutorials,
 experimenting with the code, breaking stuff, fixing it, breaking it more.
 You know how that goes. :)
 If something seems unclear or can be improved,
-please get in touch with me directly at [sven@nimiq.com](sven@nimiq.com) and
-also join the Nimiq dev community on [Telegram](https://t.me/joinchat/AAAAAEJW-ozFwo7Er9jpHw) and
+please share your ideas and feedback on the [Nimiq Community Forum](https://forum.nimiq.community),
+especially in the dedicated section for [discussions and ideas](https://forum.nimiq.community/c/documentation/drafts).
+Also join the friendly Nimiq Community on [Telegram](https://t.me/joinchat/AAAAAEJW-ozFwo7Er9jpHw) and
 [Discord](https://discord.gg/cMHemg8), fellow devs are keen to help.
-Enjoy!
+And of course feel free to get in touch with me directly at [sven@nimiq.com](sven@nimiq.com) and
+**Enjoy!**
 
 **Goal of this first tutorial**:
 Getting started by building a minimal app that connects to the Nimiq network and establishes consensus.
@@ -20,7 +22,7 @@ Blockchain technology is
 
 * Censorship resistant: nobody can keep you from using it
 * Privacy oriented: you don't need to provide any personal information to open an account
-* Decentralized: not controlled by a single person but by it's users
+* Decentralized: not controlled by a single person but by all its users
 
 A blockchain is like a distributed database, known as "ledger".
 Getting in sync with the other nodes in the network about what is
@@ -32,25 +34,29 @@ because otherwise you'd need to download
 the entire database of more than 100 GB of data
 to be able to run a
 [full node](https://en.bitcoin.it/wiki/Full_node) and establish consensus.
-Thus "forcing" you to trust that third party, take [MyEtherWallet for example](https://kb.myetherwallet.com/networks/run-your-own-node-with-myetherwallet.html).
-With Nimiq you can connect directly with what we call a nano client.
+Thus "forcing" you to trust that third party, just take the popular
+[MyEtherWallet](https://kb.myetherwallet.com/networks/run-your-own-node-with-myetherwallet.html) as an example.
+With Nimiq you can connect directly to the network with what we call a Pico Client.
 The concept is based on Ethereum's
 [light client](https://github.com/ethereum/wiki/wiki/Light-client-protocol).
-A nano client reaches consensus by just downloading a compressed form of the latest state of the blockchain
-which is only abut 1MB but still enables the nano client to verify all information.
-And that is what we're going to do!
+A Pico Client reaches consensus by asking all its peer for the latest block,
+and only if that fails or the peers don't agree on the same blockchain state,
+the client will automatically start downloading a compressed form of the latest state of the blockchain.
+That is only abut 1MB, but still enables the Pico Client to verify all information.
+This means even in the worst case it can reach consensus in just a few seconds.
+You can find much more details about all this in the [Nimiq White Paper](https://nimiq.com/whitepaper).
 
 The goal of this little demo is to connect to the network and reach consensus.
 
-_[» Skip tutorial and experiment with the code](playground.html#basics-1-consensus-demo.html)._
+_[» Skip tutorial and experiment with the code.](playground.html#basics-1-consensus-demo.html)_
 
 It's a good idea to [open the source code](playground.html#basics-1-consensus-demo.html)
 in parallel to see how it all fits together, but also to modify and play.
-The example we'll be building here can be used for building Nimiq-enabled apps.
+Later on, you can use this example as a basis to build your own Nimiq-enabled apps.
 
 ## Getting started
 
-We start from a standard HTML 5 page importing the Nimiq library:
+We start from an empty HTML 5 page and load the Nimiq library in the `<head>` section:
 
 ```HTML
 <!DOCTYPE html>
@@ -58,10 +64,13 @@ We start from a standard HTML 5 page importing the Nimiq library:
 <head>
     <meta charset=utf-8 />
     <title>Nimiq Demo App</title>
-    <script type="text/javascript" src="https://cdn.nimiq.com/nimiq.js"></script>
+
+    <!-- Load the Nimiq library -->
+    <script type="text/javascript" src="https://cdn.nimiq.com/v1.5/nimiq.js"></script>
     <script>
         // The code below will go here
     </script>
+
 </head>
 <body>
     <h1>Nimiq Demo App</h1>
@@ -69,7 +78,7 @@ We start from a standard HTML 5 page importing the Nimiq library:
 </html>
 ```
 
-Add a script that will load and start the Nimiq client library:
+Add a function that will execute once the Nimiq library has been loaded:
 
 ```js
 async function start() {
@@ -81,35 +90,40 @@ Nimiq.init(start);
 
 Inside this function:
 
-1) We're going to configure Nimiq to use the testing network, known as "Testnet".
-   That's a good choice for experimenting and testing.
+1) We're going to configure Nimiq to use the "Testnet".
+   Which is - as the name suggests - a good choice for experimenting and testing.
 
    ```js
    Nimiq.GenesisConfig.test();
    ```
 
-2) Then prepare the nano consensus which will be our client to the network.
+2) Then we use the Configuration Builder (details below)...
 
    ```js
-   const consensus = await Nimiq.Consensus.nano();
+   const configBuilder = Nimiq.Client.Configuration.builder();
    ```
 
-3) And finally connect.
+3) ... to get a Nimiq client instance that automatically connects to the network.
 
    ```js
-   consensus.network.connect();
+   const client = configBuilder.instantiateClient();
    ```
 
-**These three lines are all it needs to get a Nimiq client connected to the network!**
+**These three lines are all you need to get a Nimiq Client connected to the network!**
 
 When you run this code, you'll notice it will take a moment to reach consensus.
-Open the dev tools (F12) to see logs of the Nano Client to better understand what's going on under the hood.
+Open the dev tools (F12) to see logs of the Pico Client and understand better what is going on under the hood.
 
-Great, let's add some UI to see what's happening behind the scenes.
+The **Configuration Builder** will create the optimal Nimiq Client depending on the features we need for our project.
+In many cases, no additional features are needed - like in this example -
+and so the builder will setup a Pico Client for us which is able to sync and establish consensus in just a few seconds.
+For the entire tutorial, no extra features are needed, so we can skip diving into details.
+
+Great, let's add some UI to see what is happening behind the scenes.
 
 ## User Interface
 
-Add a `<div>` with an ID to print out the status messages like below:
+Add a `<div>` with an ID to print out the status messages:
 
 ```html
 <body>
@@ -118,7 +132,7 @@ Add a `<div>` with an ID to print out the status messages like below:
 </body>
 ```
 
-Add a function to put the word out.
+Add a function to put the word out:
 
 ```js
 function status(text) {
@@ -126,57 +140,55 @@ function status(text) {
 }
 ```
 
-And then use it in your code.
+Then use it in the code:
 
 ```js
 async function start() {
-    status('Nimiq loaded. Connecting...');           // <= here
+    status('Nimiq loaded. Establishing consensus...');           // <= Here,
 
     // Code from 'Getting started'
     Nimiq.GenesisConfig.test();
-    const consensus = await Nimiq.Consensus.nano();
-    consensus.network.connect();
+    const configBuilder = Nimiq.Client.Configuration.builder();
+    const client = configBuilder.instantiateClient();
 
-    status('Syncing and establishing consensus...');  // <= here and below
+    status('Syncing and establishing consensus...');             // <= here,
 
-    // Using "on()" will be explained in the next tutorial
-    consensus.on('established', () => status('Consensus established'));
+    // Can be 'syncing', 'established', and 'lost'
+    client.addConsensusChangedListener((consensus) =>
+        status(`Consensus: ${ consensus }`)                      // <= and here.
+    );
 };
 ```
 
-**The Nano Client is set up! It connects, syncs with the network, and establishes consensus!**
+**The Client is set up! It connects, syncs with the network and establishes consensus!**
 
 ## Next Steps
 
 **Your turn!**
 
-Follow the link below to see the prototype in action and mess around with it.
-Open the dev tools in your browser (press F12) to see the full log output from the Nano Client.
+Following the link below, you will see the prototype in action and you can mess around with the code.
+Open the dev tools in your browser - by pressing F12 - to see all the logs from the Pico Client.
 Some lines will be in red and similar to
-`Can’t establish a connection to the server at ws://some.address.com:8443/`.
-No worry, nothing's broken here.
+`WebSocket connection to 'wss://some.address:8443/' failed: ...`.
+Don't worry, nothing's broken here.
 It simply means your client tried to connect to another node in the network and that connection failed.
 That's normal in the peer-to-peer blockchain world.
 
 After a while, you should see
 `BaseConsensus: Synced with all connected peers, consensus established`.
 
-**Welcome to the Nimiq Blockchain! :)**
+**Welcome to the Nimiq Network! :)**
 
-[» See the prototype in action and modify it](playground.html#basics-1-consensus-demo.html).
+[» See the prototype in action and modify it.](playground.html#basics-1-consensus-demo.html)
 
 If even after a long time the client can not establish consensus, something went wrong.
-Check your Internet connection and try disabling your browser's ad blocker.
-
-## Need more ideas?
-
-Sure!
-
-**Encryption**: Right now, your private key is stored unencrypted.
-You can replace `exportPlain()` with `exportEncrypted(password)` and `loadPlain()` with `loadEncrypted(stored, password)`.
+Check your Internet connection and make sure your browser's ad blocker is disabled.
 
 ---
 
 **Continue the tutorial**: [Basics 2, Blockchain Events and User Interface »](basics-2-events-and-ui)
 
-_Get in touch at [sven@nimiq.com](mailto:sven@nimiq.com) to share your ideas and feedback!_
+_Find more help and documentation in the [Nimiq Developer Center](https://nimiq.com/developers/).
+Share your ideas and feedback on the [Nimiq Community Forum](https://forum.nimiq.community),
+you'll also find a dedicated section for [discussions and ideas](https://forum.nimiq.community/c/documentation/drafts).
+Or get in touch at [sven@nimiq.com](mailto:sven@nimiq.com)._

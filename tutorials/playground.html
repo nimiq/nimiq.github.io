@@ -87,6 +87,7 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
                     const doc = $('viewer_frame').contentDocument;
+                    doc.location.reload();
                     doc.open();
                     doc.write(html);
                     doc.close();

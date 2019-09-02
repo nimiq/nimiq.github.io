@@ -2,14 +2,17 @@
 <html>
 
 <head>
-    <meta name="description" content="Nimiq Basics 3: Transactions - nimiq.com/developers">
+    <meta name="description" content="Basics 5: Nimiq Identicons - nimiq.com/developers">
     <meta charset=utf-8 />
     <title>Nimiq Wallet Demo</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@nimiq/style@v0/nimiq-style.min.css" rel="stylesheet">
     <link href="basics-3-transactions-demo.css" rel="stylesheet">
+    <link href="basics-5-identicons-demo.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.nimiq.com/v1.5/nimiq.js"></script>
-    <script>
+    <script type="module">
+        import Identicons from "https://unpkg.com/@nimiq/iqons@1.5/dist/iqons.bundle.min.js";
+
         const $ = document.getElementById.bind(document);
         const nimiq = {};
 
@@ -18,11 +21,9 @@
         }
 
         function onConsensusChanged(consensus) {
-            status(
-                consensus == Nimiq.Client.ConsensusState.ESTABLISHED
-                    ? 'Consensus established.'
-                    : 'Establishing consensus...'
-            );
+            const established = consensus == Nimiq.Client.ConsensusState.ESTABLISHED;
+            status(established ? 'Consensus established.' : 'Establishing consensus...');
+            document.body.classList.toggle('consensus-established', established);
         }
 
         async function onHeadChanged() {
@@ -37,12 +38,13 @@
 
             // Pico Clients safe bandwidth by not automatically downloading all accounts.
             // Instead, the account must be loaded from our network peers on demand.
+            // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
             const account = await nimiq.client.getAccount(nimiq.wallet.address);
-            const balance = Nimiq.Policy.lunasToCoins(account.balance);
+            const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
             $('balance').textContent = `${balance.toFixed(2)} NIM`;
 
             console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
-            console.log(`New balance of ${nimiq.wallet.address.toUserFriendlyAddress()} is ${balance}.`);
+            console.log(`New balance of ${nimiq.address} is ${balance}.`);
         }
 
         function onTransaction(txDetails) {
@@ -56,26 +58,82 @@
                         break;
                     case Nimiq.Client.TransactionState.MINED:
                         // Transaction has been confirmed once
-                        status('Transaction mined, looking good...');
+                        status('Transaction confirmed once, looking good...');
                         break;
                     case Nimiq.Client.TransactionState.CONFIRMED:
                         // Requires 10 confirmations by default
-                        status('Transaction confirmed for good. :)');
+                        status('Transaction arrived for good. :)');
                         break;
                 }
             }
         }
 
-        async function sendTransaction(address, amount) {
-            const transaction = nimiq.wallet.createTransaction(
-                Nimiq.Address.fromUserFriendlyAddress(address),
-                Nimiq.Policy.coinsToLunas(amount),
-                0, // fee
-                await nimiq.client.getHeadHeight()
-            );
+        async function sendTransaction(address, amount, message) {
+
+            // helper function to create the basic transaction used in tutorial 3
+            async function basicTransaction() {
+                return nimiq.wallet.createTransaction(
+                    Nimiq.Address.fromUserFriendlyAddress(address),
+                    Nimiq.Policy.coinsToLunas(amount),
+                    0, // fee
+                    await nimiq.client.getHeadHeight()
+                );
+            }
+
+            // create an extended transaction that will carry the message as "extra data"
+            async function extendedTransaction() {
+                // turn string into a safely encoded list of bytes
+                const extraData = Nimiq.BufferUtils.fromUtf8(message);
+
+                const transaction = new Nimiq.ExtendedTransaction(
+                    nimiq.wallet.address,                           // sender address
+                    Nimiq.Account.Type.BASIC,                       // and account type
+                    Nimiq.Address.fromUserFriendlyAddress(address), // recipient address
+                    Nimiq.Account.Type.BASIC,                       // and type
+                    Nimiq.Policy.coinsToLunas(amount),
+                    0,                                              // fee
+                    await nimiq.client.getHeadHeight(),
+                    Nimiq.Transaction.Flag.NONE,
+                    extraData                                       // the message
+                );
+
+                // sign transaction with key pair from our wallet
+                const keyPair = nimiq.wallet.keyPair;
+                const signature = Nimiq.Signature.create(
+                    keyPair.privateKey,
+                    keyPair.publicKey,
+                    transaction.serializeContent()
+                );
+                const proof = Nimiq.SignatureProof.singleSig(keyPair.publicKey, signature);
+                transaction.proof = proof.serialize();
+
+                return transaction;
+            }
+
+            // create an extended transaction if the message is not empty
+            const transaction = message.trim().length > 0 ? await extendedTransaction() : await basicTransaction();
 
             // Send to the Nimiq network
             nimiq.client.sendTransaction(transaction);
+        }
+
+        async function transactionOverview() {
+            let ready = false;
+            try {
+                const recipientAddress = Nimiq.Address
+                    .fromUserFriendlyAddress($('tx_recipient').value.trim())
+                    .toUserFriendlyAddress();
+
+                await Identicons.render(nimiq.address, $('tx_overview_sender'));
+                const amount = parseFloat($('tx_amount').value || '0');
+                $('tx_overview_amount').textContent = `${amount} NIM`;
+                await Identicons.render(recipientAddress, $('tx_overview_recipient'));
+
+                ready = amount > 0;
+            } catch (error) { }
+
+            $('transaction').classList.toggle('ready', ready);
+            $('tx_send').disabled = !ready;
         }
 
         async function start() {
@@ -97,13 +155,17 @@
             const wallet = localStorage.wallet
                 ? Nimiq.Wallet.loadPlain(JSON.parse(localStorage.wallet))
                 : Nimiq.Wallet.generate();
-            $('address').textContent = wallet.address.toUserFriendlyAddress();
             localStorage.wallet = JSON.stringify(Array.from(wallet.exportPlain()));
+
+            const address = wallet.address.toUserFriendlyAddress();
+            $('address').textContent = address;
+            await Identicons.render(address, $('identicon'));
 
             // Store references
             nimiq.client = client;
             nimiq.network = client.network;
             nimiq.wallet = wallet;
+            nimiq.address = address;
 
             // Event handlers
             client.addConsensusChangedListener(onConsensusChanged);
@@ -112,12 +174,14 @@
             $('tx_send').addEventListener('click', () => {
                 const recipient = $('tx_recipient').value;
                 const amount = parseFloat($('tx_amount').value);
+                const message = $('tx_message').value;
 
-                sendTransaction(recipient, amount);
+                sendTransaction(recipient, amount, message);
 
-                // clear the form
-                $('tx_recipient').value = $('tx_amount').value = '';
+                $('tx_recipient').value = $('tx_amount').value = $('tx_message').value = '';
             });
+            $('tx_amount').addEventListener('input', transactionOverview);
+            $('tx_recipient').addEventListener('input', transactionOverview);
         }
 
         function onError(code) {
@@ -144,11 +208,12 @@
         <div class="nq-card-header">
             <h1 class="nq-h1">Nimiq Wallet</h1>
             <div class="nq-text">
-                Demo app for <a href="../tutorials/basics-3-transactions">Basics 3: Transactions</a>.
+                Demo app for <a href="../tutorials/basics-5-identicons">Basics 5: Nimiq Identicons</a>.
             </div>
         </div>
         <div class="nq-card-body">
             <h2>Wallet</h2>
+            <div id="identicon"></div>
             <p>
                 <span class="nq-label">Address: </span>
                 <span id="address">loading&hellip;</span></p>
@@ -156,7 +221,6 @@
                 <span class="nq-label">Balance: </span>
                 <span id="balance">loading&hellip;</span>
             </p>
-
             <h2>Network</h2>
             <p>
                 <span class="nq-label">Status: </span>
@@ -170,8 +234,7 @@
                 <span class="nq-label">Stats: </span>
                 <span id="network">loading&hellip;</span>
             </p>
-
-            <div class="transactions">
+            <div id="transaction">
                 <h2>Send Transaction</h2>
                 <p>
                     <label class="nq-label" for="tx_recipient">Recipient</label>
@@ -181,10 +244,22 @@
                     <label class="nq-label" for="tx_amount">Amount</label>
                     <input type="number" id="tx_amount" placeholder="0.00">
                 </p>
-                <button id="tx_send" class="nq-button">Send Transaction</button>
+                <p>
+                    <label class="nq-label" for="tx_message">Message</label>
+                    <input type="text" id="tx_message" placeholder="A message for the recipient (optional)">
+                </p>
+                <p id="tx_overview">
+                    <span id="tx_overview_sender"></span>
+                    <span> ⇢ </span>
+                    <span id="tx_overview_amount"></span>
+                    <span> ⇢ </span>
+                    <span id="tx_overview_recipient"></span>
+                </p>
+                <button id="tx_send" class="nq-button" disabled>Send Transaction</button>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
