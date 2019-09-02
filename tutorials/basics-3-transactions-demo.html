@@ -37,9 +37,8 @@
 
             // Pico Clients safe bandwidth by not automatically downloading all accounts.
             // Instead, the account must be loaded from our network peers on demand.
-            // Accounts with balance 0 will be pruned, thus, account == null means balance is 0
             const account = await nimiq.client.getAccount(nimiq.wallet.address);
-            const balance = account ? Nimiq.Policy.lunasToCoins(account.balance) : 0;
+            const balance = Nimiq.Policy.lunasToCoins(account.balance);
             $('balance').textContent = `${balance.toFixed(2)} NIM`;
 
             console.log(`Now at height ${height} with ${totalPeerCount} peers and ${bytesSent}/${bytesReceived} bytes sent/received.`);
@@ -57,11 +56,11 @@
                         break;
                     case Nimiq.Client.TransactionState.MINED:
                         // Transaction has been confirmed once
-                        status('Transaction confirmed once, looking good...');
+                        status('Transaction mined, looking good...');
                         break;
                     case Nimiq.Client.TransactionState.CONFIRMED:
                         // Requires 10 confirmations by default
-                        status('Transaction arrived for good. :)');
+                        status('Transaction confirmed for good. :)');
                         break;
                 }
             }

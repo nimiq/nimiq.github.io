@@ -2,7 +2,7 @@
 
 **Goal**: We'll add event listeners and show updates in a beautiful Nimiq-style UI.
 
-_[» Skip tutorial and see the code](playground.html#basics-2-events-and-ui-demo.html)._
+_[» Skip tutorial and see the code.](playground.html#basics-2-events-and-ui-demo.html)_
 
 > **Just Getting started?**
 > This tutorial is based on the ideas and code of [Basics 1: Consensus](basics-1-consensus.md),
@@ -25,23 +25,25 @@ We'll use `<span>` tags with IDs as placeholders to put the content in later.
 </body>
 ```
 
-In the `start()` function, the Pico Client will connect to the network and
-establish consensus.
+In the `start()` function, the Pico Client connects to the network and
+establishes consensus.
 See [Basics 1: Establishing Consensus](basics-1-consensus) for details.
 We define a shared variable `nimiq` to keep references to client and network for later.
 (More details on each part in the next tutorial.)
 
 ```js
-const nimiq = {}; // < -- this is the shared variable
+const nimiq = {}; // <-- this is the shared variable
 
 async function start() {
     // Code from tutorial "Basics 1: Establishing Consensus"
     status('Nimiq loaded. Establishing consensus...');
+
+    // Three lines to connect to the network
     Nimiq.GenesisConfig.test();
     const configBuilder = Nimiq.Client.Configuration.builder();
     const client = configBuilder.instantiateClient();
 
-    // Store references
+    // Store references          // <-- this part is NEW!
     nimiq.client = client;
     nimiq.network = client.network;
 }
@@ -60,13 +62,13 @@ function status(text) {
 // Moving the code from 'start()' into its own handler function
 function onConsensusChanged(consensus) {
     status(
-        consensus == Nimiq.Client.ConsensusState.ESTABLISHED
+        consensus === Nimiq.Client.ConsensusState.ESTABLISHED
             ? 'Consensus established.'
             : 'Establishing consensus...'
     );
 }
 
-// Head change means a new block got mined, replacing the old "head block"
+// Head change means a new block got mined, updating the 'head' of the blockchain
 async function onHeadChanged() {
     const height = await nimiq.client.getHeadHeight();
     $('height').textContent = height;
@@ -165,7 +167,7 @@ Check it out:
 That's starting to look more like a real UI.
 **And just with a few lines of code!**
 
-[» Run and modify this code live](playground.html#basics-2-events-and-ui-demo.html).
+[» Run and modify this code live.](playground.html#basics-2-events-and-ui-demo.html)
 
 ## What's next?
 
@@ -173,9 +175,9 @@ This short demo could be extended to a little blockchain stats viewer.
 You could add:
 
 **Global hash rate**: Want to calculate and show the global hash rate?
-Get the difficulty from the latest block in `onHeadChanged`
+Get the difficulty from the latest block in `onHeadChanged` with the `client.getHeadBlock()` method
 and have a look at the [nano network API](https://github.com/nimiq/nano-api/blob/1b020bf13855e5eac484c36d5c6ca4f19081bb42/src/nano-network-api.js#L468)
-to turn the difficulty into the global hash rate.
+to turn the difficulty into the estimated global hash rate.
 And while you're at it, how about adding some graphs? :)
 
 **Error handling**: Before publishing your app, you should add some error handling.

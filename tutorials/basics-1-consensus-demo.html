@@ -29,13 +29,14 @@
             const client = configBuilder.instantiateClient();
 
             // Waiting for consensus to be establish
-            client.addConsensusChangedListener((consensus) =>
-                status(
-                    consensus == Nimiq.Client.ConsensusState.ESTABLISHED
+            client.addConsensusChangedListener((consensus) => {
+                const message = consensus === Nimiq.Client.ConsensusState.ESTABLISHED
                     ? 'Consensus established.'
                     : 'Establishing consensus...'
-                )
-            );
+
+                // Update displayed status
+                status(message);
+            });
         };
 
         // Start loading the Nimiq client library
@@ -46,8 +47,7 @@
 <body>
     <h1>Nimiq Demo App</h1>
     <div id="message">loading...</div>
-    <p><small>Press F12 to open console and see full log.</small>
-        <p>
+    <p><small>Press F12 to open console and see full log.</small><p>
 </body>
 
 </html>

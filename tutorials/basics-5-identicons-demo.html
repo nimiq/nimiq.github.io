@@ -180,8 +180,8 @@
 
                 $('tx_recipient').value = $('tx_amount').value = $('tx_message').value = '';
             });
-            $('tx_amount').addEventListener('keyup', transactionOverview);
-            $('tx_recipient').addEventListener('keyup', transactionOverview);
+            $('tx_amount').addEventListener('input', transactionOverview);
+            $('tx_recipient').addEventListener('input', transactionOverview);
         }
 
         function onError(code) {

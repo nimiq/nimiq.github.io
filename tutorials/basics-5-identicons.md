@@ -1,17 +1,17 @@
 # Basics 5: Nimiq Identicons
 
-_TL;DR? [Run the demo](playground.html#basics-5-identicons-demo.html)._
+_TL;DR? [Run the demo.](playground.html#basics-5-identicons-demo.html)_
 
 Building on the tutorial [Basics 4: Extended Transactions](basics-4-extended-tx),
 we can add one of Nimiq's unique features: [Nimiq Identicons](https://github.com/nimiq/iqons).
 
-Identicons help user to identify and verify addresses,
+Identicons help users identify and verify addresses,
 for example helping them to make sure that the address they entered is the correct address of the recipient.
-Here is an example: the address `NQ45 RGMN JG3R MQ4S TS19 M1YM 46KS Q7D2 15EE` corresponds to the identicon in the screenshot.
+Here is an example: the Identicon in the following screen corresponds to the address `NQ45 RGMN JG3R MQ4S TS19 M1YM 46KS Q7D2 15EE`.
 
 ![Nimiq Identicons in action](resources/identicon-screenshot.png)
 
-First, let's load the Nimiq Identicons lib at the top of our script:
+First, let's import the Nimiq Identicons library at the top of our script:
 
 ```javascript
 import Identicons from "https://unpkg.com/@nimiq/iqons@1.5/dist/iqons.bundle.min.js";
@@ -27,9 +27,9 @@ For this to work we take advantage of the `module` type definition by changing t
 <script type="module">
 ```
 
-## An identicon for our own wallet address
+## An Identicon for our own wallet address
 
-To use the lib, we get the user-friendly address of our wallet and create an identicon for it.
+To use the lib, we get the user-friendly address of our wallet and create an Identicon for it.
 It's three new lines of code in `start()`:
 
 ```javascript
@@ -38,7 +38,7 @@ $('address').textContent = address;
 await Identicons.render(address, $('identicon'));
 ```
 
-This code will create an identicon as SVG and place it into `<div id="identicon">` that we now add to our HTML:
+This code will create an Identicon as an SVG and place it into a `#identicon' element that we now add to our HTML:
 
 ```html
 ...
@@ -52,13 +52,13 @@ This code will create an identicon as SVG and place it into `<div id="identicon"
 ...
 ```
 
-Now, when reloading the web-app, an identicon will appear.
-Of course a different one for you as the address of your wallet is different.
+Now, when reloading the web-app, an Identicon will appear there.
+Of course a different one for you, because the address of your wallet is different.
 
 ## Identicons for sending transactions
 
-In the "Send Transaction" section of our app, let's add a part that will visualize the transaction by
-showing an identicon for the sender, the amount being transferred and another identicon for the receiver.
+In the "Send Transaction" section of our app, let's add a part that visualizes the transaction by
+showing an Identicon for the sender, the amount being transferred and another Identicon for the receiver.
 
 First step, some HTML markup just before the `tx_send` button:
 
@@ -76,10 +76,10 @@ First step, some HTML markup just before the `tx_send` button:
 </div>
 ```
 
-And a new function to generate the "transaction overview".
+Add a new function to generate the "transaction overview".
 It extracts the data entered into the transaction form and renders it into the HTML section we added before.
 The function will also check if the entered values are valid.
-And if so, the overview will be shown and the "send" button enabled.
+If so, the overview will be shown and the "send" button becomes enabled.
 
 ```javascript
 async function transactionOverview() {
@@ -90,14 +90,14 @@ async function transactionOverview() {
             .fromUserFriendlyAddress($('tx_recipient').value.trim())
             .toUserFriendlyAddress();
 
-        // Render our own wallet's address as identicon
+        // Render our own wallet's address as Identicon
         await Identicons.render(nimiq.address, $('tx_overview_sender'));
 
         // Show the amount to be sent
         const amount = parseFloat($('tx_amount').value || '0');
         $('tx_overview_amount').textContent = `${amount} NIM`;
 
-        // Render the recipient address as identicon
+        // Render the recipient address as Identicon
         await Identicons.render(recipientAddress, $('tx_overview_recipient'));
 
         // If everything worked until here and a positive amount is set
@@ -116,12 +116,12 @@ async function transactionOverview() {
 
 Next step, call the `transactionOverview()` function each time
 the user enters something into the amount or recipient box
-of the transaction form by adding two `keyup` listeners
+of the transaction form by adding two `input` listeners
 at the end of `start()`:
 
 ```js
-$('tx_amount').addEventListener('keyup', transactionOverview);
-$('tx_recipient').addEventListener('keyup', transactionOverview);
+$('tx_amount').addEventListener('input', transactionOverview);
+$('tx_recipient').addEventListener('input', transactionOverview);
 ```
 
 Finally, making it nice with some CSS to
@@ -152,7 +152,7 @@ By folding and unfolding the sections using a little animation:
 }
 ```
 
-Add change the `onConsensusChanged(...)` so that it adds the `consensus-established` class to show the transactions form:
+Now update the `onConsensusChanged(...)` method so that it adds the `consensus-established` class to show the transaction form:
 
 ```js
 function onConsensusChanged(consensus) {
@@ -166,15 +166,16 @@ function onConsensusChanged(consensus) {
 }
 ```
 
-You are now an official Nimiq Basics Code Nimja, having mastered the ancient skills of
+## Awesome!
+
+You are now an official Nimiq Basics Code Nimja (that is _not_ a typo), having mastered the ancient skills of
 
 1. Establishing consensus
 1. Listening to blockchain events
-1. Sending all sorts of transactions
-1. Last but not least, creating identicons
+1. Sending both types of transactions
+1. Last but not least, creating Identicons
 
-As a Nimiq Basics Code Nimja, you can now proudly wear the golden belt of honor.
-But you don't have to. ;)
+As a Nimiq Basics Code Nimja, you can now proudly wear the golden belt of honor!
 
 ![Code Nimja with golden belt of honor!](resources/nimiq-basics-nimja.png)
 

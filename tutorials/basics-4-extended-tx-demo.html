@@ -79,7 +79,7 @@
                 );
             }
 
-            // create an extended transaction that will carry the message as "extra data"
+            // create an extended transaction that will carry the message as "extraData"
             async function extendedTransaction() {
                 // turn string into a safely encoded list of bytes
                 const extraData = Nimiq.BufferUtils.fromUtf8(message);
@@ -110,7 +110,9 @@
             }
 
             // create an extended transaction if the message is not empty
-            const transaction = message.trim().length > 0 ? await extendedTransaction() : await basicTransaction();
+            const transaction = message.trim().length > 0
+                ? await extendedTransaction()
+                : await basicTransaction();
 
             // Send to the Nimiq network
             nimiq.client.sendTransaction(transaction);

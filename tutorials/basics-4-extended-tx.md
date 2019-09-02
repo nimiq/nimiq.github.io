@@ -1,19 +1,19 @@
 # Basics 4: Extended Transactions
 
-_TL;DR? [Run the demo](playground.html#basics-4-extended-tx-demo.html)._
+_TL;DR? [Run the demo.](playground.html#basics-4-extended-tx-demo.html)_
 
 Building on the tutorial [Basics 3: Transactions](basics-3-transactions),
-we'll augment the basic transaction with an extended transaction to also be able to send a message with each transaction.
+we'll augment the basic transaction with an extended transaction to also be able to include a message with it.
 
 ## Message Input
 
-To get started, let's add a form field for the message,
+To get started, let's add a form field for the transaction message,
 in the same fashion as the other ones, just before the "Send Transaction" button
 
 ```html
 <p>
     <label class="nq-label" for="tx_message">Message</label>
-    <input type="text" id="tx_message" placeholder="...">
+    <input type="text" id="tx_message" placeholder="Optional message">
 </p>
 ```
 
@@ -33,15 +33,15 @@ Now we need to update the `sendTransaction(...)` function&hellip;
 
 ## Extended Transaction
 
-If `sendTransaction(...)` gets a message passed, we'll create and send out an extended transaction.
+If `message` contains a string, we'll create and send out an extended transaction.
 Otherwise, a basic transaction will be sent instead.
-This will save bytes in the network and on the blockchain.
-And in case you want to send out a lot transactions,
-it will reduce the fee to be paid.
-See the note in "Send Transaction" in
+Basic transactions save bytes in the network and on the blockchain.
+And in case you want to send out a lot of transactions,
+it will reduce the fees to be paid.
+See the note under "Send Transaction" in
 [Basics 3: Transactions](basics-3-transactions#send-transactions) for details.
 
-Step one, let's move the basic transaction code into it's own
+Step one: move the basic transaction code into it's own
 helper function:
 
 ```js
@@ -58,12 +58,12 @@ async function sendTransaction(address, amount, message) {
     ...
 ```
 
-Step two, add another helper function for extended transactions just below:
+Step two: add another helper function for extended transactions just below:
 
 ```js
     ...
     async function extendedTransaction() {
-        // turn string into a safely encoded list of bytes
+        // turn string into a safely encoded array of bytes
         const extraData = Nimiq.BufferUtils.fromUtf8(message);
 
         const transaction = new Nimiq.ExtendedTransaction(
@@ -86,18 +86,18 @@ Step two, add another helper function for extended transactions just below:
             transaction.serializeContent()
         );
         const proof = Nimiq.SignatureProof.singleSig(keyPair.publicKey, signature);
-        transaction.proof = proof.serialize();
+        transaction.proof = proof.serialize(); // Set the proof with the signature on the transaction
 
         return transaction;
     }
     ...
 ```
 
-Finally, checking if we got a message, we can use the two helper functions to put it all together:
+Finally, after checking if we got a message, we can use the two helper functions to put it all together:
 
 ```js
     ...
-    // create an extended transaction if the message is not empty
+    // create an extended transaction if a message is set, otherwise a basic transaction
     const transaction = message.trim().length > 0
         ? await extendedTransaction()
         : await basicTransaction();
