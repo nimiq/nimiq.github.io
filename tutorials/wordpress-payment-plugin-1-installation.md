@@ -1,4 +1,4 @@
-# Nimiq Payment Plugin for WordPress WooCommerce
+# Install Nimiq Payment Plugin for WordPress WooCommerce Tutorial
 
 WooCommerce is one of the most common online shop systems used on the Web.
 Integrated into WordPress, it allows you to quickly set up your own online shop.
