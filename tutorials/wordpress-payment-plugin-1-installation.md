@@ -28,8 +28,8 @@ or you can install all requirements [manually](#manual-installation).
 As prerequisite, you need to install Docker and Docker Compose.
 To test whether Docker and Docker Compose are installed already run `which docker` and `which docker-compose`,
 if both commands yield a path, e.g. `/usr/local/bin/docker-compose` then they are setup correctly and you can skip this step.
-Otherwise, please refer to [this page](https://docs.docker.com/compose/install/)
-for detailed instructions for all operating systems.
+Otherwise, please refer to [this page to get started with Docker](https://docs.docker.com/get-started/) and [this page to install Docker Compose](https://docs.docker.com/compose/install/)
+on all operating systems.
 
 **For Linux users**: Make sure to follow the
 [post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).
