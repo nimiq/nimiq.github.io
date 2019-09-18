@@ -108,6 +108,12 @@ docker volume prune          # delete volumes mounted to docker instances
 docker volume rm wp_db_data  # specifically clear the DB data used with Wordpress
 ```
 
+1. **Adjust permissions**: To be able to install a plugin, make sure:
+- The `~/wordpress` folder and all its subfolders are writable for the `docker` group with 
+`chmod -R g+w ~/wordpress`.
+- The user for the web server has write access over the data folder of wordpress 
+`sudo chown -R www-data:www-data wordpress/data`
+
 ### Manual installation
 
 In general, two steps are required:
@@ -126,9 +132,6 @@ Log into the the admin panel of your WordPress installation at `/wp-admin/`,
 select _Plugins_ ⇒ _Add New_ ⇒ search for "woocommerce" ⇒ and hit _Install Now_.
 
 ![Install WooCommerce plugin](resources/woocommerce-plugin.png)
-
-**Note**: If a popup asking for FTP credentials shows up when clicking _Install Now_ make sure the `~/wordpress` folder
-and all its subfolders are writable for the `docker` group with `chmod -R g+w ~/wordpress`.
 
 After the installation is completed, click _Activate_ and follow the setup process.
 FYI, WooCommerce will suggest to install and sign-up for a lot of other third-party plugins.
