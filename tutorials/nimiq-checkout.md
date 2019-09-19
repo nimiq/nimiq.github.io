@@ -1,4 +1,4 @@
-# Nimiq Checkout
+# How to Integrate Nimiq Checkout Into Your Web Shop
 
 _TL;DR? [Run the demo](playground.html#nimiq-checkout-demo.html)._
 
