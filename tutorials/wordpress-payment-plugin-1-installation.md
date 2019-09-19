@@ -88,6 +88,12 @@ This way we can 1) easily backup all relevant data and 2) keep all configuration
                - ~/wordpress/data:/var/www/html/wp-content
    ```
 
+1. **Adjust permissions**: To be able to install a plugin, make sure
+   - The `data` folder belongs to the `www-data` user so that the web server can access all files with
+   `sudo chown -R www-data:www-data ~/wordpress/data/` and
+   - The `~/wordpress` folder and all its subfolders are writable for the group with
+   `chmod -R g+w ~/wordpress`.
+
 1. **Start and stop**: Open a terminal, go to `~/wordpress` and run your docker with `up` and stop it with `down`.
 
    ```bash
@@ -107,12 +113,6 @@ docker container prune       # delete docker instances
 docker volume prune          # delete volumes mounted to docker instances
 docker volume rm wp_db_data  # specifically clear the DB data used with Wordpress
 ```
-
-1. **Adjust permissions**: To be able to install a plugin, make sure:
-- The `~/wordpress` folder and all its subfolders are writable for the `docker` group with 
-`chmod -R g+w ~/wordpress`.
-- The user for the web server has write access over the data folder of wordpress 
-`sudo chown -R www-data:www-data wordpress/data`
 
 ### Manual installation
 
