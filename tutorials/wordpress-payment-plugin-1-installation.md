@@ -106,6 +106,8 @@ This way we can 1) easily backup all relevant data and 2) keep all configuration
    (replace `localhost` with the IP of your VPS/server), your newly installed WordPress
    will greet you with an installation wizard, go through it to set up a user account and other details.
 
+   ![WordPress login](resources/woocommerce-wordpress-setup.png)
+
 To clean-up and reset your installation use:
 
 ```bash
@@ -154,6 +156,9 @@ After installing it, click _Activate_.
 
 You'll now find the _Nimiq Checkout for WooCommerce_ in the list of installed plugins.
 Click _Configure_.
+
+![Nimiq WooCommerce Plugin configuration](resources/woocommerce-configuration.png)
+
 You need to setup your Nimiq Address in _Shop NIM Address_ to receive NIM and
 you might want to adjust other settings according to your needs.
 For testing, your can set _Network_ to "Testnet".
