@@ -152,10 +152,11 @@ Similarly to the WooCommerce Plugin, you will find the Nimiq Payment Plugin in t
 
 After installing it, click _Activate_.
 
-You'll now find the _WooCommerce Nimiq Gateway_ in the list of installed plugins.
+You'll now find the _Nimiq Checkout for WooCommerce_ in the list of installed plugins.
 Click _Configure_.
-You need to setup your Nimiq Address to receive transactions and
+You need to setup your Nimiq Address in _Shop NIM Address_ to receive NIM and
 you might want to adjust other settings according to your needs.
+For testing, your can set _Network_ to "Testnet".
 
 Next, go to _WooCommerce_ ⇒ _Settings_ ⇒ _General_ and select at the bottom of the page _Currency_ "Nimiq (NIM)".
 
