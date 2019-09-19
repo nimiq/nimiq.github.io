@@ -39,7 +39,7 @@ As an extra, you can also add command-line completion for Docker Compose followi
 
 > To get a **temporary** and basic version of WordPress in a Docker container for local testing use
 > [Docker's official guide for WordPress]( https://docs.docker.com/compose/wordpress/).
-> It's a "one-time installation" meant for quick tests, i.e. it will be deleted when you restart Docker. 
+> It's a "one-time installation" meant for quick tests, i.e. it will be reset when you restart Docker.
 
 For the online shop, we're going to setup Docker to store
 all configurations, user uploads, the database content as well as all plugins outside the Docker container.
