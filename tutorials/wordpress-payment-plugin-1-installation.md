@@ -146,18 +146,17 @@ A future version of the Nimiq Payment Plugin will work in combination with other
 
 ## Nimiq Plugin
 
-Download the latest Nimiq Payment Plugin as ZIP file [here](https://github.com/nimiq/woocommerce-gateway-nimiq/releases).
-Go to _Plugins_ ⇒ _Add New_ ⇒ click _Upload Plugin_, upload the ZIP file you just downloaded ⇒
-and click _Activate_ after the installation.
+Similarly to the WooCommerce Plugin, you will find the Nimiq Payment Plugin in the same place when searching for "nimiq".
+
+![Nimiq WooCommerce Plugin](resources/woocommerce-nimiq-plugin.png)
+
+After installing it, click _Activate_.
 
 You'll now find the _WooCommerce Nimiq Gateway_ in the list of installed plugins.
 Click _Configure_.
-You need to setup your Nimiq Address to receive transactions and you might want to adjust other settings according to your needs.
+You need to setup your Nimiq Address to receive transactions and
+you might want to adjust other settings according to your needs.
 
 Next, go to _WooCommerce_ ⇒ _Settings_ ⇒ _General_ and select at the bottom of the page _Currency_ "Nimiq (NIM)".
-
-**Notes**: For now, the Nimiq Payment Plugin is available for the Nimiq Testnet only.
-The Mainnet version is expected to be ready by the end of Q1 2019 and
-will be available via Wordpress' built-in marketplace.
 
 **Disclaimer**: please check the legal and tax requirements of your country before starting to sell with your shop.
