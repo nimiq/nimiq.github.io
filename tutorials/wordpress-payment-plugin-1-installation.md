@@ -106,7 +106,7 @@ This way we can 1) easily backup all relevant data and 2) keep all configuration
    (replace `localhost` with the IP of your VPS/server), your newly installed WordPress
    will greet you with an installation wizard, go through it to set up a user account and other details.
 
-   ![WordPress login](resources/woocommerce-wordpress-setup.png)
+   ![WordPress setup](resources/woocommerce-wordpress-setup.png)
 
 To clean-up and reset your installation use:
 
