@@ -61,30 +61,33 @@ Click _Configure_.
 
 ![Nimiq WooCommerce Plugin configuration](resources/woocommerce-configuration.png)
 
-You need to setup your Nimiq Address in _Wallet NIM Address_ to receive NIM and
-you might want to adjust other settings according to your needs.
+Let's have a look at most important settings and fields:
 
-* For accepting Bitcoin (optional) set _BTC xPublic Key_ field.
-* For accepting Ethereum (optional) you have to set both, the _ETH xPublic Key_ field and the _Etherscan.io API key_ (which you
-  can get at etherscan.io)
-  We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be paid to a new ETH address and you as the shop owner have to pull all the funds together later resulting in more privacy but also in higher fees.
+**Wallet NIM Address:** Enter the Nimiq Address to receive your NIM payments.
 
-For testing, your can set _Network Mode_ for both, NIM and BTC/ETH to "Testnet", otherwise to "Mainnet".
+**For accepting Bitcoin:** set _BTC xPublic Key_ field (optional)
 
-Setting _Margin Percentage_ allows you set a positive number, e.g. to compensate for volatility, or to a negative number to give a discount to crypto users. We recommend setting it to "0", you should check your local legistlation before changing it.
+**For accepting Ethereum:** set the _ETH xPublic Key_ field and the _Etherscan.io API key_ (which you can get at etherscan.io).
+We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be paid to a new ETH address and you as the shop owner have to pull all the funds together later resulting in more privacy but also in higher fees.
 
-If you select "Fastspot" in _Exchange Rate Source_, then you do not have to enter recommended fees at the bottom, Fastspot will do that for you.
+**Network Mode:** For testing, your can set both, NIM and BTC/ETH, to "Testnet", otherwise to "Mainnet".
 
-_Validation Interval_ is in minutes and can be reduced if you need fast confirmations. Note, when changing the interval, the plugin needs to be disabled and re-enabled again.
+**Margin Percentage:** You can set this to a positive number, e.g. to compensate for volatility, or to a negative number to give a discount to crypto users. We recommend leaving it at "0". You should check your local legistlation before changing it.
 
-Change _Behaviour_ if you want to use top-level redirection instead of opening a pop-up, make sure that you have SSL encryption enabled (HTTPS in your address bar)
+**Exchange Rate Source:** If you select "Fastspot", then you do not have to enter recommended fees at the bottom, Fastspot will do that for you.
 
-To add a _Logo_, upload an image to your WordPress installation first and copy the link and insert it here - it is not possible to load it from some other website (same domain required).
+**Validation Interval:** How often (in minutes) the blockchain should be checked if transactions have been confirmed. You can reduce this value if you need fast confirmations. Note, when changing the interval, the plugin needs to be disabled and re-enabled again.
 
-If the good you sell should be delivered as fast as possible and are, for example, not too expensive, then you can reduce the _Confirmations_ for NIM, BTC, and ETH - but not below 1. If in doubt, leave as is.
+**Behaviour:** Change this if you want to use top-level redirection instead of opening a pop-up, make sure that you have SSL encryption enabled (HTTPS in your address bar).
+
+**Logo:** Upload an image to your WordPress installation first and then copy the link and insert it here. It is not possible to load it from some other website (same domain required).
+
+**Confirmations:** If the good you sell should be delivered as fast as possible and are, for example, not too expensive, then you can reduce the _Confirmations_ for NIM, BTC, and ETH - but not below 1. If in doubt, leave as is.
 
 If you have doubts or something does not work as expected, check the tool tips on the left of each input box for help.
 
-Next, go to _WooCommerce_ ⇒ _Settings_ ⇒ _General_ and select at the bottom of the page _Currency_ "Nimiq (NIM)".
+**Finally**, go to _WooCommerce_ ⇒ _Settings_ ⇒ _General_ and select US Dollars or Euros from _Currency_ at the bottom of the page. Selecting "Nimiq (NIM)" will work if you accept NIM only.
+
+---
 
 **Disclaimer**: please check the legal and tax requirements of your country before starting to sell with your shop.
