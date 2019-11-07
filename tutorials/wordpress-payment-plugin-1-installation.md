@@ -35,20 +35,35 @@ A future version of the Nimiq Payment Plugin will work in combination with other
 
 ## Nimiq Plugin
 
-Before installing the plugin, let's make sure all the requirements are met:
 
-* Using cPanel
-  * **PHP 7:** Go to *Software* > *Select PHP Version* and pick "PHP 7"
-  ![Select PHP Version](resources/woocommerce-cpanel-php-version.png)
-  * **Extensions:** Make sure you have `php-gmp` and `php-mbstring` checked
-* Using Docker
-  * Type `docker exec`, press [tab] to find your docker WordPress container, press enter to get into the docker container and then follow the instructions below
-* Using the terminal for custom installations
-  * Note: on Debian and Ubuntu you will to use `apt` as in the examples below, on RedHat, Fedora, and Arch use `dnf` instead of `apt`
-  * **PHP 7:** run `php --version`, it should show a version of 7 or higher; If it instead returns "not found", then run `sudo apt -y install php  php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-gmp`
-  * **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` and `php-mbstring`, if not install the   missing extensions by running `apt install -y php-gmp php-mbstring`
+### Requirements
+
+Before installing the plugin, let's make sure all the requirements are met.
+
+#### Using cPanel
+
+* **PHP 7:** Go to *Software* > *Select PHP Version* and pick "PHP 7"
+![Select PHP Version](resources/woocommerce-cpanel-php-version.png)
+* **Extensions:** Make sure you have `php-gmp` and `php-mbstring` checked
+
+#### Using the Terminal
+
+_Note:_ on Debian and Ubuntu you will use `apt` as shown in the examples below, on RedHat, Fedora, and Arch use `dnf` instead of `apt`.
+
+With Docker:
+
+* Type `docker exec`, press [tab] to find your docker WordPress container, press enter to get into the docker container
+* **PHP 7:** run `php --version`, it should show a version of 7 or higher; If it instead returns "not found", then run `sudo apt -y install php php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-gmp`
+* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` and `php-mbstring`, if not install the   missing extensions by running `apt install -y libgmp10` and then `docker-php-ext-install gmp` and `docker-php-ext-install  mbstring`
+
+Custom Installations:
+
+* **PHP 7:** run `php --version`, it should show a version of 7 or higher; If it instead returns "not found", then run `sudo apt -y install php  php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-gmp`
+* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` and `php-mbstring`, if not install the   missing extensions by running `apt install -y php-gmp php-mbstring`
 
 If you're not sure, please contact your service provider and ask for support.
+
+### Installation
 
 After checking the requirements, you can install the Nimiq Payment Plugin by searching for "nimiq" in the same place where you found the WooCommerce plugin before.
 
@@ -58,6 +73,8 @@ After installing it, click _Activate_.
 
 You'll now find the _Nimiq Checkout for WooCommerce_ in the list of installed plugins.
 Click _Configure_.
+
+### Configuration
 
 ![Nimiq WooCommerce Plugin configuration](resources/woocommerce-configuration.png)
 
