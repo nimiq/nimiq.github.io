@@ -65,10 +65,10 @@ Let's have a look at most important settings and fields:
 
 **Wallet NIM Address:** Enter the Nimiq Address to receive your NIM payments.
 
-**For accepting Bitcoin:** set _BTC xPublic Key_ field (optional)
+**For accepting Bitcoin:** set _BTC xPublic Key_ field (optional) and make sure you have SSL/HTTPS enabled.
 
 **For accepting Ethereum:** set the _ETH xPublic Key_ field and the _Etherscan.io API key_ (which you can get at etherscan.io).
-We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be paid to a new ETH address and you as the shop owner have to pull all the funds together later resulting in more privacy but also in higher fees.
+We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be paid to a new ETH address and you as the shop owner have to pull all the funds together later resulting in more privacy but also in higher fees. Similarily, make sure you have SSL/HTTPS enabled.
 
 **Network Mode:** For testing, your can set both, NIM and BTC/ETH, to "Testnet", otherwise to "Mainnet".
 
@@ -87,6 +87,8 @@ We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be
 If you have doubts or something does not work as expected, check the tool tips on the left of each input box for help.
 
 **Finally**, go to _WooCommerce_ ⇒ _Settings_ ⇒ _General_ and select US Dollars or Euros from _Currency_ at the bottom of the page. Selecting "Nimiq (NIM)" will work if you accept NIM only.
+
+**🎉 Happy selling in NIM, BTC, and ETH! 🎉**
 
 ---
 
