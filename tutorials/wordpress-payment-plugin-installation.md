@@ -35,7 +35,6 @@ A future version of the Nimiq Payment Plugin will work in combination with other
 
 ## Nimiq Plugin
 
-
 ### Requirements
 
 Before installing the plugin, let's make sure all the requirements are met.

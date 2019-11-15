@@ -118,4 +118,4 @@ and
 ---
 
 Now your machine is ready for the Nimiq WordPress WooCommerce plugin to be installed.
-**Continue the tutorial**: [Install WooCommerce and the Nimiq Plugin](wordpress-payment-plugin-1-installation#woocommerce)
+**Continue the tutorial**: [Install WooCommerce and the Nimiq Plugin](wordpress-payment-plugin-installation#woocommerce)
