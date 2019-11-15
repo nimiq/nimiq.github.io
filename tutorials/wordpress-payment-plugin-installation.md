@@ -66,7 +66,7 @@ If you're not sure, please contact your service provider and ask for support.
 
 After checking the requirements, you can install the Nimiq Payment Plugin by searching for "nimiq" in the same place where you found the WooCommerce plugin before.
 
-![Nimiq WooCommerce Plugin](resources/woocommerce-nimiq-plugin.png)
+![Nimiq Payment Plugin](resources/woocommerce-nimiq-plugin.png)
 
 After installing it, click _Activate_.
 
@@ -75,30 +75,64 @@ Click _Configure_.
 
 ### Configuration
 
-![Nimiq WooCommerce Plugin configuration](resources/woocommerce-configuration.png)
+Let's have a look at most important settings and fields.
 
-Let's have a look at most important settings and fields:
+Customize your shop:
 
-**Wallet NIM Address:** Enter the Nimiq Address to receive your NIM payments.
-
-**For accepting Bitcoin:** set _BTC xPublic Key_ field (optional) and make sure you have SSL/HTTPS enabled.
-
-**For accepting Ethereum:** set the _ETH xPublic Key_ field and the _Etherscan.io API key_ (which you can get at etherscan.io).
-We recommend to check the _Re-use ETH addresses_ - otherwise, each order will be paid to a new ETH address and you as the shop owner have to pull all the funds together later resulting in more privacy but also in higher fees. Similarily, make sure you have SSL/HTTPS enabled.
-
-**Network Mode:** For testing, your can set both, NIM and BTC/ETH, to "Testnet", otherwise to "Mainnet".
-
-**Margin Percentage:** You can set this to a positive number, e.g. to compensate for volatility, or to a negative number to give a discount to crypto users. We recommend leaving it at "0". You should check your local legistlation before changing it.
-
-**Exchange Rate Source:** If you select "Fastspot", then you do not have to enter recommended fees at the bottom, Fastspot will do that for you.
-
-**Validation Interval:** How often (in minutes) the blockchain should be checked if transactions have been confirmed. You can reduce this value if you need fast confirmations. Note, when changing the interval, the plugin needs to be disabled and re-enabled again.
-
-**Behaviour:** Change this if you want to use top-level redirection instead of opening a pop-up, make sure that you have SSL encryption enabled (HTTPS in your address bar).
+![Nimiq Payment Plugin general configuration](resources/wc-plugin-setup-1-general.png)
 
 **Logo:** Upload an image to your WordPress installation first and then copy the link and insert it here. It is not possible to load it from some other website (same domain required).
 
-**Confirmations:** If the good you sell should be delivered as fast as possible and are, for example, not too expensive, then you can reduce the _Confirmations_ for NIM, BTC, and ETH - but not below 1. If in doubt, leave as is.
+#### Nimiq
+
+![Nimiq Payment Plugin configuration](resources/wc-plugin-setup-2-nimiq.png)
+
+**Wallet Address:** Enter the Nimiq Address to receive your NIM payments.
+
+You can change the **message** your customers will see in the message field of the transaction. If you don't know any of the choices in the **Chain Monitoring Service** field just leave it with "NIMIQ.WATCH" - if you chose another service, make sure to sign-up and provide the credentials here.
+
+#### Bitcoin
+
+Setting up Bitcoin is optional. Leave fields empty to disable Bitcoin payments.
+
+![Nimiq Payment Plugin configuration for accepting Bitcoin](resources/wc-plugin-setup-3-bitcoin.png)
+
+**BTC xPublic Key**: Copy paste your xPub or "Master Public Key" from your Bitcoin wallet software here. Also, make sure you have SSL/HTTPS enabled to accept payments in BTC.
+
+#### Ethereum
+
+Again, leave the fields empty if you don't want to accept Ethereum.
+
+![Nimiq Payment Plugin configuration for accepting Ethereum](resources/wc-plugin-setup-4-ethereum.png)
+
+**ETH xPublic Key:** Copy paste your xPub or "Master Public Key" from your Etherium wallet software here. We recommend to check the **Re-use ETH addresses** - otherwise, each order will be paid to a new ETH address - which means more privacy - but you as the shop owner will have to pull all the funds together later resulting in more fees and effort.
+
+Additionally, you need to set the **Etherscan.io API key** which you can get at [etherscan.io](http://etherscan.io).
+Similarily to Bitcoin, make sure you have SSL/HTTPS enabled.
+
+#### Advanced
+
+These settings are considered for experienced users only. Don't touch unless you know what you're doing. :)
+
+![Nimiq Payment Plugin configuration for accepting Ethereum](resources/wc-plugin-setup-5-advanced.png)
+
+A few of the options are:
+
+**Network Mode:** For testing, your can set it to "Testnet" - which will require you to use Testnet currency, e.g. Testnet NIM - default is "Mainnet" for accepting NIM, BTC, and ETH.
+
+**Exchange Rate Source:** If you select "Fastspot", then you do not have to enter recommended fees at the bottom, Fastspot will do that for you.
+
+**Fees**: Keep  default values to make sure your transactions arrive timely. Increase values to push them to be even faster or lower to save on fees. If the value is too low, transactions might not arrive.
+
+**Margin Percentage:** You can set this to a positive number, e.g. to compensate for volatility, or to a negative number to give a discount to crypto users. We recommend leaving it at "0". You should check your local legistlation before changing it.
+
+**Validation Interval:** How often (in minutes) the blockchain should be checked if transactions have been confirmed. You can reduce this value if you need fast confirmations. Note, when changing the interval, the plugin needs to be disabled and re-enabled again.
+
+**Checkout Behaviour:** Change this if you want to use top-level redirection instead of opening a pop-up, make sure that you have SSL encryption enabled (HTTPS in your address bar).
+
+**Confirmations:** If the goods you're selling should be delivered as fast as possible and are, for example, not too expensive, then you can reduce the _Confirmations_ for NIM, BTC, and ETH - but not below 1. If in doubt, leave as is.
+
+---
 
 If you have doubts or something does not work as expected, check the tool tips on the left of each input box for help.
 
