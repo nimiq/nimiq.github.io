@@ -97,7 +97,11 @@ Setting up Bitcoin is optional. Leave fields empty to disable Bitcoin payments.
 
 ![Nimiq Payment Plugin configuration for accepting Bitcoin](resources/wc-plugin-setup-3-bitcoin.png)
 
-**BTC xPublic Key**: Copy paste your xPub or "Master Public Key" from your Bitcoin wallet software here. Also, make sure you have SSL/HTTPS enabled to accept payments in BTC.
+**Wallet Account Public Key**:  Copy paste your xPub or "Master Public Key" from your Bitcoin wallet software here. Also, make sure you have SSL/HTTPS enabled to accept payments in BTC.
+
+_Note:_ In some wallet apps, the key is called "Account Public Key", "Master Public Key", or "Public Key" - same for Ethereum.
+
+**Public Key Type:** Most of the times you don't have to chnage this. But there are wallets such as Coinomi that will show a field called "Derivation" or "BIP32" that looks similar to the values in the select box, in that case, pick the value that matches the one shown in your wallet.
 
 #### Ethereum
 
@@ -105,7 +109,7 @@ Again, leave the fields empty if you don't want to accept Ethereum.
 
 ![Nimiq Payment Plugin configuration for accepting Ethereum](resources/wc-plugin-setup-4-ethereum.png)
 
-**ETH xPublic Key:** Copy paste your xPub or "Master Public Key" from your Etherium wallet software here. We recommend to check the **Re-use ETH addresses** - otherwise, each order will be paid to a new ETH address - which means more privacy - but you as the shop owner will have to pull all the funds together later resulting in more fees and effort.
+**Wallet Account Public Key:** Copy paste your xPub or "Master Public Key" from your Etherium wallet software here. We recommend to check the **Re-use ETH addresses** - otherwise, each order will be paid to a new ETH address - which means more privacy - but you as the shop owner will have to pull all the funds together later resulting in more fees and effort.
 
 Additionally, you need to set the **Etherscan.io API key** which you can get at [etherscan.io](http://etherscan.io).
 Similarily to Bitcoin, make sure you have SSL/HTTPS enabled.
