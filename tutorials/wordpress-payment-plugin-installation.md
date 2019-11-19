@@ -37,13 +37,20 @@ A future version of the Nimiq Payment Plugin will work in combination with other
 
 ### Requirements
 
-Before installing the plugin, let's make sure all the requirements are met.
+Before installing the plugin, we have to make sure all the requirements are met.
+
+* PHP 7 or higher
+* WooCommerce 3.5 or higher (can be checked in the _plugins_  of WordPress clickinh the "More Details" link on WooCommerce)
+* PHP extension `php-gmp` or `php-bcmath` (GMP is faster!)
+* PHP extension `php-mbstring` (usually availble by default)
+
+Below are details on how to check the requirements.
 
 #### Using cPanel
 
 * **PHP 7:** Go to *Software* > *Select PHP Version* and pick "PHP 7"
 ![Select PHP Version](resources/woocommerce-cpanel-php-version.png)
-* **Extensions:** Make sure you have `php-gmp` and `php-mbstring` checked
+* **Extensions:** Make sure you have `php-gmp` (or `php-bcmath`) and `php-mbstring` checked
 
 #### Using the Terminal
 
@@ -53,12 +60,12 @@ With Docker:
 
 * Type `docker exec`, press [tab] to find your docker WordPress container, press enter to get into the docker container
 * **PHP 7:** run `php --version`, it should show a version of 7 or higher; If it instead returns "not found", then run `sudo apt -y install php php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-gmp`
-* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` and `php-mbstring`, if not install the   missing extensions by running `apt install -y libgmp10` and then `docker-php-ext-install gmp` and `docker-php-ext-install  mbstring`
+* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` (or `php-bcmath`) and `php-mbstring`, if not install the   missing extensions by running `apt install -y libgmp10` and then `docker-php-ext-install gmp` and `docker-php-ext-install  mbstring`
 
 Custom Installations:
 
 * **PHP 7:** run `php --version`, it should show a version of 7 or higher; If it instead returns "not found", then run `sudo apt -y install php  php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-gmp`
-* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` and `php-mbstring`, if not install the   missing extensions by running `apt install -y php-gmp php-mbstring`
+* **Extensions:** run `php -m`, in the returned list, search if you can find `php-gmp` (or `php-bcmath`) and `php-mbstring`, if not install the   missing extensions by running `apt install -y php-gmp php-mbstring`
 
 If you're not sure, please contact your service provider and ask for support.
 
