@@ -1,4 +1,4 @@
-# Installing WordPress
+# Installing WordPress and WooCommerce
 
 If you are using a managed service,
 e.g. [DigitalOcean's one-click-apps](https://www.digitalocean.com/products/one-click-apps/),
@@ -115,7 +115,20 @@ For more details, please refer to these two in-depth explanations
 and
 [Windows](https://www.wpbeginner.com/wp-tutorials/how-to-install-wordpress-on-your-windows-computer-using-wamp/).
 
+## WooCommerce
+
+Log into the the admin panel of your WordPress installation, usually at `<www.your-server-domain.com>/wp-admin/`,
+select _Plugins_ ⇒ _Add New_ ⇒ search for "woocommerce" ⇒ and hit _Install Now_.
+
+![Install WooCommerce plugin](resources/woocommerce-plugin.png)
+
+After the installation is completed, click _Activate_ and follow the setup process.
+FYI, WooCommerce will suggest to install and sign-up for a lot of other third-party plugins.
+Take your time and decide wisely. :)
+
+![WooCommerce activation process](resources/woocommerce-activation-payments.png)
+
 ---
 
-Now your machine is ready for the Nimiq WordPress WooCommerce plugin to be installed.
-**Continue the tutorial**: [Install WooCommerce and the Nimiq Plugin](wordpress-payment-plugin-installation#woocommerce)
+Now you're ready for the Nimiq Cryptocurrency WooCommerce plugin to be installed.
+**Continue the tutorial**: [Install the Nimiq Plugin for WooCommerce](wordpress-payment-plugin-installation)
