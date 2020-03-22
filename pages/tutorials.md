@@ -28,4 +28,9 @@ Set up a simple web shop and receive payments in NIM.
 **[How to install the Nimiq Payment Plugin for WordPress WooCommerce](../tutorials/wordpress-payment-plugin-installation)**.
 Setup an online shop with WordPress + WooCommerce and configure the Nimiq Payment Plugin to receive payments in NIM.
 
+## Nimiq Ledger Setup
+
+**[How to use Nimiq with Ledger Nano device](../tutorials/ledger-guide)**.
+Install the Nimiq app on Ledger Nano and start using your device with Nimiq Safe.
+
 **More to come.** Want to contribute? Please [get in touch](mailto:sven@nimiq.com).
