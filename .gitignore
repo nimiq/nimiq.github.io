@@ -3,6 +3,7 @@
 _dev/todos
 research
 node_modules
+vendor
 Gemfile.lock
 _site
 package*.json
