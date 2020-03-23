@@ -81,39 +81,46 @@
         const $ = document.getElementById.bind(document);
 
         function load() {
-
             let timeout;
             function changed(html) {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
                     const container = $('viewer');
                     const frame = document.createElement('iframe');
-                    const doc = frame.contentDocument;
                     frame.id = 'viewer_frame';
-                    doc.open();
-                    doc.write(html);
-                    doc.close();
                     // make sure the JS env is fully reset
                     container.removeChild($('viewer_frame'));
                     container.appendChild(frame);
-                }, 300);
 
+                    const doc = frame.contentDocument;
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
+                }, 800);
             }
+
+            function createEditor(html) {
+                let editor = CodeMirror($('editor'), {
+                    value: html,
+                    mode: 'htmlmixed',
+                    theme: 'darcula',
+                });
+                editor.on('change', editor => changed(editor.getValue()));
+                changed(html);
+            }
+
             const url = (location.hash || '#basic-transactions.html').substr(1);
             console.log(`Playground: loading ${url}`);
             fetch(url)
                 .then(response => {
                     response.text().then(html => {
-                        let editor = CodeMirror($('editor'), {
-                            value: html,
-                            mode: 'htmlmixed',
-                            theme: 'darcula',
-                        });
-                        editor.on('change', editor => changed(editor.getValue()));
-                        changed(html);
+                        createEditor(html);
                     });
                 })
-                .catch(reason => console.log(reason));
+                .catch(reason => {
+                    console.log(reason)
+                    createEditor('');
+                });
         }
 
         window.onload = load;
