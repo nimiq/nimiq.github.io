@@ -86,11 +86,16 @@
             function changed(html) {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
-                    const doc = $('viewer_frame').contentDocument;
-                    doc.location.reload();
+                    const container = $('viewer');
+                    const frame = document.createElement('iframe');
+                    const doc = frame.contentDocument;
+                    frame.id = 'viewer_frame';
                     doc.open();
                     doc.write(html);
                     doc.close();
+                    // make sure the JS env is fully reset
+                    container.removeChild($('viewer_frame'));
+                    container.appendChild(frame);
                 }, 300);
 
             }
