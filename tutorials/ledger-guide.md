@@ -88,3 +88,17 @@ Verify you have:
 
 ![Screenshot of send confirm](resources/ledger-guide-confirmed.png)
 
+## Troubleshooting
+
+- **Problems connecting your Ledger**: If you have problems connecting your Ledger in our Nimiq apps, try the following steps:
+    - First, make sure that Ledger Live can successfully connect to your Ledger via USB. To test that, you can for example try whether the receive functionality triggered by the "Receive" button for an arbitrary coin in Ledger Live is able to detect your Ledger. If that is not the case, see here for [instructions](https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues).
+    - If Ledger Live is able to connect but not the Nimiq apps, try whether using an up-to-date version of Chrome or Firefox helps.
+    - If you still can not connect, make sure your Ledger is running the latest firmware version and has the latest Nimiq app installed. See the next section for update instructions.
+- **No update available for the Nimiq app on your Ledger**: If the user interface tells you that you have to update your Nimiq app on the Ledger but no newer version appears in Ledger Live, follow these steps:
+    - Make sure you are running the latest Version of Ledger Live. If not, Ledger Live should automatically offer you an update.
+    - Make sure your Ledger is running the latest firmware. If not, the Manager in Ledger Live should offer you to update the Ledger firmware.
+    - After updating Ledger Live and the Ledger firmware to the latest version, the latest Nimiq app version should be available for installation in the Manager in Ledger Live.
+- **Security popups**: If you are using Windows security popups might open. These are triggered for some browsers that do not support direct communication with the Ledger as an USB device and instead treat the Ledger as a security key. This popup can be safely ignored and just be moved to the side if it covers the user interface. Please *do not* click cancel or close the popup. You can read more about Window's security popups [here](https://support.ledger.com/hc/en-us/articles/360023190873). Also Firefox might show up its own security popups, which can also safely be ignored.
+- **Error message "The connected Ledger is not the one this account belongs to"**: In case you are using multiple Ledgers setup with different recovery words, make sure that the right one is connected and all others are disconnected. If you are sure that the correct Ledger is connected, make sure the correct wallet is unlocked, in case you are using wallets protected by an additional passphrase on your Ledger.
+
+Still having questions? [Ask us or our community](https://www.nimiq.com/community/).
