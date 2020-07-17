@@ -3,7 +3,7 @@
 _TL;DR? [Run the demo.](playground.html#basics-5-identicons-demo.html)_
 
 Building on the tutorial [Basics 4: Extended Transactions](basics-4-extended-tx),
-we can add one of Nimiq's unique features: [Nimiq Identicons](https://github.com/nimiq/iqons).
+we can add one of Nimiq's unique features: [Nimiq Identicons](https://github.com/nimiq/identicons).
 
 Identicons help users identify and verify addresses,
 for example helping them to make sure that the address they entered is the correct address of the recipient.
@@ -14,12 +14,11 @@ Here is an example: the Identicon in the following screen corresponds to the add
 First, let's import the Nimiq Identicons library at the top of our script:
 
 ```javascript
-import Identicons from "https://unpkg.com/@nimiq/iqons@1.5/dist/iqons.bundle.min.js";
+import Identicons from "https://unpkg.com/@nimiq/identicons@1.5/dist/identicons.bundle.min.js";
 ```
 
-> Note: Nimiq Identicons were named "Iqons" before, thus the name of the library.
-> We keep it to not break any existing code out there.
-> Other documents or some members of the Nimiq Community might refer to them also as Nimiqons and Avatars.
+> **Note:** Nimiq Identicons were named "Iqons" before. Older documents, blog posts
+> or some members of the Nimiq Community might refer to them also as Nimiqons or Avatars.
 
 For this to work we take advantage of the `module` type definition by changing the `<script>` tag to:
 
