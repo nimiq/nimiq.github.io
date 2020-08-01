@@ -42,17 +42,21 @@ Verify you have:
 
 ![Screenshot of connect ledger](resources/ledger-guide-import-addresses.png)
 
-7. The Ledger account will start to **synchronize**.
-8. If you already used your Ledger account before, it will get imported. **You are all set up**.
-9. If you haven't used your account yet, it will ask you to choose an **identicon** (a little avatar that represents a Nimiq address).
+7. If your browser shows you a device selection popup, select your Ledger device from the list and click connect. If your browser does not show you such a popup, you can skip this step.
+
+![Screenshot of the device selector](resources/ledger-guide-select-device.png)
+
+8. The Ledger account will start to **synchronize**.
+9. If you already used your Ledger account before, it will get imported. **You are all set up**.
+10. If you haven't used your account yet, it will ask you to choose an **identicon** (a little avatar that represents a Nimiq address).
 
 ![Screenshot of identicons](resources/ledger-guide-identicon.png)
 
-10. **Congratulations**, your account is now created.
+11. **Congratulations**, your account is now created.
 
 ![Screenshot of account created](resources/ledger-guide-created.png)
 
-11. Click **Finish** to get back to the **Nimiq Safe**.
+12. Click **Finish** to get back to the **Nimiq Safe**.
 
 > Welcome to the **Nimiq blockchain** !
 
@@ -74,15 +78,19 @@ Verify you have:
 
 ![Screenshot of contact](resources/ledger-guide-contact.png)
 
-6. Now choose the amount you want to send. You can also add a message if you want. Finally, click **Send transaction**.
+6. Now choose the amount you want to send. You can also add a message if you want.
 
 ![Screenshot of amount](resources/ledger-guide-amount.png)
 
-7. A new popup will open, follow the instructions to connect your Ledger device if it is not connected yet.
+7. Connect and unlock your device using your PIN code, then open the **Nimiq app** on your Ledger.
+
+8. Click **Send transaction**.
+
+9. A new popup will open. If your Ledger does not automatically get connected, follow the instructions to connect it. If your browser shows you a device selection popup, select your device from the list and click connect.
 
 ![Screenshot of send confirm](resources/ledger-guide-send-confirm.png)
 
-8. You now need to confirm the transaction on your device. Verify the transaction's details and choose **Accept and send** on your device if you want to send the transaction.
+10. You now need to confirm the transaction on your device. Verify the transaction's details and choose **Accept and send** on your device if you want to send the transaction.
 
 > Congratulations! Your transaction has now been sent to the network and should be confirmed soon.
 
